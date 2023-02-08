@@ -9,12 +9,10 @@ import { SEventsOrder } from './entity/eventsOrder.entity';
 import { SEventsPrivate } from './entity/eventsPrivate.entity';
 import * as moment from 'moment';
 import { GetNowDTO } from './dto/getNow.dto';
-import { ExampleNotification } from '../notification_/notification/notification.example';
 import { ModuleRef } from '@nestjs/core';
 import { channel } from 'diagnostics_channel';
 import { EventNotFoundException } from './exception/event.not-found.exception';
 import { EventBadRequestException } from './exception/event.bad-request.exception';
-import { NestJsNotificationsService } from '../notification_/notification/notification.service';
 
 
 
@@ -23,7 +21,6 @@ export class EventsService {
     constructor(@InjectRepository(SEvents, 'mchs_connection') private eventsRepository: Repository<SEvents>,
     @InjectRepository(SEventsOrder, 'mchs_connection') private eventsOrderRepository: Repository<SEventsOrder>,
     //@InjectRepository(SEventsPrivate, 'mchs_connection') private eventsPrivateRepository: Repository<SEventsPrivate>,
-    private readonly notifications: NestJsNotificationsService,
     
     //private moduleRef: ModuleRef,
     ){
@@ -164,8 +161,7 @@ export class EventsService {
     }
 
     public async send(): Promise<void> {
-        const notification = new ExampleNotification('Notification');//подумать что передавать 
-        this.notifications.send(notification);
+        
         console.log('Notification sent');
       }
 

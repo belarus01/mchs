@@ -6,7 +6,6 @@ import { UsersModule } from './modules/users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { EventsModule } from './modules/events/events.module';
 import { StatisticsModule } from './modules/statistics/statistics.module';
-import * as dotenv from 'dotenv';
 import { ObjectModule } from './modules/object/object.module';
 import { SubjectModule } from './modules/subject/subject.module';
 import { GroupModule } from './modules/group/group.module';
@@ -37,8 +36,8 @@ import { NotificationGateway } from './notification/notification.gateway';
   imports: [
     ConfigModule.forRoot(),
     
-    /* TypeOrmModule.forRoot({
-     //name: 'mchs_connection',
+    TypeOrmModule.forRoot({
+     name: 'mchs_connection',
       type:'mysql',
       host:'192.168.150.29',
       port: 3306,
@@ -49,40 +48,53 @@ import { NotificationGateway } from './notification/notification.gateway';
       entities:[],
       synchronize:false,
       autoLoadEntities: true
-    }), */
-
-    TypeOrmModule.forRootAsync({
-      name: 'mchs_connection',
-      useFactory: async () => {
-        return {
-       type:'mysql',
-       host:'localhost',
-       port: 3306,
-       username: 'tanya',
-       password: '123456_Qq',
-       database: 'mchs',
-       
-       entities:[],
-       synchronize:false,
-       autoLoadEntities: true
-        }as MysqlConnectionOptions},
-     }),
-     TypeOrmModule.forRootAsync({
+    }),
+    TypeOrmModule.forRoot({
       name: 'doc_connection',
-      useFactory: async () => {
-        return {
        type:'mysql',
-       host:'localhost',
+       host:'192.168.150.29',
        port: 3306,
-       username: 'tanya',
+       username: 'serge',
        password: '123456_Qq',
        database: 'doc',
        
        entities:[],
        synchronize:false,
        autoLoadEntities: true
-        }as MysqlConnectionOptions},
      }),
+
+    // TypeOrmModule.forRootAsync({
+    //   name: 'mchs_connection',
+    //   useFactory: async () => {
+    //     return {
+    //    type:'mysql',
+    //    host:'localhost',
+    //    port: 3306,
+    //    username: 'tanya',
+    //    password: '123456_Qq',
+    //    database: 'mchs',
+       
+    //    entities:[],
+    //    synchronize:false,
+    //    autoLoadEntities: true
+    //     }as MysqlConnectionOptions},
+    //  }),
+    //  TypeOrmModule.forRootAsync({
+    //   name: 'doc_connection',
+    //   useFactory: async () => {
+    //     return {
+    //    type:'mysql',
+    //    host:'localhost',
+    //    port: 3306,
+    //    username: 'tanya',
+    //    password: '123456_Qq',
+    //    database: 'doc',
+       
+    //    entities:[],
+    //    synchronize:false,
+    //    autoLoadEntities: true
+    //     }as MysqlConnectionOptions},
+    //  }),
 
     AuthModule,
     UsersModule,
