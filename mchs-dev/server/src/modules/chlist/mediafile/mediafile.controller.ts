@@ -76,7 +76,7 @@ export class MediafileController {
 }
 
 function diskStorage(_arg0: { destination: string; filename: any; }): any {
-    throw new Error("Function not implemented.");
+    //throw new Error("Function not implemented.");
 }
 
 

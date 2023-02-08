@@ -4,12 +4,13 @@ import { Repository } from "typeorm";
 import { SChlist } from "./entity/chlist.entity";
 import { ChlistNotFoundException } from "./exception/chlist.not-found.exception";
 
+
 @Injectable()
 export class ChlistService{
-    constructor(@InjectRepository(SChlist) private chlistRepository: Repository<SChlist>){}
+    constructor(@InjectRepository(SChlist, 'mchs_connection') private chlistRepository: Repository<SChlist>){}
     
-    async getChlistById(idChlist: number): Promise<SChlist>{
-        const chlist = this.chlistRepository.findOneBy({idChlist});
+    async getChlistById(idChlist: number){
+        const chlist = await this.chlistRepository.findOneBy({idChlist});
         if(!chlist){
             throw new ChlistNotFoundException(idChlist);
         }
