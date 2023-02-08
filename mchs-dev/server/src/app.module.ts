@@ -28,8 +28,6 @@ import { SopbModule } from './sopb/sopb.module';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { AllExceptionsFilter } from './modules/filter/all-exceptions.filter';
 import { ExceptionInterceptor } from './modules/interceptor/exception.interceptor';
-import { NotificationModule } from './notification/notification.module';
-import { NotificationGateway } from './notification/notification.gateway';
 
 
 @Module({
@@ -122,8 +120,7 @@ import { NotificationGateway } from './notification/notification.gateway';
     TnpaModule,
     OkedModule,
     SopbModule,
-    NotificationModule,
-    NotificationGateway,//prbly delete..or leave here..bcs it is included into NotificationModule
+   
   ],
   controllers: [],
   providers: [{
