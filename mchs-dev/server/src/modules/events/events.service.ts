@@ -109,7 +109,7 @@ export class EventsService {
 
     async getUnitTypeUnit(idEvent: number){
         const typeUnit = this.eventsOrderRepository.find(
-           { where:{idEvent: idEvent},relations: {idUnit: true}} 
+           { where:{idEvent: idEvent},relations: {idUnit:true}} 
         );
         return typeUnit;
     }
