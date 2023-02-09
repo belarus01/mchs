@@ -37,9 +37,9 @@ import { ExceptionInterceptor } from './modules/interceptor/exception.intercepto
     TypeOrmModule.forRoot({
      name: 'mchs_connection',
       type:'mysql',
-      host:'192.168.150.29',
+      host:'192.168.150.29',// 192.168.150.29 | localhost
       port: 3306,
-      username: 'serge',
+      username: 'serge',// serge | tanya
       password: '123456_Qq',
       database: 'mchs',
       
@@ -50,9 +50,9 @@ import { ExceptionInterceptor } from './modules/interceptor/exception.intercepto
     TypeOrmModule.forRoot({
       name: 'doc_connection',
        type:'mysql',
-       host:'192.168.150.29',
+       host:'192.168.150.29',// 192.168.150.29 | localhost
        port: 3306,
-       username: 'serge',
+       username: 'serge',// serge | tanya
        password: '123456_Qq',
        database: 'doc',
        
