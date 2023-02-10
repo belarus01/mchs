@@ -2,9 +2,13 @@ import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessa
 import { Server, Socket } from 'socket.io';
 import { NotificationService } from './notification.service';
 
-@WebSocketGateway()
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+  },
+ })
 export class NotificationGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
-  constructor(private notificationService: NotificationService) {}
+  
  
   @WebSocketServer() server: Server;
   

@@ -28,6 +28,8 @@ import { SopbModule } from './sopb/sopb.module';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { AllExceptionsFilter } from './modules/filter/all-exceptions.filter';
 import { ExceptionInterceptor } from './modules/interceptor/exception.interceptor';
+import { NotificationModule } from './modules/notification/notification.module';
+import { NotificationGateway } from './modules/notification/notification.gateway';
 
 
 @Module({
@@ -120,10 +122,12 @@ import { ExceptionInterceptor } from './modules/interceptor/exception.intercepto
     TnpaModule,
     OkedModule,
     SopbModule,
+    NotificationModule
    
   ],
-  controllers: [],
-  providers: [{
+  controllers: [AppController],
+  providers: [
+    {
     provide: APP_INTERCEPTOR,
     //scope: Scope.REQUEST,
     useClass: ExceptionInterceptor,
