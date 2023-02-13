@@ -85,7 +85,7 @@ export class EventsController {
 
 
     @Put('/delete/:idEvent')
-    deleteEventById(@Param('idEvent') idEvent: number){
+    async deleteEventById(@Param('idEvent') idEvent: number){
         return this.eventsService.deleteEventById(idEvent);
     }
 
