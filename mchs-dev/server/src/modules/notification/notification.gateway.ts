@@ -30,6 +30,11 @@ export class NotificationGateway implements OnGatewayInit, OnGatewayConnection, 
     console.log(body);
   }
 
+  @SubscribeMessage(WS_NOTIFICATION_EVENTS.UNSENT)
+  async handleUnsentNotifications(){
+    
+  }
+
   @UseGuards(RolesGuard)
   @SubscribeMessage(WS_NOTIFICATION_EVENTS.DONE) 
   async handleClosedEvent(){//(в s_events_order) | или там про task they mean?

@@ -22,7 +22,7 @@ export class Notification {
   @Column("int", {
     name: "status",
     comment:
-      "1 - NEW, 2 - CHANGED, 3 - EMPTY,например: план не заполнен, 4 - DONE",
+    "0 - UNSENT,1 - NEW, 2 - CHANGED, 3 - EMPTY,например: план не заполнен, 4 - DONE, 5 - DELETED",
     default: () => "'1'",
   })
   status: number;
@@ -39,13 +39,19 @@ export class Notification {
     comment: "пользователь создавший уведомление",
     unsigned: true,
   })
-  uid: number;
+  uid: number | null;//для тестинга оставим пока что может быть налл
+
+  @Column("date", {
+    name: "date",
+    nullable: true,
+  })
+  date: Date | null;
 
   @Column("int", { name: "id_task_result", nullable: true, unsigned: true })
   idTaskResult: number | null;
 
   @Column("bigint", { name: "id_event_order", nullable: true, unsigned: true })
-  idEventOrder: string | null;
+  idEventOrder: number | null;
 
   @ManyToOne(() => SEventsOrder, (sEventsOrder) => sEventsOrder.notifications, {
     onDelete: "NO ACTION",
