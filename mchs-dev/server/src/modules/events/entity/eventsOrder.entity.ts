@@ -13,6 +13,7 @@ import { SEventsOrderData } from "./eventsOrderData.entity";
 import { Group } from "src/modules/group/group.entity";
 import { SEventsPrivate } from "./eventsPrivate.entity";
 import { SUnits } from "src/modules/unit/unit.entity";
+import { Notification } from "src/modules/notification/notification.entity";
 
 @Index("FK_s_events_order_id_group2", ["idGroup"], {})
 @Index("FK_s_events_order_id_subj", ["idSubj"], {})
@@ -276,6 +277,9 @@ export class SEventsOrder {
     (sEventsPrivate) => sEventsPrivate.idEventOrder2
   )
   sEventsPrivates: SEventsPrivate[];
+
+  @OneToMany(() => Notification, (notification) => notification.idEventOrder2)
+  notifications: Notification[];
 
   //////////////added
  /*  @ManyToMany(

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Notification } from "src/modules/notification/notification.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("task_result", { schema: "mchs" })
 export class TaskResult {
@@ -41,4 +42,7 @@ export class TaskResult {
     unsigned: true,
   })
   idTaskResultStatus: number | null;
+
+  @OneToMany(() => Notification, (notification) => notification.idTaskResult2)
+  notifications: Notification[];
 }
