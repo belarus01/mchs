@@ -41,8 +41,8 @@ import { NotificationGateway } from './modules/notification/notification.gateway
       type:'mysql',
       host:'localhost',// 192.168.150.29 | localhost
       port: 3306,
-      username: 'tanya',// serge | tanya
-      password: '123456_Qq',
+      username: 'root',// serge | tanya
+      password: '123456',
       database: 'mchs',
       
       entities:[],
@@ -54,8 +54,8 @@ import { NotificationGateway } from './modules/notification/notification.gateway
        type:'mysql',
        host:'localhost',// 192.168.150.29 | localhost
        port: 3306,
-       username: 'tanya',// serge | tanya
-       password: '123456_Qq',
+       username: 'root',// serge | tanya
+       password: '123456',
        database: 'doc',
        
        entities:[],
