@@ -27,9 +27,10 @@ export class EventsService {
         
     }
 
+    //не работает
     async createEvent(eventDto:CreateEventDTO): Promise<SEvents>{
         const event = this.eventsRepository.create(eventDto);
-        if(event.event){
+        if(!event.event){
             throw new EventBadRequestException(`Мероприятие id = ${event.idEvent} уже создано`);
         }
         //if выбрасывающий 403 Exc-n (тут EventForbiddenExcepion) на то что есть ли права создания  
