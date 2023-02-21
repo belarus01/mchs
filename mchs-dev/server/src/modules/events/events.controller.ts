@@ -89,7 +89,8 @@ export class EventsController {
         return this.eventsService.deleteEventById(idEvent);
     }
 
-    @Put('/update')
+    //добавлен idEvent в путь
+    @Put('/update/:idEvent')
     upadateEvent(@Param('idEvent') idEvent: number, @Body() eventDto: CreateEventDTO): Observable<any> {
         return this.eventsService.upadateEvent(Number(idEvent), eventDto);
     }

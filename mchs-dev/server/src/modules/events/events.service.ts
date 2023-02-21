@@ -155,6 +155,8 @@ export class EventsService {
         return eventToDelete.active === 0;
     }
 
+    //не работает
+    //RangeError: Invalid status code: undefined
     upadateEvent(idEvent:number, eventDto: CreateEventDTO): Observable<any>{
         return from(this.eventsRepository.update(idEvent, eventDto)).pipe(
             switchMap(() => this.getEventById(idEvent))
