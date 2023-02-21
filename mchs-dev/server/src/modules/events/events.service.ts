@@ -149,10 +149,12 @@ export class EventsService {
         });
     } */
 
-
+//исправлен Серым delete
     async deleteEventById(idEvent: number){
-        const eventToDelete = await this.getEventById(idEvent);
-        return eventToDelete.active === 0;
+        // const eventToDelete = await this.getEventById(idEvent);
+        // return eventToDelete.active === 0;
+        const result = await this.eventsRepository.update(idEvent, {active:0});
+        return result;
     }
 
     //не работает
