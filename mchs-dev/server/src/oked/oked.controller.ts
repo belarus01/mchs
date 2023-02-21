@@ -17,12 +17,14 @@ export class OkedController {
         return okeds;
     }
 
+    //вызов exception
     @Get('/get/dateBegin/id/:idOked')
     async getOkedDateBegin(@Param('idOked') idOked: number){
         const oked = this.okedService.getOkedDateBegin(idOked);
         return oked;
     }
 
+    //вызов exception
     @Get('/get/dateEnd/id/:idOked')
     async getOkedDateEnd(@Param('idOked') idOked: number){
         const oked = this.okedService.getOkedDateEnd(idOked);
