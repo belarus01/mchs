@@ -72,6 +72,7 @@ export class EventsController {
     }
 
     //for testing mostly, prbly gonna work somehow in tandem to get THE Name (in service)
+    //не работает??
     @Get('/get/typeUnit/:idUnit')
     async getUnitTypeUnit(@Param('idUnit') idUnit: number){
         const typeUnit = this.eventsService.getUnitTypeUnit(idUnit);
