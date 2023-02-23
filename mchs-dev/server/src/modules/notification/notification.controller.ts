@@ -20,13 +20,19 @@ export class NotificationController {
         return notification;
     }
 
-    @Get('get/all')
+    @Get('/get/all')
     async getAllNotifications(){
         const notifications = await this.notificationService.getAllNotifications();
         return notifications;
     }
 
-    @Get('get/all/unsent')
+    @Get('/get/user-status/:toUid/:status')
+    async getUserNotificationsStatus(@Param('toUid') toUid: number, @Param('status') status: number){
+        const notifications  = await this.notificationService.getUserNotificationsByStatus(toUid, status);
+        return notifications;
+    }
+
+    @Get('/get/all/unsent')
     async getAllUnsentNotifications(){
         const notifications = await this.notificationService.getAllUnsentNotifications();
         return notifications; 

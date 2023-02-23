@@ -11,9 +11,10 @@ import { SEventsOrder } from "../events/entity/eventsOrder.entity";
 import { TaskResult } from "../task/entity/taskResult.entity";
 import { User } from "../users/user.entity";
 
-@Index("notification_users_FK", ["uid"], {})
+@Index("notification_users_FK", ["toUid"], {})
 @Index("n_task_result_FK", ["idTaskResult"], {})
 @Index("notification_s_events_order_FK", ["idEventOrder"], {})
+@Index("notification_users_from_FK", ["fromUid"], {})
 @Entity("notification", { schema: "mchs" })
 export class Notification {
   @PrimaryGeneratedColumn({ type: "int", name: "id", unsigned: true })
@@ -22,7 +23,7 @@ export class Notification {
   @Column("int", {
     name: "status",
     comment:
-    "0 - UNSENT,1 - NEW, 2 - CHANGED, 3 - EMPTY,например: план не заполнен, 4 - DONE, 5 - DELETED",
+    "0 - UNSENT,1 - NEW,2 - UPDATED,3 - DELETED",
     default: () => "'1'",
   })
   status: number;
@@ -36,16 +37,24 @@ export class Notification {
 
   @Column("int", {
     name: "uid",
-    comment: "пользователь создавший уведомление",
+    comment: "кому уведомление",
     unsigned: true,
   })
-  uid: number | null;//для тестинга оставим пока что может быть налл
+  toUid: number | null;//для тестинга оставим пока: что может быть налл
 
   @Column("date", {
     name: "date",
     nullable: true,
   })
   date: Date | null;
+
+  @Column("int", {
+    name: "from_uid",
+    nullable: true,
+    comment: "от кого",
+    unsigned: true,
+  })
+  fromUid: number | null;
 
   @Column("int", { name: "id_task_result", nullable: true, unsigned: true })
   idTaskResult: number | null;
@@ -75,6 +84,13 @@ export class Notification {
     onDelete: "RESTRICT",
     onUpdate: "CASCADE",
   })
-  @JoinColumn([{ name: "uid", referencedColumnName: "uid" }])
-  u: User;
+  @JoinColumn([{ name: "to_uid", referencedColumnName: "uid" }])
+  toU: User;
+
+  @ManyToOne(() => User, (users) => users.notifications2, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "from_uid", referencedColumnName: "uid" }])
+  fromU: User;
 }

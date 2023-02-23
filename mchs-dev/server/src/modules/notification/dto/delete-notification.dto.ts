@@ -1,4 +1,5 @@
 export interface DeleteNotificationDTO{
     id: number;
-    uid: number;
+    fromUid: number;
+    toUid: number;
 }

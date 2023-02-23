@@ -3,26 +3,31 @@ import { MessageBody, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, S
 import { EMPTY } from 'rxjs';
 import { Server, Socket } from 'socket.io';
 import { RolesGuard } from '../auth/roles.guard';
+import { CreateNotificationDTO } from './dto/create-notification.dto';
 import { WS_NOTIFICATION_EVENTS } from './notification.constants';
 import { NotificationService } from './notification.service';
 
 @WebSocketGateway({
+/*   pingTimeout: 2000,
+  pingInterval: 2000, */
   cors: {
     origin: '*',
   },
  })
 export class NotificationGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
-  
+  constructor(private notificationService: NotificationService) {}
  
   @WebSocketServer() server: Server;
+  
   
 /*   @SubscribeMessage('sendMessage')
   async handleSendMessage(client: Socket, payload: string): Promise<void> {
     this.server.emit('sendMessageToClient', payload);
   } */
 
-  @SubscribeMessage(WS_NOTIFICATION_EVENTS.NEW)
-  async onNewNotification(@MessageBody() body: any, client: Socket){
+  //метод чисто на поиграться потетстить как сокет работает
+  @SubscribeMessage('newNotification')
+  async onNewNotification(@MessageBody() body: any){
     this.server.emit('onNotification', {
       msg: 'New Notification',
       content: body
@@ -30,24 +35,54 @@ export class NotificationGateway implements OnGatewayInit, OnGatewayConnection, 
     console.log(body);
   }
 
+  @SubscribeMessage(WS_NOTIFICATION_EVENTS.NEW)
+  async onNewNotifications(client: Socket, user: CreateNotificationDTO){
+    if(client.connected === true){
+        const notifications = await this.notificationService.getUserNotificationsByStatus(user.toUid, 1);
+        notifications.forEach(notification => {
+          this.server.emit('onNew', notification);
+        });   
+    }else{
+        return this.handleUnsentNotifications(user);
+    }
+  }
+
   @SubscribeMessage(WS_NOTIFICATION_EVENTS.UNSENT)
-  async handleUnsentNotifications(){
-    
+  async handleUnsentNotifications(user: CreateNotificationDTO){
+    //для начала криэйтнуть как UNSENT нотификейшн, чтоб из другого статуса установился статус UNSENT
+    const unsentNotification = await this.notificationService.createUnsentNotification(user);
+    const notifications = await this.notificationService.getUserNotificationsByStatus(unsentNotification.toUid, 0);
+    notifications.forEach(notification => {
+      this.server.emit('onUnsent', notification); //this.server.emit(WS_NOTIFICATION_EVENTS.UNSENT, notifications);
+    }); 
   }
 
-  @UseGuards(RolesGuard)
-  @SubscribeMessage(WS_NOTIFICATION_EVENTS.DONE) 
-  async handleClosedEvent(){//(в s_events_order) | или там про task they mean?
+@SubscribeMessage(WS_NOTIFICATION_EVENTS.UPDATED)
+async handleUpdatedNotifications(client: Socket, user: CreateNotificationDTO){
+  if(client.connected){
+    const updatedNotification = await this.notificationService.getUserNotificationsByStatus(user.toUid, 2);
+    updatedNotification.forEach(notification => {
+      this.server.emit('onUpdate', notification);}
+    )}else{
+      return this.handleUnsentNotifications(user);
+    } 
+}
 
+  @SubscribeMessage(WS_NOTIFICATION_EVENTS.DELETED)
+  async handleDeletedNotifications(client: Socket, user: CreateNotificationDTO){
+    if(client.connected === true){
+      const deletedNotifications = await this.notificationService.getUserNotificationsByStatus(user.toUid, 3);
+      deletedNotifications.forEach(notification => {
+        this.server.emit('onDelete', notification);
+      });   
+    }else{
+      return this.handleUnsentNotifications(user);
+    }   
   }
 
-  @UseGuards(RolesGuard)
-  @SubscribeMessage(WS_NOTIFICATION_EVENTS.CHANGED) 
-  async handleChangedPlan(){}
+  
 
-  @UseGuards(RolesGuard)
-  @SubscribeMessage(WS_NOTIFICATION_EVENTS.EMPTY) 
-  async handleEmptyPlan(){}
+  //?на изменеие пароля с отправкой сообщения на email, и мб тогда отдельный user.gateway создать
 
   
   afterInit(server: Server) {
@@ -64,4 +99,19 @@ export class NotificationGateway implements OnGatewayInit, OnGatewayConnection, 
       console.log(`Connected ${client.id}`);
     }) */
   }
+
+  /**
+     * Adds a timeout in milliseconds for the next operation.
+     *
+     * @example
+     * io.timeout(1000).emit("some-event", (err, responses) => {
+     *   if (err) {
+     *     // some clients did not acknowledge the event in the given delay
+     *   } else {
+     *     console.log(responses); // one response per client
+     *   }
+     * });
+     *
+     * @param timeout
+     */
 }

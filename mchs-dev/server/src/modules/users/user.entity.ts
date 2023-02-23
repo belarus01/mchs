@@ -174,6 +174,9 @@ export class User {
   @JoinColumn([{ name: "id_dept_job", referencedColumnName: "idDeptJob" }])
   idDeptJob2: SDeptJob;
 
-  @OneToMany(() => Notification, (notification) => notification.u)
+  @OneToMany(() => Notification, (notification) => notification.toU)
   notifications: Notification[];
+
+  @OneToMany(() => Notification, (notification) => notification.fromU)
+  notifications2: Notification[];
 }

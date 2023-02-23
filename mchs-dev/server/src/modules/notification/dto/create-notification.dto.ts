@@ -6,7 +6,9 @@ export class CreateNotificationDTO{
 
     content: string;
 
-    uid: number;
+    fromUid: number;
 
     date: Date;
+
+    toUid: number;
 }
