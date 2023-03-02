@@ -286,6 +286,14 @@ export class SEventsOrder {
     () => SUnits,
     (unit) => unit.sEventsOrder)
   units: SUnits;*/
+
+  //////////////added
+/*   @ManyToMany(() => SUnits, (sUnit) => sUnit.s_events_order, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_unit", referencedColumnName: "idUnit"}])
+  idUnit2: SUnits; */
 } 
 
   

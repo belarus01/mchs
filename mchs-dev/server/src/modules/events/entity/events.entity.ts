@@ -4,11 +4,13 @@ import {
     Index,
     OneToMany,
     PrimaryGeneratedColumn,
+    Unique,
   } from "typeorm";
 import { SEventsOrder } from "./eventsOrder.entity";
   
   @Index("type_event", ["numEvent"], {})
   @Entity("s_events", { schema: "mchs" })
+  //@Unique(['event'])
   export class SEvents {
     @PrimaryGeneratedColumn({ type: "bigint", name: "id_event", unsigned: true })
     idEvent: number;
@@ -48,7 +50,7 @@ import { SEventsOrder } from "./eventsOrder.entity";
     })
     dateEnd: Date | null;
   
-    @Column("date", {
+    @Column("datetime", {
       name: "date_record",
       nullable: true,
       comment: "Дата изменения записи",

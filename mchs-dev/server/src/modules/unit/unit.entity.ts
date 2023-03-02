@@ -94,4 +94,9 @@ export class SUnits {
     })
     @JoinColumn({name: ' idEventOrder'})
     sEventsOrder: SEventsOrder; */
+
+    ////////added
+/*     @ManyToMany(() => SEventsOrder, (s_events_order) => s_events_order.idUnit2)
+    s_events_order: SEventsOrder[]; */
+
 }

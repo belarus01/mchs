@@ -80,9 +80,9 @@ export class AteService {
         return reestrs;
     }
 
-
-    async getStreetById(idReestr: number): Promise<SAteStreet>{
-        const street = this.ateStreetRepository.findOneBy({idReestr})
+//idReestr заменен на idStreet
+    async getStreetById(idStreet: number): Promise<SAteStreet>{
+        const street = this.ateStreetRepository.findOneBy({idStreet})
         return street;
     }
 
