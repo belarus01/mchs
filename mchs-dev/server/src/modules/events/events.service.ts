@@ -27,14 +27,14 @@ export class EventsService {
         
     }
 
-    //не работает
+    
     async createEvent(eventDto:CreateEventDTO): Promise<SEvents>{
             const event = this.eventsRepository.create(eventDto);
             try{
                 return this.eventsRepository.save(event);
             } catch(error){
                 console.log(error);
-                /* if(error.code ===''){//вставить код ошибки когда выяснишь, после консоле.лог (код ошибки же не измениться?...)
+                /* if(error.code ===''){//вставить код ошибки когда выяснишь, после консоле.лог (код ошибки же не измениться?...) | + @Unique не забудь раскомментить в entity, + synchronize:true
                     throw new EventBadRequestException(`Мероприятие id = ${event.idEvent} уже создано`);
                 } else{ 
                     throw new //EventServerException();
@@ -43,8 +43,16 @@ export class EventsService {
             
     }
 
-    getExistedEvent(eventDto:CreateEventDTO){
-        const exists = this.eventsRepository.find({where:{
+//не работает
+    async createE(eventDto:CreateEventDTO){
+        const event = this.eventsRepository.create(eventDto);
+        if(await this.isExistedEvent(event) === true){
+            throw new EventBadRequestException(`Мероприятие id = ${event.idEvent} уже создано`); 
+        }else{ return this.eventsRepository.save(event);}
+    }
+
+    async isExistedEvent(eventDto:CreateEventDTO){
+        const exists = await this.eventsRepository.find({where:{
             event: eventDto.event
         }});
         if(exists){
