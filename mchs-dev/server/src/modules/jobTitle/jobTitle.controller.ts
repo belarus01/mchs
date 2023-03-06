@@ -32,7 +32,8 @@ export class JobController {
         return this.jobTitleService.createJobTitle(jobTitleDto);
     }
 
-    @Put('/update')
+    //неправильный адресс
+    @Put('/update/:idDeptJob')
     async updateJobTitle(@Param('idDeptJob') idDeptJob: number, @Body() jobTitleDto: CreateJobTitleDTO): Promise<Observable<any>>{
         return this.jobTitleService.updateJobTitle(Number(idDeptJob), jobTitleDto);
     }
