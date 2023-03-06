@@ -41,12 +41,12 @@ import { NotificationGateway } from './modules/notification/notification.gateway
       type:'mysql',
       host:'localhost',// 192.168.150.29 | localhost
       port: 3306,
-      username: 'tanya',// serge | tanya | root
-      password: '123456_Qq',// 123456_Qq | 123456
+      username: 'root',// serge | tanya | root
+      password: '123456',// 123456_Qq | 123456
       database: 'mchs',
       
       entities:[],
-      synchronize:true,
+      synchronize:false,
       autoLoadEntities: true
     }),
     TypeOrmModule.forRoot({
@@ -54,8 +54,8 @@ import { NotificationGateway } from './modules/notification/notification.gateway
        type:'mysql',
        host:'localhost',// 192.168.150.29 | localhost
        port: 3306,
-       username: 'tanya',// serge | tanya | root
-       password: '123456_Qq',// 123456_Qq | 123456
+       username: 'root',// serge | tanya | root
+       password: '123456',// 123456_Qq | 123456
        database: 'doc',
        
        entities:[],
