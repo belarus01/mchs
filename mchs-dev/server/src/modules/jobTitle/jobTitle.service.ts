@@ -25,9 +25,10 @@ export class JobTitleService {
         return jobTitles;
     }
 
+    //неправильно работало
     async createJobTitle(jobTitleDto: CreateJobTitleDTO): Promise<SDeptJob>{
         const jobTitle = this.jobTitleRepository.create(jobTitleDto);
-        if(jobTitle.job){
+        if(!jobTitle.job){
             throw new JobTitleBadRequestException(`Дожность ${jobTitle.job} уже существует`);
         }
         return this.jobTitleRepository.save(jobTitle);
