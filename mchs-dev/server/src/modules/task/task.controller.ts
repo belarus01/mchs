@@ -1,4 +1,5 @@
 import { Controller, Post, Body, Get, Put, Delete, Param, NotFoundException, Sse } from '@nestjs/common';
+import { TaskData } from './entity/taskData.entity';
 import { TaskService } from './task.service';
 
 @Controller('task')
@@ -38,6 +39,10 @@ export class TaskController {
         return this.taskDataService.getAllTaskData();
     }
     
+    @Put('/update')
+    updateTaskData(@Body() taskData: TaskData){
+        return this.taskDataService.updateTaskData(taskData);
+    }
 
     @Put('/delete/:idTaskData')
     deleteTaskDataById(@Param('idTaskData') idTaskData: number){

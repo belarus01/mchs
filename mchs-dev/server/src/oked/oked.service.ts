@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SOked_2 } from './entity/oked.entity';
+import { OkedDateNotFoundException } from './exception/oked.date.not-found.exception';
 import { OkedNotFoundException } from './exception/oked.not-found.exception';
 
 @Injectable()
@@ -11,7 +12,7 @@ export class OkedService {
     async getOkedDateBegin(idOked: number){
         const okedDateBegin = (await this.okedRepository.findOneBy({idOked})).dateBegin;
         if(!okedDateBegin){
-            throw new OkedNotFoundException(idOked);
+            throw new OkedDateNotFoundException(idOked);
         }
         return okedDateBegin;
     }
@@ -19,7 +20,7 @@ export class OkedService {
     async getOkedDateEnd(idOked: number){
         const okedDateEnd = (await this.okedRepository.findOneBy({idOked})).dateEnd;
         if(!okedDateEnd){
-            throw new OkedNotFoundException(idOked);
+            throw new OkedDateNotFoundException(idOked);
         }
         return okedDateEnd;
     }

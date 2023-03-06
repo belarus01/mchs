@@ -2,6 +2,7 @@ import { Controller, Post, Body, Get, Put, Delete, Param, NotFoundException, Req
 import { Observable } from 'rxjs';
 import { CreateEventDTO } from './dto/create-event.dto';
 import { GetNowDTO } from './dto/getNow.dto';
+import { SEvents } from './entity/events.entity';
 import { EventsService } from './events.service';
 
 
@@ -73,11 +74,14 @@ export class EventsController {
 
     //for testing mostly, prbly gonna work somehow in tandem to get THE Name (in service)
     //не работает??
-    @Get('/get/typeUnit/:idUnit')
+    //заработает если каким-то образом в тайпормных сущностях 
+    //либо воспримутся связи (mchs.s_events_order - doc.s_unit) написанные ручками(или правильнее напишутся то что помечено ///added)
+    //либо в самой бд корректно настороятся их взаимосявязи и при генерации сущностей эта взамосвязь появится
+/*     @Get('/get/typeUnit/:idUnit')
     async getUnitTypeUnit(@Param('idUnit') idUnit: number){
-        const typeUnit = this.eventsService.getUnitTypeUnit(idUnit);
-        return typeUnit;
-    }
+        const typeUnits = this.eventsService.getUnitTypeUnit(idUnit);
+        return typeUnits;
+    } */
 /* 
     @Get('/get/typeOrders')
     async getTypeOrders(){
@@ -91,9 +95,14 @@ export class EventsController {
     }
 
     //добавлен idEvent в путь
-    @Put('/update/:idEvent')
+    /* @Put('/update/:idEvent')
     upadateEvent(@Param('idEvent') idEvent: number, @Body() eventDto: CreateEventDTO): Observable<any> {
         return this.eventsService.upadateEvent(Number(idEvent), eventDto);
+    } */
+
+    @Put('/update/:idEvent')
+    async updateEvent(@Param('idEvent') idEvent: number, @Body() eventDto: CreateEventDTO){
+        return this.eventsService.updateEvent(idEvent, eventDto);
     }
     
 }

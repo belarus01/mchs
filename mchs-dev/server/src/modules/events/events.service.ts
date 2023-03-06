@@ -29,12 +29,27 @@ export class EventsService {
 
     //не работает
     async createEvent(eventDto:CreateEventDTO): Promise<SEvents>{
-        const event = this.eventsRepository.create(eventDto);
-        if(!event.event){
-            throw new EventBadRequestException(`Мероприятие id = ${event.idEvent} уже создано`);
+            const event = this.eventsRepository.create(eventDto);
+            try{
+                return this.eventsRepository.save(event);
+            } catch(error){
+                console.log(error);
+                /* if(error.code ===''){//вставить код ошибки когда выяснишь, после консоле.лог (код ошибки же не измениться?...)
+                    throw new EventBadRequestException(`Мероприятие id = ${event.idEvent} уже создано`);
+                } else{ 
+                    throw new //EventServerException();
+                } */
+            }
+            
+    }
+
+    getExistedEvent(eventDto:CreateEventDTO){
+        const exists = this.eventsRepository.find({where:{
+            event: eventDto.event
+        }});
+        if(exists){
+            return true;
         }
-        //if выбрасывающий 403 Exc-n (тут EventForbiddenExcepion) на то что есть ли права создания  
-        return this.eventsRepository.save(event);
     }
 
     async getAllEvents(): Promise<SEvents[]>{
@@ -108,12 +123,14 @@ export class EventsService {
             return eventStatus;            
     }
 
-    async getUnitTypeUnit(idEvent: number){
-        const typeUnit = this.eventsOrderRepository.find(
-           { where:{idEvent: idEvent},relations: {idUnit:true}} 
-        );
-        return typeUnit;
-    }
+/*     async getUnitTypeUnit(idUnit: number): Promise<SEventsOrder[]>{
+        const typeUnits = await this.eventsOrderRepository.find({where:{
+            idUnit: idUnit
+        },relations:{
+            units:true,
+        }});
+        return typeUnits;
+    } */
 
    /*  async getTypeOrders(){
         const typeUnits = [];
@@ -159,10 +176,14 @@ export class EventsService {
 
     //не работает
     //RangeError: Invalid status code: undefined
-    upadateEvent(idEvent:number, eventDto: CreateEventDTO): Observable<any>{
+/*     upadateEvent(idEvent:number, eventDto: CreateEventDTO): Observable<any>{
         return from(this.eventsRepository.update(idEvent, eventDto)).pipe(
             switchMap(() => this.getEventById(idEvent))
         );
+    } */
+
+    async updateEvent(idEvent:number, eventDto: CreateEventDTO){
+        return this.eventsRepository.update(idEvent,eventDto);
     }
 
     public async send(): Promise<void> {
