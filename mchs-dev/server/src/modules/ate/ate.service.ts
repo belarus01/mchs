@@ -6,6 +6,7 @@ import { SAteObl } from './entity/ateObl.entity';
 import { SAteRayon } from './entity/ateRayon.entity';
 import { SAteReestr } from './entity/ateReestr.entity';
 import { SAteStreet } from './entity/ateStreet.entity';
+import { AteNotFoundException } from './exception/ate.not-found.exception';
 
 @Injectable()
 export class AteService {
@@ -18,6 +19,9 @@ export class AteService {
 
     async getCategById(idCateg: number){
         const categ = this.ateCategRepository.findOneBy({idCateg});
+        if(!categ){
+            throw new AteNotFoundException();
+        }
         return categ;
     }
 
@@ -30,6 +34,9 @@ export class AteService {
 
     async getOblById(idObl: number): Promise<SAteObl>{
         const obl = this.ateOblRepository.findOneBy({idObl});
+        if(!obl){
+            throw new AteNotFoundException();
+        }
         return obl;
     }
 
@@ -42,21 +49,30 @@ export class AteService {
 
   
     async getAllRayonsByOblId(idObl: number): Promise<SAteRayon[]>{
-        const rayons = this.ateRayonRepository.find({where: {
+        const rayons = await this.ateRayonRepository.find({where: {
             active:1, idObl: idObl
         }});
+        if(rayons.length == 0){
+            throw new AteNotFoundException;
+        }
         return rayons;
     }
     
     async getAllReestrsByOblId(idObl: number): Promise<SAteReestr[]>{
-        const reestrs = this.ateReestrRepository.find({where:{
+        const reestrs = await this.ateReestrRepository.find({where:{
             active:1, idObl: idObl
         }});
+        if(reestrs.length == 0){
+            throw new AteNotFoundException;
+        }
         return reestrs;
     }
 
     async getRayonById(idRayon: number): Promise<SAteRayon>{
         const rayon = this.ateRayonRepository.findOneBy({idRayon});
+        if(!rayon){
+            throw new AteNotFoundException();
+        }
         return rayon;
     }
 
@@ -68,7 +84,10 @@ export class AteService {
     }
 
     async getReestrById(idReestr: number): Promise<SAteReestr>{
-        const reestr = this.ateReestrRepository.findOneBy({idReestr})
+        const reestr = this.ateReestrRepository.findOneBy({idReestr});
+        if(!reestr){
+            throw new AteNotFoundException();
+        }
         return reestr;
     }
 
@@ -82,7 +101,10 @@ export class AteService {
 
 //idReestr заменен на idStreet
     async getStreetById(idStreet: number): Promise<SAteStreet>{
-        const street = this.ateStreetRepository.findOneBy({idStreet})
+        const street = this.ateStreetRepository.findOneBy({idStreet});
+        if(!street){
+            throw new AteNotFoundException();
+        }
         return street;
     }
 

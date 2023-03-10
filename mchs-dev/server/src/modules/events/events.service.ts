@@ -26,7 +26,7 @@ export class EventsService {
     ){
         
     }
-
+    
     
     async createEvent(eventDto:CreateEventDTO): Promise<SEvents>{
             const event = this.eventsRepository.create(eventDto);

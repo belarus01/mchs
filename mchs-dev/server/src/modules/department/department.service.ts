@@ -62,7 +62,7 @@ export class DepartmentService {
     async getAllDeptUnitsByDept(idDept: number): Promise<SDeptUnits[]>{
         const deptsOfDeptUnit = await this.deptUnitRepository.find({where: {
             active:1, id_dept: idDept,
-        }})
+        }});
         if(deptsOfDeptUnit.length == 0){
             throw new DeptNotFoundException(idDept);
         }

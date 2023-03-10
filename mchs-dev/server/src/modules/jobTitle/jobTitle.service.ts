@@ -25,12 +25,21 @@ export class JobTitleService {
         return jobTitles;
     }
 
-    async createJobTitle(jobTitleDto: CreateJobTitleDTO): Promise<SDeptJob>{
+/*     async createJobTitle(jobTitleDto: CreateJobTitleDTO): Promise<SDeptJob>{
         const jobTitle = this.jobTitleRepository.create(jobTitleDto);
         if(jobTitle.job){
             throw new JobTitleBadRequestException(`Дожность ${jobTitle.job} уже существует`);
         }
         return this.jobTitleRepository.save(jobTitle);
+    } */
+
+    async createJobTitle(jobTitleDto: CreateJobTitleDTO): Promise<SDeptJob>{
+        const jobTitle = this.jobTitleRepository.create(jobTitleDto);
+        try{
+            return this.jobTitleRepository.save(jobTitle);
+        }catch(error){
+            console.log(error);
+        }
     }
 
     async updateJobTitle(idDeptJob: number, jobTtitleDto:CreateJobTitleDTO){

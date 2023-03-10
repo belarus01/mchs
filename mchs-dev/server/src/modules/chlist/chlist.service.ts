@@ -18,7 +18,7 @@ export class ChlistService{
     }
 
     async getAllChlists(): Promise<SChlist[]>{
-        const chlists = this.chlistRepository.find({where: {active:1}})
+        const chlists = this.chlistRepository.find({where: {active:1}});
         return chlists;
     }
     

@@ -4,11 +4,13 @@ import {
     Index,
     OneToMany,
     PrimaryGeneratedColumn,
+    Unique,
   } from "typeorm";
   import { User } from "src/modules/users/user.entity";
   
   @Index("FK_dept1", ["uid"], {})
   @Entity("s_dept_job", { schema: "mchs" })
+  //@Unique(['job'])
   export class SDeptJob {
     @PrimaryGeneratedColumn({ type: "int", name: "id_dept_job", unsigned: true })
     idDeptJob: number;

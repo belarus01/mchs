@@ -46,6 +46,7 @@ import { NotificationGateway } from './modules/notification/notification.gateway
       database: 'mchs',
       
       entities:[],
+      
       synchronize:false,
       autoLoadEntities: true
     }),

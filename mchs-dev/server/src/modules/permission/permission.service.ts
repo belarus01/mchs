@@ -26,9 +26,10 @@ export class PermissionService {
     }
 
     async updatePermission(idPerm: number, dto: CreatePermissionDTO){
-        return from(this.permissionRepository.update(idPerm, dto)).pipe(
+        /* return from(this.permissionRepository.update(idPerm, dto)).pipe(
             switchMap(() => this.getPermissionById(idPerm))
-        );
+        ); */
+        return this.permissionRepository.update(idPerm,dto);
     }
 
     async deletePermission(dto: DeletePermissionDTO){

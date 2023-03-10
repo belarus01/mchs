@@ -52,7 +52,7 @@ export class TaskService {
     }
 
     async deleteTaskDataById(idTaskData: number){
-        await this.taskDataRepository.delete(idTaskData);
+        await this.taskDataRepository.delete(idTaskData); // хмм, тут апдейт мб...
     }
 
     async getAllTaskData(): Promise<TaskData[]>{
