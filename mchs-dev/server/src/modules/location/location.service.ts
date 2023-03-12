@@ -16,7 +16,7 @@ export class LocationService {
 
     async getLocationsByUserId(uid: number): Promise<Location[]>{
         const locations = await this.locationRepository.find({where:{uid:uid}});
-        if(locations){
+        if(!locations){
             throw new LocationNotFoundException(uid);
         }
         return locations;
