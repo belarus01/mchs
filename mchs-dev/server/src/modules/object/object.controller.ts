@@ -6,10 +6,10 @@ export class ObjectController {
     constructor(private objectService: ObjectService){
 
     }
-
+//не хватало ()
     @Get('/get/all')
     getAllObjs(){
-        return this.objectService.getAllObjs;
+        return this.objectService.getAllObjs();
     }
 
     @Get('/get/id/:idObj')
@@ -19,6 +19,7 @@ export class ObjectController {
         return object;
     }
 
+    //не работает
     @Put('/delete/:idObj')
     deleteObjById(@Param('idObj') idObj: number){
         return this.objectService.deleteObjById(idObj);
