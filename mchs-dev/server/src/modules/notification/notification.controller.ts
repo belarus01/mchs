@@ -39,7 +39,7 @@ export class NotificationController {
     }
 
 
-    @Put('/update')
+    @Put('/update/:id')
     async updateNotification(@Param('id') id: number ,@Body() dto: CreateNotificationDTO){
         return this.notificationService.updateNotification(Number(id), dto);
     }

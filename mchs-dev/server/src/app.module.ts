@@ -39,9 +39,9 @@ import { NotificationGateway } from './modules/notification/notification.gateway
     TypeOrmModule.forRoot({
      name: 'mchs_connection',
       type:'mysql',
-      host:'localhost',// 192.168.150.29 | localhost
+      host:'192.168.150.29',// 192.168.150.29 | localhost
       port: 3306,
-      username: 'tanya',// serge | tanya | root
+      username: 'serge',// serge | tanya | root
       password: '123456_Qq',// 123456_Qq | 123456
       database: 'mchs',
       
@@ -53,9 +53,9 @@ import { NotificationGateway } from './modules/notification/notification.gateway
     TypeOrmModule.forRoot({
       name: 'doc_connection',
        type:'mysql',
-       host:'localhost',// 192.168.150.29 | localhost
+       host:'192.168.150.29',// 192.168.150.29 | localhost
        port: 3306,
-       username: 'tanya',// serge | tanya | root
+       username: 'serge',// serge | tanya | root
        password: '123456_Qq',// 123456_Qq | 123456
        database: 'doc',
        
@@ -127,21 +127,21 @@ import { NotificationGateway } from './modules/notification/notification.gateway
    
   ],
   controllers: [AppController],
-  providers: [
-    {
-    provide: APP_INTERCEPTOR,
-    //scope: Scope.REQUEST,
-    useClass: ExceptionInterceptor,
-  },
-/*{
-    //add TimeoutInterceptor to consider When your endpoint doesn't return anything after a period of time
-    provide: APP_INTERCEPTOR,
-    useClass: TimeInterceptor
-  }, */
-/* {
-    provide: APP_FILTER,
-    useClass: AllExceptionsFilter,//added globaly in main.ts    
-},*/
-],
+//   providers: [
+//     {
+//     provide: APP_INTERCEPTOR,
+//     //scope: Scope.REQUEST,
+//     useClass: ExceptionInterceptor,
+//   },
+// /*{
+//     //add TimeoutInterceptor to consider When your endpoint doesn't return anything after a period of time
+//     provide: APP_INTERCEPTOR,
+//     useClass: TimeInterceptor
+//   }, */
+// /* {
+//     provide: APP_FILTER,
+//     useClass: AllExceptionsFilter,//added globaly in main.ts    
+// },*/
+// ],
 })
 export class AppModule {}

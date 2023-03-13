@@ -15,7 +15,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.use(morgan('short', {stream: logStream}));
-  app.useGlobalFilters(new AllExceptionsFilter);// randomly added never tested in the prosess
+ // app.useGlobalFilters(new AllExceptionsFilter);// randomly added never tested in the prosess
   app.useGlobalPipes(
     new ValidationPipe({
       exceptionFactory: errors => new ValidationException(errors) 

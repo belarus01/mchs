@@ -17,7 +17,7 @@ import { User } from "../users/user.entity";
 @Index("notification_users_from_FK", ["fromUid"], {})
 @Entity("notification", { schema: "mchs" })
 export class Notification {
-  @PrimaryGeneratedColumn({ type: "int", name: "id", unsigned: true })
+  @PrimaryGeneratedColumn({ type: "int", name: "id_list", unsigned: true })
   id: number;
 
   @Column("int", {
@@ -43,7 +43,7 @@ export class Notification {
   toUid: number | null;//для тестинга оставим пока: что может быть налл
 
   @Column("date", {
-    name: "date",
+    name: "date_time",
     nullable: true,
   })
   date: Date | null;
