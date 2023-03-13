@@ -32,8 +32,8 @@ export class NotificationController {
         return notifications; 
     }
 
-
-    @Put('/update')
+//не работает update??
+    @Put('/update/id')
     async updateNotification(@Param('id') id: number ,@Body() dto: CreateNotificationDTO){
         return this.notificationService.updateNotification(Number(id), dto);
     }
