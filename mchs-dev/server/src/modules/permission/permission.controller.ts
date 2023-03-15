@@ -25,9 +25,10 @@ export class PermissionController {
         return this.permissionService.getAllPermissions();
     }
 
-    @Put('/update')
-    async updatePermission(@Param('idParam') idParam: number, @Body() dto: CreatePermissionDTO): Promise<Observable<any>> {
-        return this.permissionService.updatePermission(Number(idParam), dto);
+    //idParam зааменен на idPerm
+    @Put('/update/:idPerm')
+    async updatePermission(@Param('idPerm') idPerm: number, @Body() dto: CreatePermissionDTO): Promise<Observable<any>> {
+        return this.permissionService.updatePermission(Number(idPerm), dto);
     }
 
     @Put('/delete')
