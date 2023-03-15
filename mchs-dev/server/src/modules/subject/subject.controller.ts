@@ -19,6 +19,7 @@ export class SubjectController {
         return subj;
     }
 
+    //не работает
     @Put('/delete/:idSubj')
     async deleteSubjById(@Param('idSubj') idSubj: number){
         return this.subjService.deleteSubjById(idSubj);
