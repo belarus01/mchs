@@ -14,7 +14,7 @@ const typesMap = new Map<string, number>()
     .set('request_timeout', 408)//the server did not receive a complete request in the time that it prepared to wait | RequestTimeoutException 
     .set('bad_request', 400)//the server could not understand the request because of invalid syntax | BadRequestException
     .set('server', 500)// | InternalServerErrorException
-    .set('unexpected', 4000);/* if smbd forgotten to create approriate to err, part of our own Exception class, class |UnexpectedExcepion*/
+    .set('unexpected', 400);/* if smbd forgotten to create approriate to err, part of our own Exception class, class |UnexpectedExcepion*/
 
 
 @Catch()
