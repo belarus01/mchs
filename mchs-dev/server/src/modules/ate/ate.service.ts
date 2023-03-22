@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { SAteCateg } from './entity/ateCateg.entity';
-import { SAteObl } from './entity/ateObl.entity';
-import { SAteRayon } from './entity/ateRayon.entity';
-import { SAteReestr } from './entity/ateReestr.entity';
-import { SAteStreet } from './entity/ateStreet.entity';
+
 import { AteNotFoundException } from './exception/ate.not-found.exception';
+import { SAteCateg } from 'src/entities/mchs/SAteCateg';
+import { SAteObl } from 'src/entities/mchs/SAteObl';
+import { SAteRayon } from 'src/entities/mchs/SAteRayon';
+import { SAteReestr } from 'src/entities/mchs/SAteReestr';
+import { SAteStreet } from 'src/entities/mchs/SAteStreet';
 
 @Injectable()
 export class AteService {
@@ -100,7 +101,7 @@ export class AteService {
     }
 
 //idReestr заменен на idStreet
-    async getStreetById(idStreet: number): Promise<SAteStreet>{
+    async getStreetById(idStreet: string): Promise<SAteStreet>{
         const street = this.ateStreetRepository.findOneBy({idStreet});
         if(!street){
             throw new AteNotFoundException();
