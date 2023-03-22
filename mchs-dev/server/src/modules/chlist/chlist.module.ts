@@ -1,11 +1,12 @@
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SChlist } from './entity/chlist.entity';
-import { SChlistForm } from './entity/chlistForm.entity';
+
 //import { MediafileController } from './mediafile/mediafile.controller';
 import { ChlistService } from './chlist.service';
 import { ChlistController } from './chlist.controller';
+import { SChlist } from 'src/entities/mchs/SChlist';
+import { SChlistForm } from 'src/entities/mchs/SChlistForm';
 
 @Module({
     imports:[

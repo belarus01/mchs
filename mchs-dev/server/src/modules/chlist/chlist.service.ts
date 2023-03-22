@@ -1,8 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { SChlist } from "./entity/chlist.entity";
+
 import { ChlistNotFoundException } from "./exception/chlist.not-found.exception";
+import { SChlist } from "src/entities/mchs/SChlist";
 
 
 @Injectable()

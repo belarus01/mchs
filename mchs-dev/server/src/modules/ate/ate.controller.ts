@@ -24,7 +24,7 @@ export class AteController {
     }
 
     @Get('/get/street/:idStreet')
-    async getStreetById(@Param('idStreet') idStreet: number){
+    async getStreetById(@Param('idStreet') idStreet: string){
         const street = this.ateService.getStreetById(idStreet);
         return street;
     }
