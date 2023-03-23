@@ -8,18 +8,19 @@ export class TaskController {
 
     }
 
+    //не работает Exception???(выдает исключение только на idTaskDate = 6, если делать запрос с id которого нет в таблице, то выбрасывает из работы сервиса)
     @Get('/get/:idTaskData/beginDate')
     async getTaskDataBeginDateById(@Param('idTaskData') idTaskData: number){
         const eventBeginDate = await this.taskDataService.getTaskDataBeginDateById(idTaskData);
         return eventBeginDate;
     }
-
+    //такая же работа exception как и с beginDate
     @Get('/get/:idTaskData/endDate')
     async getTaskDataEndDateById(@Param('idTaskData') idTaskData: number){
         const eventEndDate = await this.taskDataService.getTaskDataEndDateById(idTaskData);
         return eventEndDate;
     }
-
+    //такая же работа exception как и с beginDate
     @Get('/get/:idTaskData/lastRunDate')
     async getTaskDataLastRunDateById(@Param('idTaskData') idTaskData: number){
         const eventLastRunDate = await this.taskDataService.getTaskDataLastRunDateById(idTaskData);
@@ -27,9 +28,9 @@ export class TaskController {
     }
 
 
-
+    //неправильно работало и такой же вопрос с исключением
     @Get('/get/:idTaskData/status')
-    async getTaskDataStatusById(idTaskData: number){
+    async getTaskDataStatusById(@Param('idTaskData') idTaskData: number){
         const eventStatus = await this.taskDataService.getTaskDataStatusById(idTaskData);
         return eventStatus;
     }
@@ -38,7 +39,7 @@ export class TaskController {
     getAllTaskData(){
         return this.taskDataService.getAllTaskData();
     }
-    
+    //не рабоатает
     @Put('/update')
     updateTaskData(@Body() taskData: TaskData){
         return this.taskDataService.updateTaskData(taskData);
@@ -48,7 +49,7 @@ export class TaskController {
     deleteTaskDataById(@Param('idTaskData') idTaskData: number){
         return this.taskDataService.deleteTaskDataById(idTaskData);
     }
-
+    //exception ???
     @Get('/get/days_to_task_end/:idTaskData')
     async getDaysToTaskEnd(@Param('idTaskData') idTaskData: number){
         return this.taskDataService.getDaysToTaskEnd(idTaskData);
