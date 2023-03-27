@@ -11,7 +11,7 @@ export class ExceptionInterceptor implements  NestInterceptor{
         return next.handle().pipe(
           catchError(err => {
             if (!(err instanceof Exception)) {
-              return throwError(() => new UnexpectedException(4000, 'Unexpected Exception, not extends the Exception class'));
+              return throwError(() => new UnexpectedException(400, 'Unexpected Exception, not extends the Exception class'));
             }
             return throwError(() => err);
           }),
