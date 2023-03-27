@@ -4,7 +4,7 @@ import { from, switchMap } from 'rxjs';
 import { Repository } from 'typeorm';
 import { CreatePermissionDTO } from './create-permission.dto';
 import { DeletePermissionDTO } from './dto/delete-permission.dto';
-import { SPermissions } from './permission.entity';
+import { SPermissions } from './entity/permission.entity';
 
 @Injectable()
 export class PermissionService {

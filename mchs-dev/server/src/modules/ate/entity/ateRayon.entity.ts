@@ -1,4 +1,12 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { SDept } from "src/modules/department/entity/department.entity";
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+
 
 @Index("id_obl", ["idObl"], {})
 @Index("name_rayon", ["nameRayon"], {})
@@ -32,4 +40,7 @@ export class SAteRayon {
     comment: "Дата обновления",
   })
   dateRecord: Date | null;
+
+  @OneToMany(() => SDept, (sDept) => sDept.idRayon2)
+  sDepts: SDept[];
 }

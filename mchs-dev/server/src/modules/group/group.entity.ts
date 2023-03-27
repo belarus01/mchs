@@ -46,7 +46,7 @@ export class Group {
   })
   uid: number | null;
 
-  @OneToMany(() => SEventsOrder, (sEventsOrder) => sEventsOrder.idGroup2)
+  @OneToMany(() => SEventsOrder, (sEventsOrder) => sEventsOrder.idGroup)
   sEventsOrders: SEventsOrder[];
 
   @OneToMany(() => UserGroup, (userGroup) => userGroup.idGroup2)

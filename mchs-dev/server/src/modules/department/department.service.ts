@@ -61,7 +61,7 @@ export class DepartmentService {
      * удалить поле id_dept в таблице s_dept */
     async getAllDeptUnitsByDept(idDept: number): Promise<SDeptUnits[]>{
         const deptsOfDeptUnit = await this.deptUnitRepository.find({where: {
-            active:1, id_dept: idDept,
+            active:1, idDept: idDept,
         }});
         if(deptsOfDeptUnit.length == 0){
             throw new DeptNotFoundException(idDept);

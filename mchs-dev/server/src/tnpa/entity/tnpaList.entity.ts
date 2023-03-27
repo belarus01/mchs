@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { STnpaDoc } from "./tnpaDoc.entity";
+
 
 @Entity("s_tnpa_list", { schema: "mchs" })
 export class STnpaList {
@@ -36,6 +38,14 @@ export class STnpaList {
   })
   dateDoc: Date | null;
 
+  @Column("varchar", {
+    name: "path_doc",
+    nullable: true,
+    comment: "Место нахождения документа",
+    length: 555,
+  })
+  pathDoc: string | null;
+
   @Column("date", {
     name: "date_begin",
     nullable: true,
@@ -54,6 +64,7 @@ export class STnpaList {
     name: "date_record",
     nullable: true,
     comment: "Дата изменения",
+    default: () => "'now()'",
   })
   dateRecord: Date | null;
 
@@ -77,7 +88,7 @@ export class STnpaList {
     name: "type_doc",
     nullable: true,
     comment:
-      "1-Закон,2-ТКП 3-ТР 4-Общие требования, 5-Договор,6-Порядок,7-Инструкция 8-Правила,9-Положение,10-Перечень,11-Постановление,12-другое",
+      "1-Закон,2-Декрет 3-Постановление 4-Общие требования, 5-Договор,6-Порядок,7-Инструкция 8-Правила,9-Положение,10-Перечень,11-ТР,12-ТКП,13-СН",
     unsigned: true,
     default: () => "'1'",
   })
@@ -90,4 +101,7 @@ export class STnpaList {
     unsigned: true,
   })
   uid: number | null;
+
+  @OneToMany(() => STnpaDoc, (sTnpaDoc) => sTnpaDoc.idList2)
+  sTnpaDocs: STnpaDoc[];
 }

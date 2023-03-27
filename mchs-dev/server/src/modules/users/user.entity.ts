@@ -7,15 +7,13 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-//import { SChlistTnpa } from "./SChlistTnpa";
-//import { UserPermissions } from "./UserPermissions";
-import { SPermissions } from "../permission/permission.entity";
-import { SSubjObj } from "../object/object.entity";
-import { UserGroup } from "../userGroup/user-group.entity";
+import { SChlistTnpa } from "../chlist/entity/chlistTnpa.entity";
 import { SDept } from "../department/entity/department.entity";
 import { SDeptJob } from "../jobTitle/jobTitle.entity";
-import { SEventsPrivate } from "../events/entity/eventsPrivate.entity";
 import { Notification } from "../notification/notification.entity";
+import { SSubjObj } from "../object/object.entity";
+import { UserPermissions } from "../permission/entity/userPermission.entity";
+import { UserGroup } from "../userGroup/user-group.entity";
 
 @Index("IDX_a894a560d274a270f087c72ba0", ["user"], { unique: true })
 @Entity("users", { schema: "mchs" })
@@ -58,10 +56,6 @@ export class User {
   })
   fio: string | null;
 
-  @Column("int", { name: "id_dept", nullable: true, unsigned: true })
-  idDept: number | null;
-
-
   @Column("int", {
     name: "id_dept_units",
     nullable: true,
@@ -78,6 +72,9 @@ export class User {
   })
   idDeptJob: number | null;
 
+  @Column("int", { name: "id_dept", nullable: true, unsigned: true })
+  idDept: number | null;
+
   @Column("varchar", { name: "email", nullable: true, length: 255 })
   email: string | null;
 
@@ -86,7 +83,7 @@ export class User {
 
   @Column("tinyint", {
     name: "active",
-    comment: "0-неакт.1-актвн.2-удален",
+    comment: "2-неакт.1-актвн.0-заблокирован",
     width: 1,
     default: () => "'0'",
   })
@@ -136,29 +133,56 @@ export class User {
   @Column("varchar", { name: "pas", length: 128 })
   pas: string;
 
-  @Column("varchar", { name: "pass_sha256", nullable: true, length: 65 })
+  @Column("varchar", {
+    name: "pass_sha256",
+    nullable: true,
+    comment: "Хэш пароля",
+    length: 65,
+  })
   passSha256: string | null;
 
-/*   @OneToMany(() => SChlistTnpa, (sChlistTnpa) => sChlistTnpa.u)
-  sChlistTnpas: SChlistTnpa[]; */
+  @Column("varchar", {
+    name: "pass_sha256_1",
+    nullable: true,
+    comment: "Хэш пердыдущего пароля ",
+    length: 65,
+  })
+  passSha256_1: string | null;
 
-  @OneToMany(() => SEventsPrivate, (sEventsPrivate) => sEventsPrivate.u)
-  sEventsPrivates: SEventsPrivate[];
+  @Column("varchar", {
+    name: "pass_sha256_2",
+    nullable: true,
+    comment: "Хэш пароля, предыдущего pass_sha256_1",
+    length: 65,
+  })
+  passSha256_2: string | null;
 
-  @OneToMany(() => SEventsPrivate, (sEventsPrivate) => sEventsPrivate.uidAdm2)
-  sEventsPrivates2: SEventsPrivate[];
+  @Column("varchar", {
+    name: "pass_sha256_3",
+    nullable: true,
+    comment: "Хэш пароля, предыдущего pass_sha256_2",
+    length: 65,
+  })
+  passSha256_3: string | null;
 
-  @OneToMany(() => SPermissions, (sPermissions) => sPermissions.u)
-  sPermissions: SPermissions[];
+  @Column("tinyint", {
+    name: "fl_pass",
+    nullable: true,
+    comment:
+      "Флаг назначения пароля: 0-назначен админом,1-изменен пользователем",
+    unsigned: true,
+    default: () => "'0'",
+  })
+  flPass: number | null;
+
+  @OneToMany(() => SChlistTnpa, (sChlistTnpa) => sChlistTnpa.u)
+  sChlistTnpas: SChlistTnpa[];
 
   @OneToMany(() => SSubjObj, (sSubjObj) => sSubjObj.u)
   sSubjObjs: SSubjObj[];
 
-  @OneToMany(() => UserGroup, (userGroup) => userGroup.u)
-  userGroups: UserGroup[];
-
- /*  @OneToMany(() => UserPermissions, (userPermissions) => userPermissions.u)
-  userPermissions: UserPermissions[]; */
+  @OneToMany(() => UserPermissions, (userPermissions) => userPermissions.u)
+  userPermissions: UserPermissions[];
 
   @ManyToOne(() => SDept, (sDept) => sDept.users, {
     onDelete: "NO ACTION",
@@ -173,6 +197,9 @@ export class User {
   })
   @JoinColumn([{ name: "id_dept_job", referencedColumnName: "idDeptJob" }])
   idDeptJob2: SDeptJob;
+
+  @OneToMany(() => UserGroup, (userGroup) => userGroup.uidGr2)
+  userGroups: UserGroup[];
 
   @OneToMany(() => Notification, (notification) => notification.toU)
   notifications: Notification[];

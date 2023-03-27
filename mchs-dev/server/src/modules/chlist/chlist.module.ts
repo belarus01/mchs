@@ -6,10 +6,11 @@ import { SChlistForm } from './entity/chlistForm.entity';
 //import { MediafileController } from './mediafile/mediafile.controller';
 import { ChlistService } from './chlist.service';
 import { ChlistController } from './chlist.controller';
+import { SChlistTnpa } from './entity/chlistTnpa.entity';
 
 @Module({
     imports:[
-        TypeOrmModule.forFeature([SChlist, SChlistForm], 'mchs_connection'),
+        TypeOrmModule.forFeature([SChlist, SChlistForm, SChlistTnpa], 'mchs_connection'),
        
     ],
     providers:[ChlistService],

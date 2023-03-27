@@ -1,4 +1,6 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { SDept } from "src/modules/department/entity/department.entity";
+import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+
 
 @Index("name_obl", ["nameObl"], {})
 @Entity("s_ate_obl", { schema: "mchs" })
@@ -28,4 +30,7 @@ export class SAteObl {
     comment: "Дата обновления",
   })
   dateRecord: Date | null;
+
+  @OneToMany(() => SDept, (sDept) => sDept.idObl2)
+  sDepts: SDept[];
 }

@@ -12,7 +12,7 @@ import {
   @Entity("s_soato", { schema: "mchs" })
   export class SSoato {
     @Column("bigint", { name: "soato", unsigned: true, default: () => "'0'" })
-    soato: string;
+    soato: number;
   
     @Column("varchar", {
       name: "name",
@@ -37,7 +37,7 @@ import {
     gni: string | null;
   
     @Column("date", { name: "datav", nullable: true })
-    datav: string | null;
+    datav: Date | null;
   
     @Column("varchar", { name: "soaton", nullable: true, length: 50 })
     soaton: string | null;
@@ -49,9 +49,9 @@ import {
     mal: string | null;
   
     @PrimaryGeneratedColumn({ type: "bigint", name: "id_soato", unsigned: true })
-    idSoato: string;
+    idSoato: number;
   
-    @OneToMany(() => SSubj, (sSubj) => sSubj.idSoato2)
-    sSubjs: SSubj[];
+    /* @OneToMany(() => SSubj, (sSubj) => sSubj.idSoato2)
+    sSubjs: SSubj[]; */
   }
   

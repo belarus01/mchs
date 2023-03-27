@@ -1,19 +1,19 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 
-@Index("id_obl", ["idObl"], {})
-@Index("id_rayon", ["idRayon"], {})
-@Index("id_reestr", ["idReestr"], {})
-@Index("name_reestr", ["nameReestr"], {})
 @Index("s_ate_reestr_id_reestr_IDX", ["idReestr", "active", "soatoCode"], {
   unique: true,
 })
+@Index("id_reestr", ["idReestr"], {})
+@Index("id_obl", ["idObl"], {})
+@Index("id_rayon", ["idRayon"], {})
+@Index("name_reestr", ["nameReestr"], {})
 @Entity("s_ate_reestr", { schema: "mchs" })
 export class SAteReestr {
-  @PrimaryGeneratedColumn({ type: "int", name: "id_reestr" })
+  @PrimaryGeneratedColumn({ type: "int",name: "id_reestr", unsigned: true })
   idReestr: number;
 
   @Column("bigint", { name: "soato_code", unsigned: true })
-  soatoCode: string;
+  soatoCode: number;
 
   @Column("int", { name: "id_obl", nullable: true })
   idObl: number | null;

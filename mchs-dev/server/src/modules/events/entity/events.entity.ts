@@ -1,5 +1,12 @@
-import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { SEventsOrder } from "./eventsOrder.entity";
+import { SEventsQue } from "./eventsQue.entity";
 
 @Index("type_event", ["numEvent"], {})
 @Entity("s_events", { schema: "mchs" })
@@ -42,6 +49,13 @@ export class SEvents {
   })
   dateEnd: Date | null;
 
+  @Column("date", {
+    name: "date_record",
+    nullable: true,
+    comment: "Дата изменения записи",
+  })
+  dateRecord: Date | null;
+
   @Column("tinyint", {
     name: "active",
     comment: "0-удалено, 1-актино",
@@ -57,7 +71,7 @@ export class SEvents {
     length: 50,
     default: () => "'wait'",
   })
-  status: string | null; //wait/in_progress/ended
+  status: string | null;
 
   @Column("text", { name: "data", nullable: true })
   data: string | null;
@@ -70,13 +84,9 @@ export class SEvents {
   })
   uid: number | null;
 
-  @Column("datetime", {
-    name: "date_record",
-    nullable: true,
-    comment: "Дата изменения записи",
-  })
-  dateRecord: Date | null;
-
   @OneToMany(() => SEventsOrder, (sEventsOrder) => sEventsOrder.idEvent2)
   sEventsOrders: SEventsOrder[];
+
+  @OneToMany(() => SEventsQue, (sEventsQue) => sEventsQue.idEvent2)
+  sEventsQues: SEventsQue[];
 }

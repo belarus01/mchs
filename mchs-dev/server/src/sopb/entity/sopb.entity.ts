@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-//import { SSopbCard } from "./SSopbCard";
+import { SSopbCard } from "./sopbCard.entity";
+
 
 @Entity("s_sopb", { schema: "doc" })
 export class SSopb {
@@ -47,6 +48,6 @@ export class SSopb {
   })
   active: number;
 
-/*   @OneToMany(() => SSopbCard, (sSopbCard) => sSopbCard.idSopb2)
-  sSopbCards: SSopbCard[]; */
+  @OneToMany(() => SSopbCard, (sSopbCard) => sSopbCard.idSopb2)
+  sSopbCards: SSopbCard[];
 }

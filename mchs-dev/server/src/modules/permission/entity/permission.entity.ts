@@ -6,7 +6,7 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
   } from "typeorm";
-import { User } from "../users/user.entity";
+import { User } from "../../users/user.entity";
   
   @Index("s_permissions_FK", ["uid"], {})
   @Entity("s_permissions", { schema: "mchs" })
@@ -28,14 +28,6 @@ import { User } from "../users/user.entity";
       comment: "Дата изменения записи",
     })
     dateRecord: Date | null;
-  
-    @Column("tinyint", {
-      name: "org",
-      nullable: true,
-      comment: "0-Госпромнадзор МЧС, 1-ГПН МЧС ",
-      unsigned: true,
-    })
-    org: number | null;
   
     @Column("tinyint", {
       name: "id_user_type",
@@ -65,11 +57,19 @@ import { User } from "../users/user.entity";
     @Column("text", { name: "scr", nullable: true, comment: "скрипт" })
     scr: string | null;
   
-    @ManyToOne(() => User, (users) => users.sPermissions, {
+    @Column("tinyint", {
+      name: "org",
+      nullable: true,
+      comment: "0-Госпромнадзор МЧС, 1-ГПН МЧС ",
+      unsigned: true,
+    })
+    org: number | null;
+  
+    /* @ManyToOne(() => User, (users) => users.sPermissions, {
       onDelete: "NO ACTION",
       onUpdate: "CASCADE",
     })
     @JoinColumn([{ name: "uid", referencedColumnName: "uid" }])
-    u: User;
+    u: User; */
   }
   

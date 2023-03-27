@@ -49,9 +49,17 @@ export class UserGroup {
   @Column("datetime", {
     name: "date_end",
     nullable: true,
-    comment: "Дата окончания действия группы",
+    comment: "Дата окончания действия груупы",
   })
   dateEnd: Date | null;
+
+  @Column("tinyint", {
+    name: "type_user",
+    nullable: true,
+    comment:
+      "0-должн.лицо, направившее чек-лист,1-руководитель группы,2-исполнитель,3-Гл.государтвенный инспектор региона по пожарному надзору",
+  })
+  typeUser: number | null;
 
   /*  @ManyToOne(() => Group, (group) => group.userGroups, {
     onDelete: "NO ACTION",

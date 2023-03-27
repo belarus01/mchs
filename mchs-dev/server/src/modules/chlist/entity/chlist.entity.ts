@@ -1,6 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { SChlistForm } from "./chlistForm.entity";
-//import { SChlistForm } from "./SChlistForm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("s_chlist", { schema: "mchs" })
 export class SChlist {
@@ -76,7 +74,4 @@ export class SChlist {
     default: () => "'1'",
   })
   active: number;
-
-  @OneToMany(() => SChlistForm, (sChlistForm) => sChlistForm.idChlist2)
-  sChlistForms: SChlistForm[];
-} 
+}

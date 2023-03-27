@@ -16,7 +16,7 @@ export class UserGroupService {
         const users = await this.userGroupRepository.find({where: {
             active:1, idGroup: idGroup,
         }, relations:{
-            u: true
+            uidGr2: true
         }
     });
         if(users.length == 0){

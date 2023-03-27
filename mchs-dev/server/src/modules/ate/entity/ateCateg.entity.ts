@@ -28,7 +28,7 @@ export class SAteCateg {
     comment: "2-справа,1-слева",
     unsigned: true,
   })
-  leftRight: number | null;// А как это? А для чего это?
+  leftRight: number | null;
 
   @Column("varchar", {
     name: "name_short",

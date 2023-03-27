@@ -1,26 +1,28 @@
+import { Notification } from "src/modules/notification/notification.entity";
+import { SSubj } from "src/modules/subject/entity/subject.entity";
 import {
   Column,
   Entity,
   Index,
   JoinColumn,
-  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { SEvents } from "./events.entity";
+import { SEventsOrderAdmBan } from "./eventsOrderAdmBan.entity";
+import { SEventsOrderAdmForce } from "./eventsOrderAdmForce.entity";
 import { SEventsOrderData } from "./eventsOrderData.entity";
-import { Group } from "src/modules/group/group.entity";
-import { SEventsPrivate } from "./eventsPrivate.entity";
-import { SUnits } from "src/modules/unit/unit.entity";
-import { Notification } from "src/modules/notification/notification.entity";
+import { SEventsOrderDef } from "./eventsOrderDef.entity";
+import { SEventsOrderDefMtx } from "./eventsOrderDefMtx.entity";
+import { SEventsOrderObj } from "./eventsOrderObj.entity";
+import { SEventsOrderQue } from "./eventsOrderQue.entity";
 
-@Index("FK_s_events_order_id_group2", ["idGroup"], {})
-@Index("FK_s_events_order_id_subj", ["idSubj"], {})
-//@Index("FK_s_events_order_id_unit", ["idUnit"], {schema: "doc"})
-@Index("FK_s_events_order_id_unit", ["idUnit"], {})
 @Index("s_events_order_FK", ["idEvent"], {})
-@Index("type_order", ["typeCheck"], {})
+@Index("FK_s_events_order_id_group2", ["idGroup"], {})
+@Index("FK_s_events_order_id_unit", ["idUnit"], {})
+@Index("FK_s_events_order_id_subj2", ["idSubj"], {})
+@Index("FK_s_events_order_sphera", ["sphera"], {})
 @Entity("s_events_order", { schema: "mchs" })
 export class SEventsOrder {
   @PrimaryGeneratedColumn({
@@ -41,35 +43,83 @@ export class SEventsOrder {
   @Column("bigint", { name: "id_subj", nullable: true, unsigned: true })
   idSubj: number | null;
 
+  @Column("int", {
+    name: "id_dept_iss",
+    nullable: true,
+    comment: "Контр.орган,выдавший предписание",
+    unsigned: true,
+  })
+  idDeptIss: number | null;
+
+  @Column("int", {
+    name: "id_dept",
+    nullable: true,
+    comment: "Контр.орган, которому поручено проведение проверки",
+    unsigned: true,
+  })
+  idDept: number | null;
+
   @Column("int", { name: "id_group", nullable: true, unsigned: true })
   idGroup: number | null;
 
   @Column("varchar", {
-    name: "type_order",
+    name: "num_order",
+    nullable: true,
+    comment: "Номер проверки",
+    length: 50,
+  })
+  numOrder: string | null;
+
+  @Column("varchar", {
+    name: "name_order",
+    nullable: true,
+    comment: "Основание назначения проверки",
+    length: 255,
+  })
+  nameOrder: string | null;
+
+  @Column("varchar", {
+    name: "reason_order",
+    nullable: true,
+    comment: "Основание назначения надзорно-профилактического мероприятия",
+    length: 255,
+  })
+  reasonOrder: string | null;
+
+  @Column("bigint", {
+    name: "id_unit_3",
     nullable: true,
     comment:
       "Вид надзорно-профилактического мероприятия (1-проверка,2- мониторинг,3- обследование).\r\nБерем из  doc.s_units.type_unit=4 поле name",
-    length: 55,
+    unsigned: true,
   })
-  typeOrder: string | null;
+  idUnit_3: number | null;
 
-  @Column("varchar", {
-    name: "type_check",
+  @Column("bigint", {
+    name: "id_unit_4",
     nullable: true,
     comment:
-      "Тип проверки 1-выборочная,2-внеплановая,3-мониторинг.3-для использ.при планир.проверок.Берем из  doc.s_units.type_unit=3 поле name",
-    length: 55,
+      "Тип проверки 1-выборочная,2-внеплановая,3-для использ.при планир.проверок.Берем из  doc.s_units.type_unit=3 поле name",
+    unsigned: true,
   })
-  typeCheck: string | null;
+  idUnit_4: number | null;
 
-  @Column("varchar", {
+  @Column("bigint", {
     name: "sphera",
     nullable: true,
     comment:
       "Сфера контроля(надзора). Берем из doc.s_units.type_unit.id_unit=0, поле name.ВНИМАНИЕ! для Ч.Л.5-11 смотреть с id_parent",
-    length: 255,
+    unsigned: true,
   })
-  sphera: string | null;
+  sphera: number | null;
+
+  @Column("varchar", {
+    name: "technical",
+    nullable: true,
+    comment: "Применяемые научно-технические средства",
+    length: 855,
+  })
+  technical: string | null;
 
   @Column("bigint", {
     name: "id_unit",
@@ -143,14 +193,6 @@ export class SEventsOrder {
   uid: number | null;
 
   @Column("varchar", {
-    name: "reason_order",
-    nullable: true,
-    comment: "Основание назначения надзорно-профилактического мероприятия",
-    length: 255,
-  })
-  reasonOrder: string | null;
-
-  @Column("varchar", {
     name: "post_title",
     nullable: true,
     comment: "Должность лица, выдавшего предписание на проведение проверки",
@@ -166,14 +208,6 @@ export class SEventsOrder {
     length: 255,
   })
   fioPostTitle: string | null;
-
-  @Column("varchar", {
-    name: "num_order",
-    nullable: true,
-    comment: "Номер предписания",
-    length: 50,
-  })
-  numOrder: string | null;
 
   @Column("date", {
     name: "date_order",
@@ -252,12 +286,8 @@ export class SEventsOrder {
   })
   nameAgent: string | null;
 
-  @ManyToOne(() => Group, (group) => group.sEventsOrders, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "id_group", referencedColumnName: "idGroup" }])
-  idGroup2: Group;
+  @Column("varchar", { name: "other_info", nullable: true, length: 1255 })
+  otherInfo: string | null;
 
   @ManyToOne(() => SEvents, (sEvents) => sEvents.sEventsOrders, {
     onDelete: "NO ACTION",
@@ -266,6 +296,25 @@ export class SEventsOrder {
   @JoinColumn([{ name: "id_event", referencedColumnName: "idEvent" }])
   idEvent2: SEvents;
 
+  @ManyToOne(() => SSubj, (sSubj) => sSubj.sEventsOrders, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "id_subj", referencedColumnName: "idSubj" }])
+  idSubj2: SSubj;
+
+  @OneToMany(
+    () => SEventsOrderAdmBan,
+    (sEventsOrderAdmBan) => sEventsOrderAdmBan.idEventOrder2
+  )
+  sEventsOrderAdmBans: SEventsOrderAdmBan[];
+
+  @OneToMany(
+    () => SEventsOrderAdmForce,
+    (sEventsOrderAdmForce) => sEventsOrderAdmForce.idEventOrder2
+  )
+  sEventsOrderAdmForces: SEventsOrderAdmForce[];
+
   @OneToMany(
     () => SEventsOrderData,
     (sEventsOrderData) => sEventsOrderData.idEventOrder2
@@ -273,27 +322,29 @@ export class SEventsOrder {
   sEventsOrderData: SEventsOrderData[];
 
   @OneToMany(
-    () => SEventsPrivate,
-    (sEventsPrivate) => sEventsPrivate.idEventOrder2
+    () => SEventsOrderDef,
+    (sEventsOrderDef) => sEventsOrderDef.idEventOrder2
   )
-  sEventsPrivates: SEventsPrivate[];
+  sEventsOrderDefs: SEventsOrderDef[];
+
+  @OneToMany(
+    () => SEventsOrderDefMtx,
+    (sEventsOrderDefMtx) => sEventsOrderDefMtx.idEventOrder2
+  )
+  sEventsOrderDefMtxes: SEventsOrderDefMtx[];
+
+  @OneToMany(
+    () => SEventsOrderObj,
+    (sEventsOrderObj) => sEventsOrderObj.idEventOrder2
+  )
+  sEventsOrderObjs: SEventsOrderObj[];
+
+  @OneToMany(
+    () => SEventsOrderQue,
+    (sEventsOrderQue) => sEventsOrderQue.idEventOrder2
+  )
+  sEventsOrderQues: SEventsOrderQue[];
 
   @OneToMany(() => Notification, (notification) => notification.idEventOrder2)
   notifications: Notification[];
-
-  //////////////added
- /*  @ManyToMany(
-    () => SUnits,
-    (unit) => unit.sEventsOrder)
-  units: SUnits;*/
-
-  //////////////added
-/*   @ManyToMany(() => SUnits, (sUnit) => sUnit.s_events_order, {
-    onDelete: "NO ACTION",
-    onUpdate: "CASCADE",
-  })
-  @JoinColumn([{ name: "id_unit", referencedColumnName: "idUnit"}])
-  idUnit2: SUnits; */
-} 
-
-  
+}

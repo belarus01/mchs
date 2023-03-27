@@ -1,21 +1,22 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 
-@Index("name_reestr", ["nameReestr"], {})
-@Index("name_rus", ["nameRus"], {})
-@Index("obl", ["obl"], {})
-@Index("rayon", ["rayon"], {})
 @Index(
   "s_ate_street_id_street_IDX",
   ["idReestr", "idStreet", "idTipeStreet", "soatoCode"],
   { unique: true }
 )
+@Index("name_rus", ["nameRus"], {})
+@Index("obl", ["obl"], {})
+@Index("rayon", ["rayon"], {})
+@Index("name_reestr", ["nameReestr"], {})
 @Entity("s_ate_street", { schema: "mchs" })
 export class SAteStreet {
-  @PrimaryGeneratedColumn({ type: "int", name: "id_street" })
-  idStreet: number;
-
-  @Column("bigint", { name: "soato_code", unsigned: true })
-  soatoCode: string;
+  @Column("bigint", {
+    name: "soato_code",
+    comment: "Код СОАТО (связь с таблицей s_soato)",
+    unsigned: true,
+  })
+  soatoCode: number;
 
   @Column("int", {
     name: "id_reestr",
@@ -26,13 +27,28 @@ export class SAteStreet {
   })
   idReestr: number | null;
 
-  @Column("varchar", { name: "obl", nullable: true, length: 55 })
+  @Column("varchar", {
+    name: "obl",
+    nullable: true,
+    comment: "Область",
+    length: 55,
+  })
   obl: string | null;
 
-  @Column("varchar", { name: "rayon", nullable: true, length: 155 })
+  @Column("varchar", {
+    name: "rayon",
+    nullable: true,
+    comment: "Район",
+    length: 155,
+  })
   rayon: string | null;
 
-  @Column("varchar", { name: "sovet", nullable: true, length: 155 })
+  @Column("varchar", {
+    name: "sovet",
+    nullable: true,
+    comment: "Сельсовет",
+    length: 155,
+  })
   sovet: string | null;
 
   @Column("varchar", {
@@ -67,13 +83,13 @@ export class SAteStreet {
   })
   nameTipeStreet: string | null;
 
-/*   @Column("bigint", {
+  @PrimaryGeneratedColumn({
+    type: "bigint",
     name: "id_street",
-    nullable: true,
     comment: "Идентификатор элемента",
     unsigned: true,
   })
-  idStreet: number | null; */
+  idStreet: number | null;
 
   @Column("varchar", {
     name: "name_rus",

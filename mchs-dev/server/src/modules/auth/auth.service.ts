@@ -61,6 +61,15 @@ export class AuthService {
         }   
     }
 
+    async compareIsExistedPassword(){
+        /**
+         * 1. метод в юзер сервисе на получение массива паролей по юзер id
+         * 1.1 получение массива паролей - ,а можно через и spread operator кстати/ не мудрить и просто find
+         * 2. пройтись лупом c bcrypt.compare
+         * p.s. plaintext -> hash -> compare the results to the stored hash to see if they match
+         */
+    }
+
     async registration(userDto: CreateUserDto){
         const candidate = await this.userService.getUserByLogin(userDto.user);
         if(candidate){

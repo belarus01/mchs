@@ -30,6 +30,9 @@ import { AllExceptionsFilter } from './modules/filter/all-exceptions.filter';
 import { ExceptionInterceptor } from './modules/interceptor/exception.interceptor';
 import { NotificationModule } from './modules/notification/notification.module';
 import { NotificationGateway } from './modules/notification/notification.gateway';
+import { VedomstvaModule } from './modules/vedomstva/vedomstva.module';
+import { StateModule } from './modules/state/state.module';
+
 
 
 @Module({
@@ -123,7 +126,10 @@ import { NotificationGateway } from './modules/notification/notification.gateway
     TnpaModule,
     OkedModule,
     SopbModule,
-    NotificationModule
+    NotificationModule,
+    VedomstvaModule,
+    StateModule,
+    TnpaModule,
    
   ],
   controllers: [AppController],

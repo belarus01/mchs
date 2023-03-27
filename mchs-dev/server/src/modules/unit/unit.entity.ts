@@ -1,3 +1,4 @@
+//!!!создать модуль для s_fire!!!
 import { table } from "console";
 import { Column, Entity, JoinColumn, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { SEventsOrder } from "../events/entity/eventsOrder.entity";
@@ -47,7 +48,7 @@ export class SUnits {
     name: "name",
     nullable: true,
     comment: "Описание опасности",
-    length: 550,
+    length: 850,
   })
   name: string | null;
 
@@ -57,7 +58,7 @@ export class SUnits {
     comment: "Дата изменения записи",
     default: () => "'now()'",
   })
-  dateRecord: string | null;
+  dateRecord: Date | null;
 
   @Column("tinyint", {
     name: "active",
@@ -85,6 +86,15 @@ export class SUnits {
 
   @Column("varchar", { name: "comm", nullable: true, length: 55 })
   comm: string | null;
+
+/*   @OneToMany(() => SFireCardBuild, (sFireCardBuild) => sFireCardBuild.idUnit_17)
+  sFireCardBuilds: SFireCardBuild[];
+
+  @OneToMany(() => SFireCardBuild, (sFireCardBuild) => sFireCardBuild.idUnit)
+  sFireCardBuilds2: SFireCardBuild[];
+
+  @OneToMany(() => SFireCardBuild, (sFireCardBuild) => sFireCardBuild.idUnit_2)
+  sFireCardBuilds3: SFireCardBuild[]; */
 
   ////////added
   /* @ManyToMany(

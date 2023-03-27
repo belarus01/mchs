@@ -1,4 +1,3 @@
-import { User } from "src/modules/users/user.entity";
 import {
   Column,
   Entity,
@@ -8,18 +7,31 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Group } from "../group/group.entity";
+import { User } from "../users/user.entity";
 
 @Index("user_group_FK", ["idGroup"], {})
 @Index("user_group_FK_1", ["uid"], {})
+@Index("FK_user_group_uid_gr", ["uidGr"], {})
 @Entity("user_group", { schema: "mchs" })
 export class UserGroup {
-  @PrimaryGeneratedColumn({ type: "int", name: "id_user_group" })
+  @PrimaryGeneratedColumn({
+    type: "int",
+    name: "id_user_group",
+    comment: "0-Госпромнадзор,1-пожарники",
+  })
   idUserGroup: number;
 
   @Column("int", { name: "id_group", unsigned: true })
   idGroup: number;
 
-  @Column("int", { name: "uid", unsigned: true })
+  @Column("int", { name: "uid_gr", nullable: true, unsigned: true })
+  uidGr: number | null;
+
+  @Column("int", {
+    name: "uid",
+    comment: "Пользователь, изменивший запись",
+    unsigned: true,
+  })
   uid: number;
 
   @Column("tinyint", {
@@ -48,18 +60,22 @@ export class UserGroup {
   @Column("datetime", {
     name: "date_end",
     nullable: true,
-    comment: "Дата окончания действия группы",
+    comment: "Дата окончания действия груупы",
   })
   dateEnd: Date | null;
 
-  @Column("tinyint",{
+  @Column("tinyint", {
     name: "type_user",
     nullable: true,
-    comment: "0-должн.лицо, направившее чек-лист,1-руководитель группы,2-исполнитель"
+    comment:
+      "0-должн.лицо, направившее чек-лист,1-руководитель группы,2-исполнитель,3-Гл.государтвенный инспектор региона по пожарному надзору",
   })
-  type_user: number | null;
+  typeUser: number | null;
 
-   @ManyToOne(() => Group, (group) => group.userGroups, {
+  @Column("tinyint", { name: "org", nullable: true, unsigned: true })
+  org: number | null;
+
+  @ManyToOne(() => Group, (group) => group.userGroups, {
     onDelete: "NO ACTION",
     onUpdate: "CASCADE",
   })
@@ -70,6 +86,6 @@ export class UserGroup {
     onDelete: "NO ACTION",
     onUpdate: "CASCADE",
   })
-  @JoinColumn([{ name: "uid", referencedColumnName: "uid" }])
-  u: User; 
+  @JoinColumn([{ name: "uid_gr", referencedColumnName: "uid" }])
+  uidGr2: User;
 }
