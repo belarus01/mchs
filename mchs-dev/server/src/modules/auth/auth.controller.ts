@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Put, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { ROLES } from './role.enum';
@@ -25,6 +25,12 @@ export class AuthController {
     @Post('/getuser')
     getUserByToken(@Body() token: string){
         return this.authService.getUserByToken(token);
+    }
+
+    @Put('/update/pass')
+    updateUserPassword(@Body() user: LoginUserDto){
+      //return this.authService.generateHash(user.pas);  
+      return this.authService.updatePassword(user);
     }
 
     /** @Post('register')

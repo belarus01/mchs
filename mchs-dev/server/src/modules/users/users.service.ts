@@ -145,8 +145,35 @@ export class UsersService {
         ); 
     }
 
-    async updateUser(user:User){
+    async updateUser(user:User){ 
         return this.userRepository.update(user.uid, user);
+    }
+
+    async updateUserPassword(user: string, params:any){
+        return this.userRepository.update({user:user}, {
+            pas:params.pas, 
+            passSha256: params.old.pas,
+            passSha256_1: params.old.passSha256,
+            passSha256_2: params.old.passSha256_1
+        });
+    }
+
+
+    async getAllPasswordsBy(user:string){
+        const passwords = await this.userRepository
+        .findOne({select:{
+            pas: true,
+            passSha256: true,
+            passSha256_1: true,
+            passSha256_2: true,    
+        }, where:{user: user}});
+       
+        return passwords;
+    }
+
+    async getAllPassByLogin(user:string){
+        const client = await this.getUserByLogin(user);
+        
     }
 
 /*     async editUser(id: number, dto:CreateUserDto): Promise<User>{//тот же самый updateUser

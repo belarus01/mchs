@@ -21,6 +21,12 @@ export class UsersController {
         return this.usersService.getAllUsers();
     }
 
+   /*  @Get('/get/pass')
+    getAllPasswordsBy(){
+        return this.usersService.getAllPasswordsBy();
+    } */
+    
+    
 
 
     /*..*/
@@ -101,6 +107,8 @@ export class UsersController {
     blockUser(@Body() dto:DeleteUserDTO){
         return this.usersService.blockUserById(dto.uid);
     }
+
+    
 
 
 /*     @Put('/edit')
