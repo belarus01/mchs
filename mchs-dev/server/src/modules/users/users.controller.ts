@@ -108,7 +108,11 @@ export class UsersController {
         return this.usersService.blockUserById(dto.uid);
     }
 
-    
+    @Post('/passwords')
+    getOldPasswords(@Body() dto: any){
+        console.log(dto.user);
+        return this.usersService.getAllPasswordsBy(dto.user);
+    }
 
 
 /*     @Put('/edit')

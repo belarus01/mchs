@@ -11,11 +11,12 @@ import { AteNotFoundException } from './exception/ate.not-found.exception';
 @Injectable()
 export class AteService {
     constructor(
-    @InjectRepository(SAteCateg, 'mchs_connection') private ateCategRepository: Repository<SAteCateg>,
-    @InjectRepository(SAteObl, 'mchs_connection') private ateOblRepository: Repository<SAteObl>,
-    @InjectRepository(SAteRayon, 'mchs_connection') private ateRayonRepository: Repository<SAteRayon>,
-    @InjectRepository(SAteReestr, 'mchs_connection') private ateReestrRepository: Repository<SAteReestr>,
-    @InjectRepository(SAteStreet, 'mchs_connection') private ateStreetRepository: Repository<SAteStreet>){}
+        @InjectRepository(SAteCateg, 'mchs_connection') private ateCategRepository: Repository<SAteCateg>,
+        @InjectRepository(SAteObl, 'mchs_connection') private ateOblRepository: Repository<SAteObl>,
+        @InjectRepository(SAteRayon, 'mchs_connection') private ateRayonRepository: Repository<SAteRayon>,
+        @InjectRepository(SAteReestr, 'mchs_connection') private ateReestrRepository: Repository<SAteReestr>,
+        @InjectRepository(SAteStreet, 'mchs_connection') private ateStreetRepository: Repository<SAteStreet>
+    ){}
 
     async getCategById(idCateg: number){
         const categ = this.ateCategRepository.findOneBy({idCateg});
@@ -24,11 +25,12 @@ export class AteService {
         }
         return categ;
     }
-
+    
     async getAllCategs(): Promise<SAteCateg[]>{
         const categs = this.ateCategRepository.find({where: {
             active:1
         }});
+        
         return categs;
     }
 
@@ -47,7 +49,6 @@ export class AteService {
         return obls;
     }
 
-  
     async getAllRayonsByOblId(idObl: number): Promise<SAteRayon[]>{
         const rayons = await this.ateRayonRepository.find({where: {
             active:1, idObl: idObl
@@ -91,7 +92,6 @@ export class AteService {
         return reestr;
     }
 
-
     async getAllReestrs(): Promise<SAteReestr[]>{
         const  reestrs = this.ateReestrRepository.find({where: {
             active:1
@@ -114,9 +114,6 @@ export class AteService {
         }});
         return streets;
     }
-
-
-    
 
     //WithSaotoRealations
 

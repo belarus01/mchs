@@ -54,7 +54,6 @@ export class AteController {
         return this.ateService.getAllStreets();
     } 
 
-
     @Get('/get/rayons/in_obl/:idObl')
     async getAllRayonsByOblId(@Param('idObl') idObl: number){
         const rayons = await this.ateService.getAllRayonsByOblId(idObl);

@@ -9,7 +9,6 @@ import { DeleteUserDTO } from './dto/deleteUser.dto';
 import { UserNotFoundException } from './exception/user.not-found.exception';
 import { DeptNotFoundException } from '../department/exception/dept.not-found.exception';
 
-
 @Injectable()
 export class UsersService {
     constructor(@InjectRepository(User, 'mchs_connection') private userRepository: Repository<User>){}
@@ -25,7 +24,6 @@ export class UsersService {
         return users;
 
     }
-
 
     /*..*/
     async getAllActiveUsers(): Promise<User[]>{
@@ -61,7 +59,6 @@ export class UsersService {
         }});
         return users;
     }
-
 
     //async getAllDeptUnitUsers(){}
 
@@ -158,8 +155,8 @@ export class UsersService {
         });
     }
 
-
     async getAllPasswordsBy(user:string){
+        const pas:string[] = [];
         const passwords = await this.userRepository
         .findOne({select:{
             pas: true,
@@ -167,8 +164,8 @@ export class UsersService {
             passSha256_1: true,
             passSha256_2: true,    
         }, where:{user: user}});
-       
-        return passwords;
+        pas.push(passwords.pas, passwords.passSha256, passwords.passSha256_1, passwords.passSha256_2);
+        return pas;
     }
 
     async getAllPassByLogin(user:string){

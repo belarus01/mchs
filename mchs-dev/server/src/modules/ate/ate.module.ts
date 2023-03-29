@@ -14,4 +14,5 @@ import { SAteStreet } from './entity/ateStreet.entity';
   controllers: [AteController],
   exports:[AteService]
 })
+
 export class AteModule {}
