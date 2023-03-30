@@ -131,6 +131,34 @@ export class EventsService {
             return eventStatus;            
     }
 
+    async getEventsByUserId(uid: number){
+        const events = await this.eventsOrderRepository.manager.query(`SELECT
+        e.id_event,e.id_event_order,ss.event title,p.name_event private,DATE_FORMAT(DATE(e.date_begin), "%d.%m.%Y") start,
+        e.date_end end,e.date_begin_fact b_fact,e.date_end_fact e_fact,e.date_stop d_stop,e.date_continue d_cont
+      FROM mchs.s_events_order e
+      left JOIN mchs.s_events ss ON ss.id_event=e.id_event
+      
+      left JOIN mchs.group g ON e.id_group=g.id_group
+      left JOIN mchs.user_group ug ON ug.id_group=g.id_group
+      left JOIN mchs.users u ON u.uid=ug.uid_gr
+      LEFT JOIN mchs.s_events_private p ON p.uid=u.uid AND p.id_event_order=e.id_event_order
+      WHERE u.uid=1 #GROUP BY e.id_event_order  
+      union
+      SELECT
+        null,p.id_event_order,null,p.name_event private,DATE_FORMAT(DATE(p.date_begin), "%d.%m.%Y") beg,
+        p.date_end en,null b_fact,null e_fact,null d_stop,null d_cont
+      FROM mchs.s_events_private p
+      #left JOIN mchs.s_events ss ON ss.id_event=e.id_event
+      
+      #left JOIN mchs.group g ON e.id_group=g.id_group
+      #left JOIN mchs.user_group ug ON ug.id_group=g.id_group
+      left JOIN mchs.users u ON u.uid=p.uid
+      #LEFT JOIN mchs.s_events_order e ON p.uid=u.uid AND p.id_event_order=e.id_event_order
+      WHERE u.uid=1 and p.id_event_order IS NULL #ORDER BY p.date_begin`);
+      console.log(events);
+      return events;
+    }
+
 /*     async getUnitTypeUnit(idUnit: number): Promise<SEventsOrder[]>{
         const typeUnits = await this.eventsOrderRepository.find({where:{
             idUnit: idUnit

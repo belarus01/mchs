@@ -105,4 +105,9 @@ export class EventsController {
         return this.eventsService.updateEvent(idEvent, eventDto);
     }
     
+
+    @Get('/get/all/userId=:uid')
+    async getAllByUid(@Param('uid') uid:number){
+        return this.eventsService.getEventsByUserId(uid);
+    }
 }
