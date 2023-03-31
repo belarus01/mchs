@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Put, Delete, Param, NotFoundException, Req } from '@nestjs/common';
+import { Controller, Post, Body, Get, Put, Delete, Param, Req } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { CreateEventDTO } from './dto/create-event.dto';
 import { GetNowDTO } from './dto/getNow.dto';
@@ -50,7 +50,6 @@ export class EventsController {
     @Get('/get/id/:idEvent')
     async getEventById(@Param('idEvent') idEvent: number){
         const event = await this.eventsService.getEventById(idEvent);
-        if(!event) throw new NotFoundException('Event does not exist');
         return event;
     }
 

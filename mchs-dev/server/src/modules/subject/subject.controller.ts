@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, NotFoundException, Param, Put } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Put } from '@nestjs/common';
 import { SubjectService } from './subject.service';
 
 @Controller('subject')
@@ -15,7 +15,6 @@ export class SubjectController {
     @Get('/get/id/:idSubj')
     async getSubjById(@Param('idSubj') idSubj: number){
         const subj = await this.subjService.getSubjById(idSubj);
-        if(!subj) throw new NotFoundException('Subject does not exist');
         return subj;
     }
 

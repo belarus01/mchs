@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { CreateJobTitleDTO } from './dto/create-jobTitle.dto';
 import { DeleteJobTitleDTO } from './dto/delete-jobTitle.dto';
@@ -18,7 +18,6 @@ export class JobController {
     @Get('/get/id/:idDeptJob')
     async getJobTitleById(@Param('idDeptJob') idDeptJob: number){
         const jobTitle = await this.jobTitleService.getJobTitleById(idDeptJob);
-        if(!jobTitle) throw new NotFoundException('Job title does not exist');
         return jobTitle;
     }
 

@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Post, Put, Param, NotFoundException, Res, HttpStatus, UseFilters} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Post, Put, Param, Res, HttpStatus, UseFilters} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { Observable, from, throwError } from 'rxjs';
@@ -68,7 +68,6 @@ export class UsersController {
     async getUserById(@Param('uid') uid: number){
         const user = await this.usersService.getUserById(uid);
         //console.log(user.dateRecord);
-        if(!user) throw new NotFoundException('User does not exist');
         return user;
     }
 
@@ -77,7 +76,6 @@ export class UsersController {
     async getUserByLogin(@Param('user') user: string){
         const user_ = await this.usersService.getUserByLogin(user)
         //console.log(login);
-        if(!user_) throw new NotFoundException('User does not exist');
         return user_; 
     }
 

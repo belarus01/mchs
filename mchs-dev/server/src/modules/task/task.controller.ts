@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Put, Delete, Param, NotFoundException, Sse } from '@nestjs/common';
+import { Controller, Post, Body, Get, Put, Delete, Param, Sse } from '@nestjs/common';
 import { TaskData } from './entity/taskData.entity';
 import { TaskService } from './task.service';
 

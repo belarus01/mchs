@@ -71,7 +71,7 @@ export class AuthService {
     
     async compare(pas: string, hash: string) {
         if (hash === null) {
-            return false;
+            throw new AuthBadRequestException('Отсутствует хэш');
         }
         return await bcrypt.compare(pas, hash);
     }
@@ -89,7 +89,7 @@ export class AuthService {
         const userOldPasswords = await this.userService.getAllPasswordsBy(user.user);
         const result = await this.comparePasswords(userOldPasswords, user.pas);
         if (result === true) {
-            throw new AuthBadRequestException();
+            throw new AuthBadRequestException('ВВеденный пароль уже существует');
         }
         const hashPassword = await bcrypt.hash(user.pas, 5);
         const res = await this.userService.updateUserPassword(user.user, { pas: hashPassword, old: userOldPasswords });

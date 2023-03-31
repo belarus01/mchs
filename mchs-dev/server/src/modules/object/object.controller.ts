@@ -15,7 +15,6 @@ export class ObjectController {
     @Get('/get/id/:idObj')
     getObjById(@Param('idObj') idObj: number){
         const object = this.objectService.getObjById(idObj);
-        if(!object) throw new NotFoundException('Object does not exists');
         return object;
     }
 
