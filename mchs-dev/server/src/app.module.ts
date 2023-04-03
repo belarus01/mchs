@@ -32,6 +32,8 @@ import { NotificationModule } from './modules/notification/notification.module';
 import { NotificationGateway } from './modules/notification/notification.gateway';
 import { VedomstvaModule } from './modules/vedomstva/vedomstva.module';
 import { StateModule } from './modules/state/state.module';
+import { DefectionModule } from './modules/defection/defection.module';
+import { FormModule } from './modules/form/form.module';
 
 
 
@@ -130,6 +132,8 @@ import { StateModule } from './modules/state/state.module';
     VedomstvaModule,
     StateModule,
     TnpaModule,
+    DefectionModule,
+    FormModule,
    
   ],
   controllers: [AppController],

@@ -5,15 +5,27 @@ import { SDept } from './entity/department.entity';
 import { SDeptUnits } from './entity/departmentUnit.entity';
 import { DeptNotFoundException } from './exception/dept.not-found.exception';
 import { DeptUnitNotFoundException } from './exception/deptUnit.not-found.exception';
+import { CreateDeptDTO } from './dto/create-department.dto';
+import { CreateDeptUnitDTO } from './dto/create-departmentUnit.dto';
 
 @Injectable()
 export class DepartmentService {
     constructor(@InjectRepository(SDept, 'mchs_connection') private deptRepository: Repository<SDept>,
-    @InjectRepository(SDeptUnits, 'mchs_connection')private deptUnitRepository: Repository<SDeptUnits>){}
+    @InjectRepository(SDeptUnits, 'mchs_connection') private deptUnitRepository: Repository<SDeptUnits>){}
 
     /* в зависимости от:
             - мчс/надзор
             - админ/суперадмин => @ роли над соответ методом?*/
+
+    async createDept(dto: CreateDeptDTO): Promise<SDept>{
+        const department = this.deptRepository.create(dto);
+        return this.deptRepository.save(department);
+    }
+
+    async createDeptUnit(dto: CreateDeptUnitDTO): Promise<SDeptUnits>{
+        const department = this.deptUnitRepository.create(dto);
+        return this.deptRepository.save(department);
+    }
 
     async getDeptById(idDept: number): Promise<SDept>{
         const dept = await this.deptRepository.findOneBy({idDept});
@@ -68,7 +80,24 @@ export class DepartmentService {
         }
         return deptsOfDeptUnit;
     }
+
+    async updateDept(idDept: number, dto: CreateDeptDTO){
+        return this.deptRepository.update(idDept, dto);
+    }
     
+    async updateDeptUnit(idDeptUnits: number, dto: CreateDeptUnitDTO){
+        return this.deptRepository.update(idDeptUnits, dto);
+    }
+
+    async deleteDeptById(idDept: number){
+        const dept = await this.deptRepository.update(idDept, {active: 0});
+        return dept;
+    }
+
+    async deleteDeptUnitById(idDeptUnit: number){
+        const dept = await this.deptRepository.update(idDeptUnit, {active: 0});
+        return dept;
+    }
 
    /*  async getDepartmentName(){
 

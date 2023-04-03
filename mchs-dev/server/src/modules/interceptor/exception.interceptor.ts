@@ -1,5 +1,5 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
-import { catchError, Observable, throwError } from "rxjs";
+import { catchError, Observable, tap, throwError } from "rxjs";
 import { Exception } from "../exception/exception";
 import { UnexpectedException } from "../exception/unexpected.exception"; 
 /*интерцептор, который все ошибки не являющиеся экземпляром наследников Exception
@@ -15,7 +15,7 @@ export class ExceptionInterceptor implements  NestInterceptor{
             }
             return throwError(() => err);
           }),
-        );
+        ); 
     }
     
 }
