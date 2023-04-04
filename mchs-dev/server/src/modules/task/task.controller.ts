@@ -4,8 +4,11 @@ import { TaskService } from './task.service';
 
 @Controller('task')
 export class TaskController {
-    constructor(private taskDataService: TaskService){
+    constructor(private taskDataService: TaskService){}
 
+    @Get('/get/:idTaskData')
+    async getTaskDataById(@Param('idTaskData') idTaskData: number){
+        return this.taskDataService.getTaskDataById(idTaskData);
     }
 
     @Get('/get/:idTaskData/beginDate')

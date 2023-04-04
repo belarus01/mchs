@@ -28,10 +28,10 @@ export class VedomstvaService {
     }
 
     async updateVedomstvo(idVed: number, dto:CreateVedomstvoDTO){
-        return this.vedomstvaRepository.update(idVed, dto);
+        return await this.vedomstvaRepository.update(idVed, dto);
     }
 
     async deleteVedomstvo(idVed: number){//в бд отсутствует поле статуса(поле active), следовательно тут получается просто delete
-        return this.vedomstvaRepository.delete(idVed);
+        return await this.vedomstvaRepository.delete(idVed);
     }
 }

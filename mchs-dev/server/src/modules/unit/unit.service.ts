@@ -38,7 +38,7 @@ export class UnitService {
     }
 
     async updateUnit(idUnit: number, dto: CreateUnitDTO){
-        return this.unitRepository.update(idUnit, dto);
+        return await this.unitRepository.update(idUnit, dto);
     }
 
     async deleteUnitById(idUnit: number){

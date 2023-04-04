@@ -29,11 +29,11 @@ export class SoatoService {
     }
 
     async updateSoato(idSoato: number, dto: CreateSoatoDTO){
-        return this.soatoRepository.update(idSoato, dto);
+        return await this.soatoRepository.update(idSoato, dto);
     }
 
     async deleteSoato(idSoato: number){//в бд отсутствует поле статуса(поле active), следовательно тут получается просто delete
-        return this.soatoRepository.delete(idSoato);
+        return await this.soatoRepository.delete(idSoato);
     }
 
 }

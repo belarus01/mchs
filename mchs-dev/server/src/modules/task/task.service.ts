@@ -18,6 +18,14 @@ export class TaskService {
         return this.taskDataRepository.save(taskData);
     }
 
+    async getTaskDataById(idTaskData: number): Promise<TaskData>{
+        const taskData = await this.taskDataRepository.findOneBy({idTaskData});
+        if(!taskData){
+            throw new TaskNotFoundException(idTaskData);
+        }
+        return taskData;
+    }
+
 
     async getTaskDataBeginDateById( idTaskData: number){
         const taskDataBeginDate = (await (this.taskDataRepository.findOneBy({ idTaskData }))).dateBegin;

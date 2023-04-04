@@ -3,11 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SSubj } from './entity/subject.entity';
 import { SubjectNotFoundException } from './exception/subject.not-found.exception';
+import { CreateSubjectDTO } from './dto/create-subject.dto';
 
 @Injectable()
 export class SubjectService {
-    constructor(@InjectRepository(SSubj, 'mchs_connection') private subjRepository: Repository<SSubj>){
+    constructor(@InjectRepository(SSubj, 'mchs_connection') private subjRepository: Repository<SSubj>){}
 
+    async createSubj(dto: CreateSubjectDTO){
+        const subj = this.subjRepository.create(dto);
+        return this.subjRepository.save(subj);
     }
 
     async getSubjById(idSubj: number){
@@ -23,6 +27,10 @@ export class SubjectService {
             active:1
         }});
         return subj;
+    }
+
+    async updateSubj(idSubj: number, dto: CreateSubjectDTO){
+        return await this.subjRepository.update(idSubj, dto);
     }
 
     async deleteSubjById(idSubj: number){

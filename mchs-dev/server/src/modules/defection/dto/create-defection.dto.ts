@@ -16,8 +16,8 @@ export class CreateDefectionDTO{
     rulePunct?: string;
     org?: number;
     typeDef?: number;
-    dateBegin?: string;
-    dateEnd?: string;
+    dateBegin?: Date;
+    dateEnd?: Date;
     uid?: number;
 
 }

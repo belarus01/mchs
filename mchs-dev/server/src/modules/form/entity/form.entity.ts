@@ -63,14 +63,14 @@ import {
       nullable: true,
       comment: "Дата начала действия документа об оценке соответствия",
     })
-    dateFrom: string | null;
+    dateFrom: Date | null;
   
     @Column("date", {
       name: "date_to",
       nullable: true,
       comment: "Дата окончания действия документа об оценке соответствия",
     })
-    dateTo: string | null;
+    dateTo: Date | null;
   
     @Column("tinyint", {
       name: "org",
