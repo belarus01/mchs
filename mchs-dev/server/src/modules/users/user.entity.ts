@@ -14,6 +14,7 @@ import { Notification } from "../notification/notification.entity";
 import { SSubjObj } from "../object/object.entity";
 import { UserPermissions } from "../permission/entity/userPermission.entity";
 import { UserGroup } from "../userGroup/user-group.entity";
+import { SEventsPrivate } from "../events/entity/eventsPrivate.entity";
 
 @Index("IDX_a894a560d274a270f087c72ba0", ["user"], { unique: true })
 @Entity("users", { schema: "mchs" })
@@ -206,4 +207,7 @@ export class User {
 
   @OneToMany(() => Notification, (notification) => notification.fromU)
   notifications2: Notification[];
+
+  @OneToMany(() => SEventsPrivate, (sEventsPrivate) => sEventsPrivate.u)
+  sEventsPrivates: SEventsPrivate[];
 }

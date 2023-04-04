@@ -93,7 +93,7 @@ import { SEventsQue } from "./eventsQue.entity";
     })
     problemInfo: string | null;
   
-    @ManyToOne(
+/*     @ManyToOne(
       () => SEventsOrder,
       (sEventsOrder) => sEventsOrder.sEventsOrderQues,
       { onDelete: "NO ACTION", onUpdate: "CASCADE" }
@@ -101,7 +101,7 @@ import { SEventsQue } from "./eventsQue.entity";
     @JoinColumn([
       { name: "id_event_order", referencedColumnName: "idEventOrder" },
     ])
-    idEventOrder2: SEventsOrder;
+    idEventOrder2: SEventsOrder; *///ВЗАИМОСВЯЗЬ В БД УБРАНА
   
     @ManyToOne(() => SEventsQue, (sEventsQue) => sEventsQue.sEventsOrderQues, {
       onDelete: "NO ACTION",

@@ -1,8 +1,16 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { SEventsOrder } from "./eventsOrder.entity";
+import { User } from "src/modules/users/user.entity";
 
-@Index("FK_s_events_private_id_event_order", ["idEventOrder"], {})
-@Index("FK_s_events_private_id_unit", ["idUnit"], {})
-@Index("FK_s_events_private_uid", ["uid"], {})
+@Index("FK_s_events_private_id_event_order2", ["idEventOrder"], {})
+@Index("FK_s_events_private_uid2", ["uid"], {})
 @Index("FK_s_events_private_uid_adm", ["uidAdm"], {})
 @Entity("s_events_private", { schema: "mchs" })
 export class SEventsPrivate {
@@ -22,7 +30,6 @@ export class SEventsPrivate {
     name: "id_unit",
     comment: "Текущее состояние.Берем из doc.s_units.type_unit=11",
     unsigned: true,
-    default: () => "'1'",
   })
   idUnit: number;
 
@@ -51,7 +58,7 @@ export class SEventsPrivate {
   })
   org: number | null;
 
-  @Column("date", {
+  @Column("datetime", {
     name: "date_begin",
     nullable: true,
     comment:
@@ -59,7 +66,7 @@ export class SEventsPrivate {
   })
   dateBegin: Date | null;
 
-  @Column("date", {
+  @Column("datetime", {
     name: "date_end",
     nullable: true,
     comment:
@@ -106,4 +113,21 @@ export class SEventsPrivate {
     unsigned: true,
   })
   uidAdm: number | null;
+
+  @ManyToOne(
+    () => SEventsOrder,
+    (sEventsOrder) => sEventsOrder.sEventsPrivates,
+    { onDelete: "NO ACTION", onUpdate: "CASCADE" }
+  )
+  @JoinColumn([
+    { name: "id_event_order", referencedColumnName: "idEventOrder" },
+  ])
+  idEventOrder2: SEventsOrder;
+
+  @ManyToOne(() => User, (users) => users.sEventsPrivates, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "uid", referencedColumnName: "uid" }])
+  u: User;
 }

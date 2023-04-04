@@ -1,5 +1,7 @@
 import { SAteObl } from "src/modules/ate/entity/ateObl.entity";
 import { SAteRayon } from "src/modules/ate/entity/ateRayon.entity";
+import { SEventsOrder } from "src/modules/events/entity/eventsOrder.entity";
+import { SEventsPlan } from "src/modules/events/entity/eventsPlan.entity";
 import { User } from "src/modules/users/user.entity";
 import {
   Column,
@@ -107,6 +109,14 @@ export class SDept {
   })
   telOper: string | null;
 
+  @Column("varchar", {
+    name: "tel_dover",
+    nullable: true,
+    comment: "Телефон доверия",
+    length: 55,
+  })
+  telDover: string | null;
+
   @Column("varchar", { name: "email", nullable: true, length: 100 })
   email: string | null;
 
@@ -118,13 +128,13 @@ export class SDept {
   })
   uid: number | null;
 
-  @Column("int", {
-    name: "unp_nadz_organ",
+  @Column("varchar", {
+    name: "unp",
     nullable: true,
     comment: "unp надзорного органа",
-    unsigned: true,
+    length: 55,
   })
-  unpNadzOrgan: number | null;
+  unp: string | null;
 
   @Column("varchar", {
     name: "fio_boss",
@@ -164,6 +174,12 @@ export class SDept {
   @JoinColumn([{ name: "id_rayon", referencedColumnName: "idRayon" }])
   idRayon2: SAteRayon;
 
-  @OneToMany(() => User, (user) => user.idDept)
+  @OneToMany(() => SEventsOrder, (sEventsOrder) => sEventsOrder.idDept2)
+  sEventsOrders: SEventsOrder[];
+
+  @OneToMany(() => SEventsPlan, (sEventsPlan) => sEventsPlan.idDept2)
+  sEventsPlans: SEventsPlan[];
+
+  @OneToMany(() => User, (users) => users.idDept)
   users: User[];
 }

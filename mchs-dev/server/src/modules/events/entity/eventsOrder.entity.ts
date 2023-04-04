@@ -1,5 +1,5 @@
+import { SDept } from "src/modules/department/entity/department.entity";
 import { Notification } from "src/modules/notification/notification.entity";
-import { SSubj } from "src/modules/subject/entity/subject.entity";
 import {
   Column,
   Entity,
@@ -10,19 +10,24 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { SEvents } from "./events.entity";
+import { Group } from "src/modules/group/group.entity";
+import { SSubj } from "src/modules/subject/entity/subject.entity";
 import { SEventsOrderAdmBan } from "./eventsOrderAdmBan.entity";
 import { SEventsOrderAdmForce } from "./eventsOrderAdmForce.entity";
 import { SEventsOrderData } from "./eventsOrderData.entity";
 import { SEventsOrderDef } from "./eventsOrderDef.entity";
 import { SEventsOrderDefMtx } from "./eventsOrderDefMtx.entity";
 import { SEventsOrderObj } from "./eventsOrderObj.entity";
-import { SEventsOrderQue } from "./eventsOrderQue.entity";
+import { SEventsPrivate } from "./eventsPrivate.entity";
 
-@Index("s_events_order_FK", ["idEvent"], {})
-@Index("FK_s_events_order_id_group2", ["idGroup"], {})
-@Index("FK_s_events_order_id_unit", ["idUnit"], {})
+@Index("FK_s_events_order_id_dept", ["idDept"], {})
+@Index("FK_s_events_order_id_group", ["idGroup"], {})
 @Index("FK_s_events_order_id_subj2", ["idSubj"], {})
+@Index("FK_s_events_order_id_unit", ["idUnit"], {})
+@Index("FK_s_events_order_id_unit_3", ["idUnit_3"], {})
+@Index("FK_s_events_order_id_unit_4", ["idUnit_4"], {})
 @Index("FK_s_events_order_sphera", ["sphera"], {})
+@Index("s_events_order_FK", ["idEvent"], {})
 @Entity("s_events_order", { schema: "mchs" })
 export class SEventsOrder {
   @PrimaryGeneratedColumn({
@@ -65,7 +70,7 @@ export class SEventsOrder {
   @Column("varchar", {
     name: "num_order",
     nullable: true,
-    comment: "Номер проверки",
+    comment: "Пункт плана проверок",
     length: 50,
   })
   numOrder: string | null;
@@ -138,7 +143,7 @@ export class SEventsOrder {
   })
   org: number | null;
 
-  @Column("date", {
+  @Column("datetime", {
     name: "date_begin",
     nullable: true,
     comment:
@@ -146,7 +151,7 @@ export class SEventsOrder {
   })
   dateBegin: Date | null;
 
-  @Column("date", {
+  @Column("datetime", {
     name: "date_end",
     nullable: true,
     comment:
@@ -154,7 +159,7 @@ export class SEventsOrder {
   })
   dateEnd: Date | null;
 
-  @Column("date", {
+  @Column("datetime", {
     name: "date_record",
     nullable: true,
     comment: "Дата изменения записи",
@@ -209,7 +214,7 @@ export class SEventsOrder {
   })
   fioPostTitle: string | null;
 
-  @Column("date", {
+  @Column("datetime", {
     name: "date_order",
     nullable: true,
     comment:
@@ -217,21 +222,21 @@ export class SEventsOrder {
   })
   dateOrder: Date | null;
 
-  @Column("date", {
+  @Column("datetime", {
     name: "period_check_from",
     nullable: true,
     comment: "Начало проверяемого периода",
   })
   periodCheckFrom: Date | null;
 
-  @Column("date", {
+  @Column("datetime", {
     name: "period_check_to",
     nullable: true,
     comment: "Окончание проверяемого периода",
   })
   periodCheckTo: Date | null;
 
-  @Column("date", {
+  @Column("datetime", {
     name: "date_begin_fact",
     nullable: true,
     comment:
@@ -239,7 +244,7 @@ export class SEventsOrder {
   })
   dateBeginFact: Date | null;
 
-  @Column("date", {
+  @Column("datetime", {
     name: "date_end_fact",
     nullable: true,
     comment:
@@ -247,7 +252,7 @@ export class SEventsOrder {
   })
   dateEndFact: Date | null;
 
-  @Column("date", {
+  @Column("datetime", {
     name: "date_stop",
     nullable: true,
     comment:
@@ -255,7 +260,7 @@ export class SEventsOrder {
   })
   dateStop: Date | null;
 
-  @Column("date", {
+  @Column("datetime", {
     name: "date_continue",
     nullable: true,
     comment:
@@ -263,7 +268,7 @@ export class SEventsOrder {
   })
   dateContinue: Date | null;
 
-  @Column("date", {
+  @Column("datetime", {
     name: "date_to",
     nullable: true,
     comment: "Дата, до которой продлен срок проведения проверки",
@@ -289,12 +294,29 @@ export class SEventsOrder {
   @Column("varchar", { name: "other_info", nullable: true, length: 1255 })
   otherInfo: string | null;
 
+  @Column("int", { name: "id_event_plan", nullable: true, unsigned: true })
+  idEventPlan: number | null;
+
+  @ManyToOne(() => SDept, (sDept) => sDept.sEventsOrders, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_dept", referencedColumnName: "idDept" }])
+  idDept2: SDept;
+
   @ManyToOne(() => SEvents, (sEvents) => sEvents.sEventsOrders, {
     onDelete: "NO ACTION",
     onUpdate: "CASCADE",
   })
   @JoinColumn([{ name: "id_event", referencedColumnName: "idEvent" }])
   idEvent2: SEvents;
+
+  @ManyToOne(() => Group, (group) => group.sEventsOrders, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_group", referencedColumnName: "idGroup" }])
+  idGroup2: Group;
 
   @ManyToOne(() => SSubj, (sSubj) => sSubj.sEventsOrders, {
     onDelete: "NO ACTION",
@@ -340,10 +362,10 @@ export class SEventsOrder {
   sEventsOrderObjs: SEventsOrderObj[];
 
   @OneToMany(
-    () => SEventsOrderQue,
-    (sEventsOrderQue) => sEventsOrderQue.idEventOrder2
+    () => SEventsPrivate,
+    (sEventsPrivate) => sEventsPrivate.idEventOrder2
   )
-  sEventsOrderQues: SEventsOrderQue[];
+  sEventsPrivates: SEventsPrivate[];
 
   @OneToMany(() => Notification, (notification) => notification.idEventOrder2)
   notifications: Notification[];
