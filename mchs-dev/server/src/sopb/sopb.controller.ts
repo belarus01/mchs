@@ -43,8 +43,8 @@ export class SopbController {
     }
 
     @Put('/update/sopbCard/:idCard')
-    async upadateSopbCard(@Param('idCard') idCard: number, @Body() dto: CreateSopbCardDTO){
-        return this.sopbService.upadateSopbCard(idCard, dto);
+    async updateSopbCard(@Param('idCard') idCard: number, @Body() dto: CreateSopbCardDTO){
+        return this.sopbService.updateSopbCard(idCard, dto);
     }
 
     @Put('/delete/:idSopb')

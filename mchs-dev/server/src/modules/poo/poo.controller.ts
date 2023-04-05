@@ -27,7 +27,7 @@ export class PooController {
     }
 
     @Put('/delete/:idPoo')
-    async deletePoo(@Param('idPoo') idPoo: number){
-        return this.pooService.deletePoo(idPoo);
+    async deletePooById(@Param('idPoo') idPoo: number){
+        return this.pooService.deletePooById(idPoo);
     }
 }

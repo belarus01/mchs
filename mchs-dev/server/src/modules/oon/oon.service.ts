@@ -30,7 +30,7 @@ export class OonService {
         return await this.oonRepository.update(idType, dto);
     }
 
-    async deleteOon(idType: number){
+    async deleteOonById(idType: number){
         return await this.oonRepository.update(idType, {active:0});
     }
 }

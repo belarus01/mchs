@@ -27,7 +27,7 @@ export class OonController {
     }
 
     @Put('/delete/:idType')
-    async deleteOon(@Param('idType') idType: number){
-        return this.oonService.deleteOon(idType);
+    async deleteOonById(@Param('idType') idType: number){
+        return this.oonService.deleteOonById(idType);
     }
 }

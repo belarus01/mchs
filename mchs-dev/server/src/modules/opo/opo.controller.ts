@@ -27,7 +27,7 @@ export class OpoController {
     }
 
     @Put('/delete/:idOpo')
-    async deleteOpo(@Param('idOpo') idOpo: number){
-        return this.opoService.deleteOpo(idOpo);
+    async deleteOpoById(@Param('idOpo') idOpo: number){
+        return this.opoService.deleteOpoById(idOpo);
     }
 }

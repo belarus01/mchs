@@ -15,6 +15,8 @@ import { EventNotFoundException } from './exception/event.not-found.exception';
 import { EventBadRequestException } from './exception/event.bad-request.exception';
 import { SEventsQue } from './entity/eventsQue.entity';
 import { SEventsDef } from './entity/eventsDef.entity';
+import { CreateEventDefDTO } from './dto/create-eventDef.dto';
+import { CreateEventQueDTO } from './dto/create-eventQue.dto';
 
 
 
@@ -66,12 +68,37 @@ export class EventsService {
         }
     }
 
+    async createEventDef(dto: CreateEventDefDTO){
+        const event = this.eventsDefRepository.create(dto);
+        return this.eventsDefRepository.save(event);
+    }
+
+    async createEventQue(dto: CreateEventQueDTO){
+        const event = this.eventsQueRepository.create(dto);
+        return this.eventsDefRepository.save(event);
+    }
+
     async getAllEvents(): Promise<SEvents[]>{
         const events = await this.eventsRepository.find({where: {
             active:1
         }});
         return events;
     }
+
+    async getAllEventDefs(){
+        const events = await this.eventsDefRepository.find({where: {
+            active:1
+        }});
+        return events;
+    }
+
+    async getAllEventQues(){
+        const events = await this.eventsDefRepository.find({where: {
+            active:1
+        }});
+        return events;
+    }
+
 
     async getPetyaTheBest(){
         console.log(moment(new Date(Date.now())).format('YYYY-MM-DD'));
@@ -121,6 +148,21 @@ export class EventsService {
     }
 
 
+    async getEventDefById(idList: number){
+        const event = await this.eventsDefRepository.findOneBy({idList});
+        if(!event){
+            throw new EventNotFoundException(`Event Def id = ${idList} not found!`);
+        }
+        return event;
+    }
+
+    async getEventQueById(idList: number){
+        const event = await this.eventsQueRepository.findOneBy({idList});
+        if(!event){
+            throw new EventNotFoundException(`Event Que id = ${idList} not found!`);
+        }
+        return event;
+    }
 
     async getEventBeginDateById(idEvent: number){
         const eventBeginDate = (await (this.eventsRepository.findOneBy({ idEvent }))).dateBegin;
@@ -225,7 +267,25 @@ export class EventsService {
     } */
 
     async updateEvent(idEvent:number, eventDto: CreateEventDTO){
-        return this.eventsRepository.update(idEvent,eventDto);
+        return await this.eventsRepository.update(idEvent,eventDto);
+    }
+
+    async updateEventDef(idList: number, dto: CreateEventDefDTO){
+        return await this.eventsDefRepository.update(idList, dto);
+    }
+
+    async updateEventQue(idList: number, dto: CreateEventQueDTO){
+        return await this.eventsDefRepository.update(idList, dto);
+    }
+
+    async deleteEventDefById(idList: number){
+        const result = await this.eventsDefRepository.update(idList, {active:0});
+        return result;
+    }
+
+    async deleteEventQueById(idList: number){
+        const result = await this.eventsDefRepository.update(idList, {active:0});
+        return result;
     }
 
     public async send(): Promise<void> {

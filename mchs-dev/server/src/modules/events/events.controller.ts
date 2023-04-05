@@ -4,17 +4,27 @@ import { CreateEventDTO } from './dto/create-event.dto';
 import { GetNowDTO } from './dto/getNow.dto';
 import { SEvents } from './entity/events.entity';
 import { EventsService } from './events.service';
+import { CreateEventQueDTO } from './dto/create-eventQue.dto';
+import { CreateEventDefDTO } from './dto/create-eventDef.dto';
 
 
 @Controller('events')
 export class EventsController {
-    constructor(private eventsService: EventsService){
-
-    }
+    constructor(private eventsService: EventsService){}
 
     @Post('/create')
     createEvent(@Body() eventDto: CreateEventDTO){
         return this.eventsService.createEvent(eventDto);
+    }
+
+    @Post('/create/eventDef')
+    async createEventDef(@Body() dto: CreateEventDefDTO){
+        return this.eventsService.createEventDef(dto);
+    }
+
+    @Post('/create/eventQue')
+    async createEventQue(@Body() dto: CreateEventQueDTO){
+        return this.eventsService.createEventQue(dto);
     }
 
     @Post('/send')
@@ -23,8 +33,18 @@ export class EventsController {
     }
 
     @Get('/get/all')
-    getAllEvents(){
+    async getAllEvents(){
         return this.eventsService.getAllEvents();
+    }
+
+    @Get('/get/all/eventDefs')
+    async getAllEventDefs(){
+        return this.eventsService.getAllEventDefs();
+    }
+
+    @Get('/get/all/eventQues')
+    async getAllEventQues(){
+        return this.eventsService.getAllEventQues();
     }
  
     @Get('/get/all/day')
@@ -51,6 +71,16 @@ export class EventsController {
     async getEventById(@Param('idEvent') idEvent: number){
         const event = await this.eventsService.getEventById(idEvent);
         return event;
+    }
+
+    @Get('/get/id/eventDef/:idList')
+    async getEventDefById(@Param('idList') idList: number){
+        return this.eventsService.getEventDefById(idList);
+    }
+
+    @Get('/get/id/eventQue/:idList')
+    async getEventQueById(@Param('idList') idList: number){
+        return this.eventsService.getEventQueById(idList);
     }
 
     @Get('/get/:idEvent/beginDate')
@@ -102,6 +132,26 @@ export class EventsController {
     @Put('/update/:idEvent')
     async updateEvent(@Param('idEvent') idEvent: number, @Body() eventDto: CreateEventDTO){
         return this.eventsService.updateEvent(idEvent, eventDto);
+    }
+
+    @Put('/update/eventDef/:idList')
+    async updateEventDef(idList: number, dto: CreateEventDefDTO){
+        return this.eventsService.updateEventDef(idList, dto);
+    }
+
+    @Put('/update/eventQue/:idList')
+    async updateEventQue(idList: number, dto: CreateEventQueDTO){
+        return this.eventsService.updateEventQue(idList, dto);
+    }
+
+    @Put('/delete/eventDef/:idList')
+    async deleteEventDefById(idList: number){
+        return this.eventsService.deleteEventDefById(idList);
+    }
+
+    @Put('/delete/eventQue/:idList')
+    async deleteEventQueById(idList: number){
+        return this.eventsService.deleteEventQueById(idList);
     }
     
 

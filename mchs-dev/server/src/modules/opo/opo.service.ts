@@ -30,7 +30,7 @@ export class OpoService {
         return await this.opoRepository.update(idOpo, dto);
     }
 
-    async deleteOpo(idOpo: number){
+    async deleteOpoById(idOpo: number){
         return await this.opoRepository.update(idOpo, {active:0});
     }
 }

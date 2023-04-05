@@ -30,7 +30,7 @@ export class PooService {
         return await this.pooRepository.update(idPoo, dto);
     }
 
-    async deletePoo(idPoo: number){
+    async deletePooById(idPoo: number){
         return await this.pooRepository.update(idPoo, {active:0});
     }
 }

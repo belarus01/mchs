@@ -53,7 +53,7 @@ export class SopbService {
         return await this.sopbRepository.update(idSopb, dto);
     }
 
-    async upadateSopbCard(idCard: number, dto: CreateSopbCardDTO){
+    async updateSopbCard(idCard: number, dto: CreateSopbCardDTO){
         return await this.sopbCardRepository.update(idCard, dto);
     }
 
