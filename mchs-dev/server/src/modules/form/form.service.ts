@@ -7,7 +7,7 @@ import { FormNotFoundException } from './exception/form.not-found.exception';
 
 @Injectable()
 export class FormService {
-    constructor(@InjectRepository(SForm) private formRepository: Repository<SForm>){}
+    constructor(@InjectRepository(SForm, 'doc_connection') private formRepository: Repository<SForm>){}
 
     async createForm(dto: CreateFormDTO){
         const form = this.formRepository.create(dto);

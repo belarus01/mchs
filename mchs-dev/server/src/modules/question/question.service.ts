@@ -7,7 +7,7 @@ import { QuestionNotFoundException } from './exception/question.not-found.except
 
 @Injectable()
 export class QuestionService {
-    constructor(@InjectRepository(SQuestion) private questionRepository: Repository<SQuestion>){}
+    constructor(@InjectRepository(SQuestion, 'doc_connection') private questionRepository: Repository<SQuestion>){}
 
     async createQuestion(dto: CreateQuestionDTO){
         const que = this.questionRepository.create(dto);

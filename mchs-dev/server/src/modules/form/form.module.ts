@@ -17,6 +17,7 @@ import { SFormBuildData } from './entity/formBuildData.entity';
     SFormBuildData
   ], 'doc_connection'),],
   providers: [FormService],
+  exports: [FormService],
   controllers: [FormController]
 })
 export class FormModule {}
