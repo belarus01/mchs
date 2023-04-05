@@ -50,18 +50,18 @@ export class SopbService {
     }
 
     async updateSopb(idSopb: number, dto: CreateSopbDTO){
-        return this.sopbRepository.update(idSopb, dto);
+        return await this.sopbRepository.update(idSopb, dto);
     }
 
     async upadateSopbCard(idCard: number, dto: CreateSopbCardDTO){
-        return this.sopbCardRepository.update(idCard, dto);
+        return await this.sopbCardRepository.update(idCard, dto);
     }
 
     async deleteSopbById(idSopb: number){
-        return this.sopbRepository.update(idSopb, {active: 0});
+        return await this.sopbRepository.update(idSopb, {active: 0});
     }
 
     async deleteSopbCardById(idCard: number){
-        return this.sopbCardRepository.update(idCard,{active: 0});
+        return await this.sopbCardRepository.update(idCard,{active: 0});
     }
 }

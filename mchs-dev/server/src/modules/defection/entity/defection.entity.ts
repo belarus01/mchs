@@ -14,7 +14,7 @@ import {
   @Entity("s_defection", { schema: "doc" })
   export class SDefection {
     @PrimaryGeneratedColumn({ type: "bigint", name: "id_def", unsigned: true })
-    idDef: string;
+    idDef: number;
   
     @Column("int", {
       name: "id_tnpa",
@@ -178,21 +178,21 @@ import {
       comment: "Дата изменения записи",
       default: () => "'now()'",
     })
-    dateRecord: string | null;
+    dateRecord: Date | null;
   
     @Column("date", {
       name: "date_begin",
       nullable: true,
       comment: "Дата начала действия записи",
     })
-    dateBegin: string | null;
+    dateBegin: Date | null;
   
     @Column("date", {
       name: "date_end",
       nullable: true,
       comment: "Дата окончания действия записи",
     })
-    dateEnd: string | null;
+    dateEnd: Date | null;
   
     @Column("tinyint", {
       name: "active",

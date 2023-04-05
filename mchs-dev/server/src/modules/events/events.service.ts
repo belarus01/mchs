@@ -13,6 +13,8 @@ import { ModuleRef } from '@nestjs/core';
 import { channel } from 'diagnostics_channel';
 import { EventNotFoundException } from './exception/event.not-found.exception';
 import { EventBadRequestException } from './exception/event.bad-request.exception';
+import { SEventsQue } from './entity/eventsQue.entity';
+import { SEventsDef } from './entity/eventsDef.entity';
 
 
 
@@ -20,6 +22,8 @@ import { EventBadRequestException } from './exception/event.bad-request.exceptio
 export class EventsService {
     constructor(@InjectRepository(SEvents, 'mchs_connection') private eventsRepository: Repository<SEvents>,
     @InjectRepository(SEventsOrder, 'mchs_connection') private eventsOrderRepository: Repository<SEventsOrder>,
+    @InjectRepository(SEventsQue, 'mchs_connection') private eventsQueRepository: Repository<SEventsQue>,
+    @InjectRepository(SEventsDef, 'mchs_connection') private eventsDefRepository: Repository<SEventsDef>,
     //@InjectRepository(SEventsPrivate, 'mchs_connection') private eventsPrivateRepository: Repository<SEventsPrivate>,
     
     //private moduleRef: ModuleRef,
@@ -42,6 +46,8 @@ export class EventsService {
             }
             
     }
+
+    
 
 //не работает
     async createE(eventDto:CreateEventDTO){

@@ -34,6 +34,11 @@ import { VedomstvaModule } from './modules/vedomstva/vedomstva.module';
 import { StateModule } from './modules/state/state.module';
 import { DefectionModule } from './modules/defection/defection.module';
 import { FormModule } from './modules/form/form.module';
+import { QuestionModule } from './modules/question/question.module';
+import { OonModule } from './modules/oon/oon.module';
+import { PooModule } from './modules/poo/poo.module';
+import { OpoModule } from './modules/opo/opo.module';
+import { AdmModule } from './modules/adm/adm.module';
 
 
 
@@ -134,7 +139,11 @@ import { FormModule } from './modules/form/form.module';
     TnpaModule,
     DefectionModule,
     FormModule,
-   
+    QuestionModule,
+    OonModule,
+    PooModule,
+    OpoModule,
+    AdmModule,
   ],
   controllers: [AppController],
 //   providers: [

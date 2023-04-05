@@ -1,8 +1,8 @@
-//!!!создать модуль для s_fire!!!
-import { table } from "console";
-import { Column, Entity, JoinColumn, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { SEventsOrder } from "../events/entity/eventsOrder.entity";
-
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { SQuestion } from "../question/entity/question.entity";
+/* import { SFireCardBuild } from "./SFireCardBuild";
+import { SQuestion } from "./SQuestion";
+ */
 @Entity("s_units", { schema: "doc" })
 export class SUnits {
   @PrimaryGeneratedColumn({ type: "bigint", name: "id_unit", unsigned: true })
@@ -96,17 +96,6 @@ export class SUnits {
   @OneToMany(() => SFireCardBuild, (sFireCardBuild) => sFireCardBuild.idUnit_2)
   sFireCardBuilds3: SFireCardBuild[]; */
 
-  ////////added
-  /* @ManyToMany(
-    () => SEventsOrder,
-    (sEventsOrder): SUnits => {
-      return sEventsOrder.units;
-    })
-    @JoinColumn({name: ' idEventOrder'})
-    sEventsOrder: SEventsOrder; */
-
-    ////////added
-/*     @ManyToMany(() => SEventsOrder, (s_events_order) => s_events_order.idUnit2)
-    s_events_order: SEventsOrder[]; */
-
+  @OneToMany(() => SQuestion, (sQuestion) => sQuestion.idUnit)
+  sQuestions: SQuestion[];
 }

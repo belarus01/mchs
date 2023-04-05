@@ -82,11 +82,11 @@ export class DepartmentService {
     }
 
     async updateDept(idDept: number, dto: CreateDeptDTO){
-        return this.deptRepository.update(idDept, dto);
+        return await this.deptRepository.update(idDept, dto);
     }
     
     async updateDeptUnit(idDeptUnits: number, dto: CreateDeptUnitDTO){
-        return this.deptRepository.update(idDeptUnits, dto);
+        return await this.deptRepository.update(idDeptUnits, dto);
     }
 
     async deleteDeptById(idDept: number){
