@@ -8,6 +8,7 @@ import { switchMap, map, catchError} from 'rxjs/operators';
 import { DeleteUserDTO } from './dto/deleteUser.dto';
 import { UserNotFoundException } from './exception/user.not-found.exception';
 import { DeptNotFoundException } from '../department/exception/dept.not-found.exception';
+import { Pagination } from 'src/utils/utils';
 
 @Injectable()
 export class UsersService {
@@ -170,9 +171,29 @@ export class UsersService {
 
     async getAllPassByLogin(user:string){
         const client = await this.getUserByLogin(user);
-        
     }
 
+    async searchUser(query:string){
+        const s = `%${query}%`;
+        console.log(s);
+        const users =  await this.userRepository.createQueryBuilder("users").leftJoinAndSelect("users.idDeptJob2", "sDeptJob")
+            .where(`MATCH(l_name, s_name) AGAINST ('${s}' IN NATURAL LANGUAGE MODE)`)
+            .getMany();
+        console.log(users); 
+        return users;
+    }
+
+    async getAllUsersWithRelationsByPages(pagination:Pagination){
+        const users = await this.userRepository.
+        find({where:{
+            active:1
+        }, relations:{
+            sSubjObjs:true,
+            idDept2:true,
+            idDeptJob2: true,    
+        }, skip:pagination.pageSize});
+        return users;
+    }
 /*     async editUser(id: number, dto:CreateUserDto): Promise<User>{//тот же самый updateUser
         const editedUser = await this.userRepository.findByIdAndUpdate(id, dto, {new: true});
         

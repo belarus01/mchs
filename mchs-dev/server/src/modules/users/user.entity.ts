@@ -22,6 +22,7 @@ export class User {
   @PrimaryGeneratedColumn({ type: "int", name: "uid", unsigned: true })
   uid: number;
 
+ 
   @Column("varchar", {
     name: "user",
     unique: true,
@@ -37,6 +38,7 @@ export class User {
     length: 100,
   })
   lName: string | null;
+
 
   @Column("varchar", { name: "f_name", comment: "имя", length: 255 })
   fName: string;

@@ -65,5 +65,16 @@ export class AteController {
         const reestrs = await this.ateService.getAllReestrsByOblId(idObl);
         return reestrs;
     }
+
+    @Get('/get/reestrs/id_rayon/:idRayon')
+    async getAllReestrsByRayonId(@Param('idRayon') idRayon:number){
+        const reestrs = await this.ateService.getAllReestrsByRayonId(idRayon);
+        return reestrs;
+    }
+    @Get('/get/streets/id_city/:idCity')
+    async getAllStreetsByCityId(@Param('idCity') idCity:number){
+        const streets = await this.ateService.getStreetsByCityId(idCity);
+        return streets;
+    }
     
 }
