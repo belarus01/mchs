@@ -112,6 +112,12 @@ export class UsersController {
         return this.usersService.getAllPasswordsBy(dto.user);
     }
 
+    @Get('/get/search/:query')
+    searchUsers(@Param('query') query:string){
+        console.log(query);
+        return this.usersService.searchUser(query);
+    }
+
 
 /*     @Put('/edit')
     async editUser(@Param('id') id: number, @Body() dto: CreateUserDto, @Res() res){

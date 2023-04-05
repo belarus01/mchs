@@ -10,6 +10,8 @@ import { AteNotFoundException } from './exception/ate.not-found.exception';
 
 @Injectable()
 export class AteService {
+    
+    
     constructor(
         @InjectRepository(SAteCateg, 'mchs_connection') private ateCategRepository: Repository<SAteCateg>,
         @InjectRepository(SAteObl, 'mchs_connection') private ateOblRepository: Repository<SAteObl>,
@@ -115,6 +117,16 @@ export class AteService {
         return streets;
     }
 
+    async getAllReestrsByRayonId(idRayon: number):Promise<SAteReestr[]> {
+        const reestrs = await this.ateReestrRepository.find({where:{active:1, idRayon:idRayon}});
+        return reestrs;
+    }
+
+    async getStreetsByCityId(idCity: number):Promise<SAteStreet[]> {
+        const streets = await this.ateStreetRepository.find({where:{active:0, idReestr:idCity}});
+        console.log(streets);
+        return streets;
+    }
     //WithSaotoRealations
 
     //updateAll
