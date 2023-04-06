@@ -173,12 +173,7 @@ export class EventsService {
         const eventEndDate = (await (this.eventsRepository.findOneBy({ idEvent }))).dateEnd;
         return eventEndDate;
     }
-
-    async getEventStatusById(idEvent: number){
-            const eventStatus = (await this.eventsRepository.findOneBy({idEvent})).status; 
-            return eventStatus;            
-    }
-
+    
     async getEventsByUserId(uid: number){
         const events = await this.eventsOrderRepository.manager.query(`SELECT
         e.id_event,e.id_event_order,ss.event title,p.name_event private,DATE_FORMAT(DATE(e.date_begin), "%d.%m.%Y") start,
@@ -292,5 +287,13 @@ export class EventsService {
         
         console.log('Notification sent');
       }
+
+    async getAllEventsBySubjectId(idSubj:number){
+        const result = await this.eventsOrderRepository.find({where:{active:1, idSubj: idSubj},relations:{
+            idEvent2:true, 
+            idDept2:true,
+        }});
+        return result;
+    }
 
 }

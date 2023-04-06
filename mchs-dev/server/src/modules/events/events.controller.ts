@@ -95,12 +95,6 @@ export class EventsController {
         return eventEndDate;
     }
 
-    @Get('/get/:idEvent/status')
-    async getEventStatusById(@Param('idEvent') idEvent: number){
-        const eventStatus = await this.eventsService.getEventStatusById(idEvent);
-        return eventStatus;
-    }
-
     //for testing mostly, prbly gonna work somehow in tandem to get THE Name (in service)
     //не работает??
     //заработает если каким-то образом в тайпормных сущностях 
@@ -158,5 +152,10 @@ export class EventsController {
     @Get('/get/all/userId=:uid')
     async getAllByUid(@Param('uid') uid:number){
         return this.eventsService.getEventsByUserId(uid);
+    }
+
+    @Get('/get/all/subjId=:idSubj')
+    async getAllEventsBySubjectId(@Param('idSubj') idSubj: number){
+        return this.eventsService.getAllEventsBySubjectId(idSubj);
     }
 }

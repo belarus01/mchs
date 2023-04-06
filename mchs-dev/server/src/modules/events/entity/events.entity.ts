@@ -64,14 +64,7 @@ export class SEvents {
   })
   active: number;
 
-  @Column("varchar", {
-    name: "status",
-    nullable: true,
-    comment: "Статус",
-    length: 50,
-    default: () => "'wait'",
-  })
-  status: string | null;
+
 
   @Column("text", { name: "data", nullable: true })
   data: string | null;
