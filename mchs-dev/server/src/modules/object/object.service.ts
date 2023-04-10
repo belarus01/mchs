@@ -32,4 +32,9 @@ export class ObjectService {
         }
         return objToDelete.active === 0;
     }
+
+    async getObjectBySubjectId(idSubj:number){
+        const objs = await this.objectRepository.find({where:{idSubj:idSubj}});
+        return objs;
+    }
 }

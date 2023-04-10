@@ -81,7 +81,7 @@ export class UsersController {
 
     @Get('/get/all/department/:idDept')
     async getAllUsersByDept(@Param('idDept') idDept: number){
-        const users = await this.usersService.getAllDeptUsers(idDept);
+        const users = (await this.usersService.getAllDeptUsers(idDept));
         return users;
     }
 

@@ -22,4 +22,9 @@ export class ObjectController {
     deleteObjById(@Param('idObj') idObj: number){
         return this.objectService.deleteObjById(idObj);
     }
+
+    @Get('/get/subjectId=:idSubj')
+    getAllObjectsBySubjectId(@Param('idSubj') idSubj:number){
+        return this.objectService.getObjectBySubjectId(idSubj);
+    }
 }
