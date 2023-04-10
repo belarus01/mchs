@@ -1,10 +1,11 @@
-import {Body, Controller, Delete, Get, Post, Put, Param, Res, HttpStatus, UseFilters} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Post, Put, Param, Res, HttpStatus, UseFilters, Query} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { Observable, from, throwError } from 'rxjs';
 import { DeleteUserDTO } from './dto/deleteUser.dto';
 import { HttpExceptionFilter } from '../filter/http-exception.filter';
 import { UpdateDateColumn } from 'typeorm';
+import { Pagination } from 'src/utils/utils';
 
 @Controller('users')
 //@UseFilters(new HttpExceptionFilter())//probably no sense bcs the global one is set in app.module/main.ts
@@ -88,6 +89,12 @@ export class UsersController {
     @Get('/get/all/department/relations/:idDept')
     async getAllUsersByDeptWithRelations(@Param('idDept') idDept: number){
         const users = await this.usersService.getAllDeptUsersWithRelatoins(idDept);
+        return users;
+    }
+
+    @Get('/get/all/users/by/page')
+    async getAllUsersWithRelationsByPages(@Query('pagination') pagination:Pagination){
+        const users = this.usersService.getAllUsersWithRelationsByPages(pagination);
         return users;
     }
 
