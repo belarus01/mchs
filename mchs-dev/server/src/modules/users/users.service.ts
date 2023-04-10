@@ -202,7 +202,7 @@ export class UsersService {
     }
 
    
-    async getAllUsersAndSortBy(field:string){//передаем параметр/n парметров, на месте которого/ых может быть любое поле сущности
+    async getAllUsersAndSortBy(field:string, order:number){//передаем параметр/n парметров, на месте которого/ых может быть любое поле сущности
         //const users = this.userRepository.createQueryBuilder('users').orderBy(parameter)
         
         //const users = this.userRepository.createQueryBuilder('users').where("parameter").
@@ -210,11 +210,11 @@ export class UsersService {
         //sortFormat
         const users = (await this.userRepository.find({where:{active:1}})).sort((a,b)=>{
             if(a[field]<b[field])
-                return -1;
+                return -1*order;
             else if(
                 a[field]>b[field]
             )
-                return 1;
+                return 1*order;
                 else return 0;
         });
         return users;
