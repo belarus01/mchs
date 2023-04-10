@@ -10,6 +10,11 @@ import { UserNotFoundException } from './exception/user.not-found.exception';
 import { DeptNotFoundException } from '../department/exception/dept.not-found.exception';
 import { Pagination } from 'src/utils/utils';
 
+interface Sort{
+    name:string;
+    direction:string;
+}
+
 @Injectable()
 export class UsersService {
     constructor(@InjectRepository(User, 'mchs_connection') private userRepository: Repository<User>){}
@@ -194,6 +199,24 @@ export class UsersService {
         }, order: {lName: "ASC", fName: "ASC"}, skip:pagination.pageSize*(pagination.current-1), take:pagination.pageSize},);
         pagination.total = users.length;
         return {users, pagination};
+    }
+
+   
+    async getAllUsersAndSortBy(sort:Sort){//передаем параметр/n парметров, на месте которого/ых может быть любое поле сущности
+        //const users = this.userRepository.createQueryBuilder('users').orderBy(parameter)
+        
+        //const users = this.userRepository.createQueryBuilder('users').where("parameter").
+        const sortFormat = {[sort.name] : sort.direction};
+        sortFormat
+        const users = (await this.userRepository.find({where:{active:1}})).sort((a,b)).
+
+        /*
+        1. получить пользователей где передаваемый параметр мэтчится?/like?/in?/any..? параметру из полей сущности
+        2. orderBy({
+    "user.parameter": "ASC",
+    })
+        */
+
     }
 /*     async editUser(id: number, dto:CreateUserDto): Promise<User>{//тот же самый updateUser
         const editedUser = await this.userRepository.findByIdAndUpdate(id, dto, {new: true});
