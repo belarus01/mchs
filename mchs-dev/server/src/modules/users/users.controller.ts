@@ -93,7 +93,7 @@ export class UsersController {
     }
 
     @Get('/get/all/users/by/page')
-    async getAllUsersWithRelationsByPages(@Query('pagination') pagination:Pagination){
+    async getAllUsersWithRelationsByPages(@Query() pagination:Pagination){
         const users = this.usersService.getAllUsersWithRelationsByPages(pagination);
         return users;
     }

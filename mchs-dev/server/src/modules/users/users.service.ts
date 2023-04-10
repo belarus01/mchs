@@ -183,6 +183,7 @@ export class UsersService {
     }
 
     async getAllUsersWithRelationsByPages(pagination:Pagination){
+        console.log(pagination);
         const users = await this.userRepository.
         find({where:{
             active:1
@@ -190,8 +191,9 @@ export class UsersService {
             sSubjObjs:true,
             idDept2:true,
             idDeptJob2: true,    
-        }, order: {lName: "ASC", fName: "ASC"}, skip:pagination.pageSize});
-        return users;
+        }, order: {lName: "ASC", fName: "ASC"}, skip:pagination.pageSize*(pagination.current-1), take:pagination.pageSize},);
+        pagination.total = users.length;
+        return {users, pagination};
     }
 /*     async editUser(id: number, dto:CreateUserDto): Promise<User>{//тот же самый updateUser
         const editedUser = await this.userRepository.findByIdAndUpdate(id, dto, {new: true});
