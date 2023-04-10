@@ -202,13 +202,22 @@ export class UsersService {
     }
 
    
-    async getAllUsersAndSortBy(sort:Sort){//передаем параметр/n парметров, на месте которого/ых может быть любое поле сущности
+    async getAllUsersAndSortBy(field:string){//передаем параметр/n парметров, на месте которого/ых может быть любое поле сущности
         //const users = this.userRepository.createQueryBuilder('users').orderBy(parameter)
         
         //const users = this.userRepository.createQueryBuilder('users').where("parameter").
-        const sortFormat = {[sort.name] : sort.direction};
-        sortFormat
-        const users = (await this.userRepository.find({where:{active:1}})).sort((a,b)).
+        //const sortFormat = {[sort.name] : sort.direction};
+        //sortFormat
+        const users = (await this.userRepository.find({where:{active:1}})).sort((a,b)=>{
+            if(a[field]<b[field])
+                return -1;
+            else if(
+                a[field]>b[field]
+            )
+                return 1;
+                else return 0;
+        });
+        return users;
 
         /*
         1. получить пользователей где передаваемый параметр мэтчится?/like?/in?/any..? параметру из полей сущности

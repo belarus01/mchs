@@ -125,6 +125,10 @@ export class UsersController {
         return this.usersService.searchUser(query);
     }
 
+    @Get('get/sort?')
+    getUsersAndSort(@Query('field') field:string){
+        return this.usersService.getAllUsersAndSortBy(field)
+    }
 
 /*     @Put('/edit')
     async editUser(@Param('id') id: number, @Body() dto: CreateUserDto, @Res() res){
