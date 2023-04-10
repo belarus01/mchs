@@ -7,6 +7,7 @@ import { CreateGroupDTO } from './dto/create-group.dto';
 import { DeleteGroupDTO } from './dto/delete-group.dto';
 import { GroupNotFoundException } from './exception/group.not-found.exception';
 import { Group } from './group.entity';
+import { Pagination } from 'src/utils/utils';
 
 @Injectable()
 export class GroupService {
@@ -31,10 +32,10 @@ export class GroupService {
 
     //getGroupByIdDept
 
-    async getAllGroupsByIdDept(idDept: number): Promise<Group[]>{
+    async getAllGroupsByIdDept(idDept: number, pagination: Pagination): Promise<Group[]>{
         const groups = await this.groupRepository.find({where:{
             active:1, idDept: idDept,
-        }});
+        }, order: {name: "ASC"}});
         if(groups.length == 0){
             throw new DeptNotFoundException(idDept);
         }

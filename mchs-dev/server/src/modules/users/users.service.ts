@@ -21,16 +21,15 @@ export class UsersService {
     }
 
     async getAllUsers(): Promise<User[]>{
-        const users = await this.userRepository.find();
+        const users = ((await this.userRepository.find({order: {lName: "ASC", fName: "ASC"}})));
         return users;
-
     }
 
     /*..*/
     async getAllActiveUsers(): Promise<User[]>{
         const users = await this.userRepository.find({where: {
             active:1
-        }});
+        }, order: {lName: "ASC", fName: "ASC"}});
         return users;
     }
 
@@ -38,14 +37,14 @@ export class UsersService {
         
         const users = await this.userRepository.find({where: {
             active:2
-        }});
+        }, order: {lName: "ASC", fName: "ASC"}});
         return users;
     }
 
     async getAllUnactiveUsers(): Promise<User[]>{
         const users = await this.userRepository.find({where: {
             active:0
-        }});
+        }, order: {lName: "ASC", fName: "ASC"}});
         return users;
     }
 
@@ -57,7 +56,7 @@ export class UsersService {
             sSubjObjs:true,
             idDept2:true,
             idDeptJob2: true,    
-        }});
+        }, order: {lName: "ASC", fName: "ASC"}});
         return users;
     }
 
@@ -66,7 +65,7 @@ export class UsersService {
     async getAllDeptUsers(id_dept:number): Promise<User[] | undefined> {  
         const users = await this.userRepository.find({where: {
             active:1, idDept:id_dept,
-        }});
+        },order: {lName: "ASC", fName: "ASC"}});
         if(users.length == 0){
             throw new DeptNotFoundException(id_dept);
         }
@@ -80,7 +79,7 @@ export class UsersService {
             sSubjObjs:true,
             idDept2:true,
             idDeptJob2: true,  
-        }});
+        }, order: {lName: "ASC", fName: "ASC"}});
         if(users.length == 0){
             throw new DeptNotFoundException(id_dept);
         }
@@ -191,7 +190,7 @@ export class UsersService {
             sSubjObjs:true,
             idDept2:true,
             idDeptJob2: true,    
-        }, skip:pagination.pageSize});
+        }, order: {lName: "ASC", fName: "ASC"}, skip:pagination.pageSize});
         return users;
     }
 /*     async editUser(id: number, dto:CreateUserDto): Promise<User>{//тот же самый updateUser
