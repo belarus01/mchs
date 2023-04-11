@@ -8,16 +8,18 @@ import { switchMap, map, catchError} from 'rxjs/operators';
 import { DeleteUserDTO } from './dto/deleteUser.dto';
 import { UserNotFoundException } from './exception/user.not-found.exception';
 import { DeptNotFoundException } from '../department/exception/dept.not-found.exception';
-import { Pagination } from 'src/utils/utils';
+import { Order, Pagination, skipPage, sortByField } from 'src/utils/utils';
 
-interface Sort{
+/* interface Sort{
     name:string;
     direction:string;
-}
+} */
 
 @Injectable()
-export class UsersService {
+export class UsersService{
     constructor(@InjectRepository(User, 'mchs_connection') private userRepository: Repository<User>){}
+
+
 
     async createUser(dto:CreateUserDto): Promise<User>{
         const user = this.userRepository.create(dto);
@@ -198,35 +200,25 @@ export class UsersService {
             idDeptJob2: true,    
         }, order: {lName: "ASC", fName: "ASC"}, skip:pagination.pageSize*(pagination.current-1), take:pagination.pageSize},);
         pagination.total = users.length;
-        return {users, pagination};
+        return {users, pagination};// return {users, current, pageSize, total}
     }
 
-   
-    async getAllUsersAndSortBy(field:string, order:number){//передаем параметр/n парметров, на месте которого/ых может быть любое поле сущности
-        //const users = this.userRepository.createQueryBuilder('users').orderBy(parameter)
-        
-        //const users = this.userRepository.createQueryBuilder('users').where("parameter").
-        //const sortFormat = {[sort.name] : sort.direction};
-        //sortFormat
-        const users = (await this.userRepository.find({where:{active:1}})).sort((a,b)=>{
-            if(a[field]<b[field])
-                return -1*order;
-            else if(
-                a[field]>b[field]
-            )
-                return 1*order;
-                else return 0;
-        });
-        return users;
-
-        /*
-        1. получить пользователей где передаваемый параметр мэтчится?/like?/in?/any..? параметру из полей сущности
-        2. orderBy({
-    "user.parameter": "ASC",
-    })
-        */
-
+    async getAllUsersAndSortBy(field:string, order:number){
+        const users = (await this.userRepository.find({where:{active:1}}));
+        const sorted = sortByField(users, field, order);
+        return sorted;
     }
+
+    async getAllUsersAndSortAndPage(field:string, order:number, pagination:Pagination){///не работает..пока
+        const users = (await this.userRepository.find({where:{active:1}}));
+        const sorted = sortByField(users, field, order);
+        //const paged = skipPage(sorted, pagination.current, pagination.pageSize);
+        return sorted;
+    }
+
+    
+
+
 /*     async editUser(id: number, dto:CreateUserDto): Promise<User>{//тот же самый updateUser
         const editedUser = await this.userRepository.findByIdAndUpdate(id, dto, {new: true});
         

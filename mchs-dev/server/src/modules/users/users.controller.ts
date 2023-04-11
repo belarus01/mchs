@@ -5,11 +5,8 @@ import { Observable, from, throwError } from 'rxjs';
 import { DeleteUserDTO } from './dto/deleteUser.dto';
 import { HttpExceptionFilter } from '../filter/http-exception.filter';
 import { UpdateDateColumn } from 'typeorm';
-import { Pagination } from 'src/utils/utils';
-interface Order{
-    field:string;
-    order:number;
-}
+import { Order, Pagination } from 'src/utils/utils';
+
 @Controller('users')
 //@UseFilters(new HttpExceptionFilter())//probably no sense bcs the global one is set in app.module/main.ts
 export class UsersController {
@@ -128,10 +125,10 @@ export class UsersController {
         return this.usersService.searchUser(query);
     }
 
-    @Get('get/sort?')
-    getUsersAndSort(@Query() params:Order){
+    @Get('get/sort')
+    getUsersAndSort(@Query() params: Order){
         const {field, order} = params;
-        return this.usersService.getAllUsersAndSortBy(field, order)
+        return this.usersService.getAllUsersAndSortBy(field, order);
     }
 
 /*     @Put('/edit')
