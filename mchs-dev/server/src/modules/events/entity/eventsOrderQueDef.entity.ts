@@ -4,17 +4,21 @@ import {
     Index,
     JoinColumn,
     ManyToOne,
-    OneToMany,
     PrimaryGeneratedColumn,
   } from "typeorm";
 import { SEventsOrder } from "./eventsOrder.entity";
-import { SEventsQue } from "./eventsQue.entity";
-import { SEventsOrderQueDef } from "./eventsOrderQueDef.entity";
+import { SEventsOrderQue } from "./eventsOrderQue.entity";
+import { SSubjObj } from "src/modules/object/entity/object.entity";
+/*   import { SEventsOrder } from "./SEventsOrder";
+  import { SEventsOrderQue } from "./SEventsOrderQue";
+  import { SSubjObj } from "./SSubjObj"; */
   
-  @Index("FK_s_events_order_que_id_event_order", ["idEventOrder"], {})
-  @Index("FK_s_events_order_que_id_event_que", ["idEventQue"], {})
-  @Entity("s_events_order_que", { schema: "mchs" })
-  export class SEventsOrderQue {
+  @Index("FK_s_events_order_que_def_id_def2", ["idDef"], {})
+  @Index("FK_s_events_order_que_def_id_event_order", ["idEventOrder"], {})
+  @Index("FK_s_events_order_que_def_id_event_order_que", ["idEventQue"], {})
+  @Index("FK_s_events_order_que_def_id_obj", ["idObj"], {})
+  @Entity("s_events_order_que_def", { schema: "mchs" })
+  export class SEventsOrderQueDef {
     @PrimaryGeneratedColumn({ type: "int", name: "id_list", unsigned: true })
     idList: number;
   
@@ -24,15 +28,29 @@ import { SEventsOrderQueDef } from "./eventsOrderQueDef.entity";
     @Column("int", { name: "id_event_que", nullable: true, unsigned: true })
     idEventQue: number | null;
   
-    @Column("tinyint", {
-      name: "fl_ok",
+    @Column("bigint", { name: "id_obj", nullable: true, unsigned: true })
+    idObj: number | null;
+  
+    @Column("bigint", { name: "id_def", nullable: true, unsigned: true })
+    idDef: number | null;
+  
+    @Column("int", {
+      name: "num_reg",
       nullable: true,
-      comment: "0-исправлено, 1-нет,2 частично,3-перенесено",
+      comment: "Номер по порядку",
       unsigned: true,
     })
-    flOk: number | null;
+    numReg: number | null;
   
-    @Column("datetime", {
+    @Column("tinyint", {
+      name: "fl_ok",
+      comment: "0-исправлено, 1-нет,2 частично,3-перенесено",
+      unsigned: true,
+      default: () => "'1'",
+    })
+    flOk: number;
+  
+    @Column("date", {
       name: "date_record",
       nullable: true,
       comment: "Дата изменения записи",
@@ -86,36 +104,29 @@ import { SEventsOrderQueDef } from "./eventsOrderQueDef.entity";
     })
     transferData: string | null;
   
-    @Column("varchar", {
-      name: "problem_info",
-      nullable: true,
-      comment:
-        "В карточке учета субъекта пром.безопасности.Сведения о проблемных вопросах",
-      length: 850,
-    })
-    problemInfo: string | null;
-  
-/*     @ManyToOne(
+    @ManyToOne(
       () => SEventsOrder,
-      (sEventsOrder) => sEventsOrder.sEventsOrderQues,
+      (sEventsOrder) => sEventsOrder.sEventsOrderQueDefs,
       { onDelete: "NO ACTION", onUpdate: "CASCADE" }
     )
     @JoinColumn([
       { name: "id_event_order", referencedColumnName: "idEventOrder" },
     ])
-    idEventOrder2: SEventsOrder; *///ВЗАИМОСВЯЗЬ В БД УБРАНА
+    idEventOrder2: SEventsOrder;
   
-/*     @ManyToOne(() => SEventsQue, (sEventsQue) => sEventsQue.sEventsOrderQues, {
+    @ManyToOne(
+      () => SEventsOrderQue,
+      (sEventsOrderQue) => sEventsOrderQue.sEventsOrderQueDefs,
+      { onDelete: "NO ACTION", onUpdate: "CASCADE" }
+    )
+    @JoinColumn([{ name: "id_event_que", referencedColumnName: "idList" }])
+    idEventQue2: SEventsOrderQue;
+  
+    @ManyToOne(() => SSubjObj, (sSubjObj) => sSubjObj.sEventsOrderQueDefs, {
       onDelete: "NO ACTION",
       onUpdate: "CASCADE",
     })
-    @JoinColumn([{ name: "id_event_que", referencedColumnName: "idList" }])
-    idEventQue2: SEventsQue; *////ВЗАИМОСВЯЗЬ В БД УБРАНА
-
-    @OneToMany(
-      () => SEventsOrderQueDef,
-      (sEventsOrderQueDef) => sEventsOrderQueDef.idEventQue2
-    )
-    sEventsOrderQueDefs: SEventsOrderQueDef[];
+    @JoinColumn([{ name: "id_obj", referencedColumnName: "idObj" }])
+    idObj2: SSubjObj;
   }
   

@@ -1,4 +1,4 @@
-import { SSubjObj } from "src/modules/object/object.entity";
+import { SSubjObj } from "src/modules/object/entity/object.entity";
 import {
     Column,
     Entity,

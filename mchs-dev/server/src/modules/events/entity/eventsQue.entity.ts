@@ -55,11 +55,11 @@ import { SEventsOrderQue } from "./eventsOrderQue.entity";
     })
     info: string | null;
   
-    @OneToMany(
+    /* @OneToMany(
       () => SEventsOrderQue,
       (sEventsOrderQue) => sEventsOrderQue.idEventQue2
     )
-    sEventsOrderQues: SEventsOrderQue[];
+    sEventsOrderQues: SEventsOrderQue[]; *////ВЗАИМОСВЯЗЬ В БД УБРАНА
   
     @ManyToOne(() => SEvents, (sEvents) => sEvents.sEventsQues, {
       onDelete: "NO ACTION",

@@ -15,6 +15,7 @@ import { SEventsOrderObj } from './entity/eventsOrderObj.entity';
 import { SEventsOrderQue } from './entity/eventsOrderQue.entity';
 import { SEventsQue } from './entity/eventsQue.entity';
 import { SEventsPlan } from './entity/eventsPlan.entity';
+import { SEventsOrderQueDef } from './entity/eventsOrderQueDef.entity';
 
 
 @Module({
@@ -31,6 +32,7 @@ import { SEventsPlan } from './entity/eventsPlan.entity';
     SEventsOrderObj,
     SEventsOrderQue,
     SEventsQue,
+    SEventsOrderQueDef,
     SEventsPlan,
   ], 'mchs_connection'),],
   providers: [EventsService, ],

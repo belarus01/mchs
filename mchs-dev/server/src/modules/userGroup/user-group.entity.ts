@@ -24,7 +24,12 @@ export class UserGroup {
   @Column("int", { name: "id_group", unsigned: true })
   idGroup: number;
 
-  @Column("int", { name: "uid_gr", nullable: true, unsigned: true })
+  @Column("int", {
+    name: "uid_gr",
+    nullable: true,
+    comment: "Пользователь, включенный в состав группы",
+    unsigned: true,
+  })
   uidGr: number | null;
 
   @Column("int", {

@@ -7,11 +7,12 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { SEventsOrderAdmBan } from "../events/entity/eventsOrderAdmBan.entity";
-import { SEventsOrderAdmForce } from "../events/entity/eventsOrderAdmForce.entity";
-import { SEventsOrderObj } from "../events/entity/eventsOrderObj.entity";
-import { SSubj } from "../subject/entity/subject.entity";
-import { User } from "../users/user.entity";
+import { SEventsOrderAdmBan } from "../../events/entity/eventsOrderAdmBan.entity";
+import { SEventsOrderAdmForce } from "../../events/entity/eventsOrderAdmForce.entity";
+import { SEventsOrderObj } from "../../events/entity/eventsOrderObj.entity";
+import { SSubj } from "../../subject/entity/subject.entity";
+import { User } from "../../users/user.entity";
+import { SEventsOrderQueDef } from "../../events/entity/eventsOrderQueDef.entity";
 
 @Index("id_subj", ["idSubj"], {})
 @Index("s_subj_obj_FK_1", ["uid"], {})
@@ -157,6 +158,12 @@ export class SSubjObj {
 
   @OneToMany(() => SEventsOrderObj, (sEventsOrderObj) => sEventsOrderObj.idObj2)
   sEventsOrderObjs: SEventsOrderObj[];
+
+  @OneToMany(
+    () => SEventsOrderQueDef,
+    (sEventsOrderQueDef) => sEventsOrderQueDef.idObj2
+  )
+  sEventsOrderQueDefs: SEventsOrderQueDef[];
 
   @ManyToOne(() => User, (users) => users.sSubjObjs, {
     onDelete: "NO ACTION",

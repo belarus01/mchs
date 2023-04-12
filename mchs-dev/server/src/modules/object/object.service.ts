@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ObjectNotFoundException } from './exception/object.not-found.exception';
-import { SSubjObj } from './object.entity';
+import { SSubjObj } from './entity/object.entity';
 import { skipPage, sortByField } from 'src/utils/utils';
 import { CreateObjectDTO } from './dto/create-object.dto';
 

@@ -1,5 +1,5 @@
 import { SEventsOrder } from "src/modules/events/entity/eventsOrder.entity";
-import { SSubjObj } from "src/modules/object/object.entity";
+import { SSubjObj } from "src/modules/object/entity/object.entity";
 import { SVedomstva } from "src/modules/vedomstva/vedomstva.entity";
 import {
   Column,

@@ -11,7 +11,7 @@ import { SChlistTnpa } from "../chlist/entity/chlistTnpa.entity";
 import { SDept } from "../department/entity/department.entity";
 import { SDeptJob } from "../jobTitle/jobTitle.entity";
 import { Notification } from "../notification/notification.entity";
-import { SSubjObj } from "../object/object.entity";
+import { SSubjObj } from "../object/entity/object.entity";
 import { UserPermissions } from "../permission/entity/userPermission.entity";
 import { UserGroup } from "../userGroup/user-group.entity";
 import { SEventsPrivate } from "../events/entity/eventsPrivate.entity";
