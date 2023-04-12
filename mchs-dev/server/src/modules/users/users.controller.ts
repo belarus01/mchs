@@ -134,8 +134,8 @@ export class UsersController {
     @Get('get/sort/page')
     getAllUsersAndSortAndPage(@Query() params: Order, @Query() params2: Pagination){
         const {field, order} = params;
-        const {current, pageSize} = params2;
-        return this.usersService.getAllUsersAndSortAndPage(field, order, current, pageSize);
+        const {current, pageSize, total} = params2;
+        return this.usersService.getAllUsersAndSortAndPage(field, order, current, pageSize, total);
     }
 //? по идее где нужна будет сортировка, там и пагинация нужна? мб тогда в один интерфейс..или нет..
 

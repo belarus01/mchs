@@ -27,10 +27,10 @@ export interface Pagination {
 
 
 //попробоать без skip take из FindManyOptions, создать свое
-export function skipPage<T>(array:T[], current: number, pageSize: number){
+export function skipPage<T>(array:T[], current: number, pageSize: number, total: number){
   const skip = pageSize*(current-1);
   const take = pageSize;
-  const total = array.length;
+  total = array.length;
   return {array, skip, take, total};
   }
 
