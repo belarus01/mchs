@@ -17,6 +17,8 @@ import { SEventsQue } from './entity/eventsQue.entity';
 import { SEventsDef } from './entity/eventsDef.entity';
 import { CreateEventDefDTO } from './dto/create-eventDef.dto';
 import { CreateEventQueDTO } from './dto/create-eventQue.dto';
+import { skipPage, sortByField } from 'src/utils/utils';
+import { CreateEventOrderDTO } from './dto/create-eventOrder';
 
 
 
@@ -68,6 +70,11 @@ export class EventsService {
         }
     }
 
+    async createEventOrder(dto: CreateEventOrderDTO){
+        const event = this.eventsOrderRepository.create(dto);
+        return this.eventsOrderRepository.save(event);
+    }
+
     async createEventDef(dto: CreateEventDefDTO){
         const event = this.eventsDefRepository.create(dto);
         return this.eventsDefRepository.save(event);
@@ -83,6 +90,20 @@ export class EventsService {
             active:1
         }});
         return events;
+    }
+
+    async getAllEventsSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
+        const events = (await this.eventsRepository.find({where:{active:1}}));
+        const sorted = sortByField(events, field, order);
+        const paged = skipPage(sorted, current, pageSize, total);
+        return paged;
+    }
+
+    async getAllEventsOrdersSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
+        const events = (await this.eventsOrderRepository.find({where:{active:1}}));
+        const sorted = sortByField(events, field, order);
+        const paged = skipPage(sorted, current, pageSize, total);
+        return paged;
     }
 
     async getAllEventDefs(){
@@ -265,12 +286,20 @@ export class EventsService {
         return await this.eventsRepository.update(idEvent,eventDto);
     }
 
+    async updateEventOrder(idEventOrder: number, dto: CreateEventOrderDTO){
+        return await this.eventsOrderRepository.update(idEventOrder, dto);
+    }
+
     async updateEventDef(idList: number, dto: CreateEventDefDTO){
         return await this.eventsDefRepository.update(idList, dto);
     }
 
     async updateEventQue(idList: number, dto: CreateEventQueDTO){
         return await this.eventsDefRepository.update(idList, dto);
+    }
+
+    async deleteEventOrderById(idEventOrder: number){
+        return await this.eventsOrderRepository.update(idEventOrder, {active:0});
     }
 
     async deleteEventDefById(idList: number){

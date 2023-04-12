@@ -31,8 +31,8 @@ export class SubjectService {
     }
 
     async getAllSubjSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
-        const objects = (await this.subjRepository.find({where:{active:1}}));
-        const sorted = sortByField(objects, field, order);
+        const subjects = (await this.subjRepository.find({where:{active:1}}));
+        const sorted = sortByField(subjects, field, order);
         const paged = skipPage(sorted, current, pageSize, total);
         return paged;
     }

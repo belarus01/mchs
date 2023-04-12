@@ -10,6 +10,7 @@ export class CreateEventDTO{
     @IsNotEmpty()
     org: number;
     
+    active: number;
     dateBegin: Date;
     dateEnd: Date;
 

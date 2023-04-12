@@ -7,7 +7,7 @@ import { CreateGroupDTO } from './dto/create-group.dto';
 import { DeleteGroupDTO } from './dto/delete-group.dto';
 import { GroupNotFoundException } from './exception/group.not-found.exception';
 import { Group } from './group.entity';
-import { Pagination } from 'src/utils/utils';
+import { Pagination, skipPage, sortByField } from 'src/utils/utils';
 
 @Injectable()
 export class GroupService {
@@ -41,6 +41,13 @@ export class GroupService {
         }
         return groups;
     }
+
+    async getAllGroupsSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
+        const groups = (await this.groupRepository.find({where:{active:1}}));
+        const sorted = sortByField(groups, field, order);
+        const paged = skipPage(sorted, current, pageSize, total);
+        return paged;
+    } 
 
     async createGroup(dto: CreateGroupDTO): Promise<Group>{//!!уточнить create-group.dto
         const group = this.groupRepository.create(dto);

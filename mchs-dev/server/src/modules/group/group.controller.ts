@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CreateGroupDTO } from './dto/create-group.dto';
 import { DeleteGroupDTO } from './dto/delete-group.dto';
 import { GroupService } from './group.service';
+import { Order, Pagination } from 'src/utils/utils';
 
 @Controller('group')
 export class GroupController {
@@ -19,6 +20,13 @@ export class GroupController {
         return group;
     }
 
+    @Get('get/all/sorted/by/page')
+    async getAllDeptsSortAndPage(@Query() params: Order, @Query() params2: Pagination){
+        const {field, order} = params;
+        const {current, pageSize, total} = params2;
+        return this.groupService.getAllGroupsSortAndPage(field, order, current, pageSize, total);
+    }
+    
     @Post('/create')
     async createGroup(@Body() dto: CreateGroupDTO){
         return this.groupService.createGroup(dto);

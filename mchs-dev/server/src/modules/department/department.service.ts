@@ -61,12 +61,12 @@ export class DepartmentService {
         return depts;
     }
 
-/*     async getAllDeptsSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
-        const objects = (await this.deptRepository.find({where:{active:1}}));
-        const sorted = sortByField(objects, field, order);
+    async getAllDeptsSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
+        const depts = (await this.deptRepository.find({where:{active:1}}));
+        const sorted = sortByField(depts, field, order);
         const paged = skipPage(sorted, current, pageSize, total);
         return paged;
-    }  */
+    } 
 
     async getAllDeptUnits(): Promise<SDeptUnits[]>{
         const depts = await this.deptUnitRepository.find();

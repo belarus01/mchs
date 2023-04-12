@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Put, Delete, Param, Req } from '@nestjs/common';
+import { Controller, Post, Body, Get, Put, Delete, Param, Req, Query } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { CreateEventDTO } from './dto/create-event.dto';
 import { GetNowDTO } from './dto/getNow.dto';
@@ -6,6 +6,8 @@ import { SEvents } from './entity/events.entity';
 import { EventsService } from './events.service';
 import { CreateEventQueDTO } from './dto/create-eventQue.dto';
 import { CreateEventDefDTO } from './dto/create-eventDef.dto';
+import { Order, Pagination } from 'src/utils/utils';
+import { CreateEventOrderDTO } from './dto/create-eventOrder';
 
 
 @Controller('events')
@@ -15,6 +17,11 @@ export class EventsController {
     @Post('/create')
     createEvent(@Body() eventDto: CreateEventDTO){
         return this.eventsService.createEvent(eventDto);
+    }
+
+    @Post('/create/eventOrder')
+    createEventOrder(@Body() eventDto: CreateEventOrderDTO){
+        return this.eventsService.createEventOrder(eventDto);
     }
 
     @Post('/create/eventDef')
@@ -35,6 +42,20 @@ export class EventsController {
     @Get('/get/all')
     async getAllEvents(){
         return this.eventsService.getAllEvents();
+    }
+
+    @Get('get/all/sorted/by/page')
+    async getAllEventsSortAndPage(@Query() params: Order, @Query() params2: Pagination){
+        const {field, order} = params;
+        const {current, pageSize, total} = params2;
+        return this.eventsService.getAllEventsSortAndPage(field, order, current, pageSize, total);
+    }
+
+    @Get('get/all/eventsOrders/sorted/by/page')
+    async getAllEventsOrdersSortAndPage(@Query() params: Order, @Query() params2: Pagination){
+        const {field, order} = params;
+        const {current, pageSize, total} = params2;
+        return this.eventsService.getAllEventsOrdersSortAndPage(field, order, current, pageSize, total);
     }
 
     @Get('/get/all/eventDefs')
@@ -111,12 +132,6 @@ export class EventsController {
         return this.eventsService.getTypeOrders();
     } */
 
-
-    @Put('/delete/:idEvent')
-    async deleteEventById(@Param('idEvent') idEvent: number){
-        return this.eventsService.deleteEventById(idEvent);
-    }
-
     //добавлен idEvent в путь
     /* @Put('/update/:idEvent')
     upadateEvent(@Param('idEvent') idEvent: number, @Body() eventDto: CreateEventDTO): Observable<any> {
@@ -128,6 +143,11 @@ export class EventsController {
         return this.eventsService.updateEvent(idEvent, eventDto);
     }
 
+    @Put('/update/eventOrder/:idEventOrder')
+    async updateEventOrder(@Param('idEventOrder') idEventOrder: number, @Body() eventDto: CreateEventOrderDTO){
+        return this.eventsService.updateEventOrder(idEventOrder, eventDto);
+    }
+
     @Put('/update/eventDef/:idList')
     async updateEventDef(idList: number, dto: CreateEventDefDTO){
         return this.eventsService.updateEventDef(idList, dto);
@@ -136,6 +156,16 @@ export class EventsController {
     @Put('/update/eventQue/:idList')
     async updateEventQue(idList: number, dto: CreateEventQueDTO){
         return this.eventsService.updateEventQue(idList, dto);
+    }
+
+    @Put('/delete/:idEvent')
+    async deleteEventById(@Param('idEvent') idEvent: number){
+        return this.eventsService.deleteEventById(idEvent);
+    }
+
+    @Put('/delete/eventOrder/:idEventOrder')
+    async deleteEventOrderById(@Param('idEventOrder') idEventOrder: number){
+        return this.eventsService.deleteEventOrderById(idEventOrder);
     }
 
     @Put('/delete/eventDef/:idList')

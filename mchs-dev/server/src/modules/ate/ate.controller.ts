@@ -1,5 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { AteService } from './ate.service';
+import { Order, Pagination } from 'src/utils/utils';
 
 @Controller('ate')
 export class AteController {
@@ -49,10 +50,24 @@ export class AteController {
         return this.ateService.getAllRayons();
     }
 
+    @Get('get/all/rayons/sorted/by/page')
+    async getAllAteRayonsSortAndPage(@Query() params: Order, @Query() params2: Pagination){
+        const {field, order} = params;
+        const {current, pageSize, total} = params2;
+        return this.ateService.getAllAteRayonsSortAndPage(field, order, current, pageSize, total);
+    }
+
     @Get('/get/all/streets')
     async getAllStreets(){
         return this.ateService.getAllStreets();
     } 
+
+    @Get('get/all/streets/sorted/by/page')
+    async getAllAteStreetsSortAndPage(@Query() params: Order, @Query() params2: Pagination){
+        const {field, order} = params;
+        const {current, pageSize, total} = params2;
+        return this.ateService.getAllAteStreetsSortAndPage(field, order, current, pageSize, total);
+    }
 
     @Get('/get/rayons/in_obl/:idObl')
     async getAllRayonsByOblId(@Param('idObl') idObl: number){

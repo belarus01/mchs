@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { DepartmentService } from './department.service';
 import { CreateDeptDTO } from './dto/create-department.dto';
 import { CreateDeptUnitDTO } from './dto/create-departmentUnit.dto';
+import { Order, Pagination } from 'src/utils/utils';
 
 @Controller('department')
 export class DepartmentController {
@@ -34,14 +35,21 @@ export class DepartmentController {
         return this.deptService.getAllMchsDepts();
     }
 
-    @Get('/get/nadz/all')
+    @Get('/get/all/nadz')
     async getAllNadzDepts(){
         return this.deptService.getAllNadzDepts();
     }
 
-    @Get('/get')
+    @Get('/get/all')
     getAllDepts(){
         return this.deptService.getAllDepts();
+    }
+
+    @Get('get/all/sorted/by/page')
+    async getAllDeptsSortAndPage(@Query() params: Order, @Query() params2: Pagination){
+        const {field, order} = params;
+        const {current, pageSize, total} = params2;
+        return this.deptService.getAllDeptsSortAndPage(field, order, current, pageSize, total);
     }
 
     @Get('/get/units')

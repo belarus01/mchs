@@ -6,4 +6,5 @@ export interface CreateEventOrderDTO{
     fioPostTitle: string;
     postAgent: string;
     nameAgent: string;
+    active: number;
 }

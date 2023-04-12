@@ -7,6 +7,7 @@ import { SAteRayon } from './entity/ateRayon.entity';
 import { SAteReestr } from './entity/ateReestr.entity';
 import { SAteStreet } from './entity/ateStreet.entity';
 import { AteNotFoundException } from './exception/ate.not-found.exception';
+import { skipPage, sortByField } from 'src/utils/utils';
 
 @Injectable()
 export class AteService {
@@ -84,6 +85,20 @@ export class AteService {
             active:1
         }});
         return rayons;
+    }
+
+    async getAllAteRayonsSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
+        const rayons = (await this.ateRayonRepository.find({where:{active:1}}));
+        const sorted = sortByField(rayons, field, order);
+        const paged = skipPage(sorted, current, pageSize, total);
+        return paged;
+    }
+
+    async getAllAteStreetsSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
+        const streets = (await this.ateRayonRepository.find({where:{active:1}}));
+        const sorted = sortByField(streets, field, order);
+        const paged = skipPage(sorted, current, pageSize, total);
+        return paged;
     }
 
     async getReestrById(idReestr: number): Promise<SAteReestr>{
