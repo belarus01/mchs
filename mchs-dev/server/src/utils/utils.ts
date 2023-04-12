@@ -10,7 +10,7 @@ export interface Pagination {
 export function skipPage<T>(array:T[], current: string, pageSize: string, total: number){
   const skip = parseInt(pageSize)*(parseInt(current)-1);
   const take = pageSize;
-  const result = array.slice(skip, parseInt(skip+take));
+  const result = array.slice(skip, skip+parseInt(take));
   total = array.length;
   return {result, skip, take, total};
   }
