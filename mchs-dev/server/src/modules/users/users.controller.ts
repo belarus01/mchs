@@ -131,6 +131,15 @@ export class UsersController {
         return this.usersService.getAllUsersAndSortBy(field, order);
     }
 
+    @Get('get/sort/page')
+    getAllUsersAndSortAndPage(@Query() params: Order, @Query() params2: Pagination){
+        const {field, order} = params;
+        const {current, pageSize} = params2;
+        return this.usersService.getAllUsersAndSortAndPage(field, order, current, pageSize);
+    }
+//? по идее где нужна будет сортировка, там и пагинация нужна? мб тогда в один интерфейс..или нет..
+
+
 /*     @Put('/edit')
     async editUser(@Param('id') id: number, @Body() dto: CreateUserDto, @Res() res){
         const editedUser = await this.usersService.editUser(id, dto)

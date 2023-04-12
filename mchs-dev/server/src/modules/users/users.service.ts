@@ -209,11 +209,11 @@ export class UsersService{
         return sorted;
     }
 
-    async getAllUsersAndSortAndPage(field:string, order:number, pagination:Pagination){///не работает..пока
+    async getAllUsersAndSortAndPage(field:string, order:number, current: number, pageSize: number){
         const users = (await this.userRepository.find({where:{active:1}}));
         const sorted = sortByField(users, field, order);
-        //const paged = skipPage(sorted, pagination.current, pagination.pageSize);
-        return sorted;
+        const paged = skipPage(sorted, current, pageSize);
+        return paged;
     }
 
     

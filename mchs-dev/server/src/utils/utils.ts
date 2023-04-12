@@ -7,14 +7,13 @@ export interface Pagination {
     total?: number;
   }
 
-export function skipPage<T extends FindManyOptions>(array:T[], current: number, pageSize: number){ // или все-таки передавать сюда total..
+/* export function skipPage<T extends FindManyOptions>(array:T[], current: number, pageSize: number){ // или все-таки передавать сюда total..
   (current: number, pageSize: number): FindManyOptions => ({
     skip: pageSize*(current-1),
     take: pageSize
     });
   const total = array.length;
-  return{array, current, pageSize, total};
-  
+  return{array, current, pageSize, total};///стоооооппппп а то ли ты возвращаешь??} */
   
   //const{current, pageSize, total} = pagination;
   /* skip: pageSize*(current-1),
@@ -23,8 +22,18 @@ export function skipPage<T extends FindManyOptions>(array:T[], current: number, 
 
    /**pagination.total = users.length;
         return {users, pagination}; */
-}
+
 //skip:pagination.pageSize*(pagination.current-1), take:pagination.pageSize}
+
+
+//попробоать без skip take из FindManyOptions, создать свое
+export function skipPage<T>(array:T[], current: number, pageSize: number){
+  const skip = pageSize*(current-1);
+  const take = pageSize;
+  const total = array.length;
+  return {array, skip, take, total};
+  }
+
 
 
 export interface Order{
