@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { SSubj } from './entity/subject.entity';
 import { SubjectNotFoundException } from './exception/subject.not-found.exception';
 import { CreateSubjectDTO } from './dto/create-subject.dto';
+import { skipPage, sortByField } from 'src/utils/utils';
 
 @Injectable()
 export class SubjectService {
@@ -27,6 +28,13 @@ export class SubjectService {
             active:1
         }});
         return subj;
+    }
+
+    async getAllSubjSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
+        const objects = (await this.subjRepository.find({where:{active:1}}));
+        const sorted = sortByField(objects, field, order);
+        const paged = skipPage(sorted, current, pageSize, total);
+        return paged;
     }
 
     async updateSubj(idSubj: number, dto: CreateSubjectDTO){

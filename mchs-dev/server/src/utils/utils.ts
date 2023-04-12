@@ -2,52 +2,30 @@ import { skip } from "rxjs";
 import { FindManyOptions } from "typeorm";
 
 export interface Pagination {
-    current?: number;
-    pageSize?: number;
+    current?: string;
+    pageSize?: string;
     total?: number;
   }
 
-/* export function skipPage<T extends FindManyOptions>(array:T[], current: number, pageSize: number){ // или все-таки передавать сюда total..
-  (current: number, pageSize: number): FindManyOptions => ({
-    skip: pageSize*(current-1),
-    take: pageSize
-    });
-  const total = array.length;
-  return{array, current, pageSize, total};///стоооооппппп а то ли ты возвращаешь??} */
-  
-  //const{current, pageSize, total} = pagination;
-  /* skip: pageSize*(current-1),
-  take: pageSize */
-  //return { array, pagination};
-
-   /**pagination.total = users.length;
-        return {users, pagination}; */
-
-//skip:pagination.pageSize*(pagination.current-1), take:pagination.pageSize}
-
-
-//попробоать без skip take из FindManyOptions, создать свое
-export function skipPage<T>(array:T[], current: number, pageSize: number, total: number){
-  const skip = pageSize*(current-1);
+export function skipPage<T>(array:T[], current: string, pageSize: string, total: number){
+  const skip = parseInt(pageSize)*(parseInt(current)-1);
   const take = pageSize;
-  const result = array.slice(skip, skip+take);
+  const result = array.slice(skip, parseInt(skip+take));
   total = array.length;
   return {result, skip, take, total};
   }
 
-
-
 export interface Order{
     field:string;
-    order:number;
+    order:string;
 }
 
-export function sortByField<T>(array:T[], field:string, order:number){
+export function sortByField<T>(array:T[], field:string, order:string){
   const sorted = array.sort((a,b)=>{
     if(a[field] < b[field])
-      return -1*order;
+      return -1*parseInt(order);
     else if(a[field] > b[field])
-      return 1*order;
+      return 1*parseInt(order);
     else return 0;
   })
   return sorted;

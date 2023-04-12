@@ -189,7 +189,7 @@ export class UsersService{
         return users;
     }
 
-    async getAllUsersWithRelationsByPages(pagination:Pagination){
+/*     async getAllUsersWithRelationsByPages(pagination:Pagination){
         console.log(pagination);
         const users = await this.userRepository.
         find({where:{
@@ -201,15 +201,15 @@ export class UsersService{
         }, order: {lName: "ASC", fName: "ASC"}, skip:pagination.pageSize*(pagination.current-1), take:pagination.pageSize},);
         pagination.total = users.length;
         return {users, pagination};// return {users, current, pageSize, total}
-    }
+    } */
 
-    async getAllUsersAndSortBy(field:string, order:number){
+    async getAllUsersAndSortBy(field:string, order:string){
         const users = (await this.userRepository.find({where:{active:1}}));
         const sorted = sortByField(users, field, order);
         return sorted;
     }
 
-    async getAllUsersAndSortAndPage(field:string, order:number, current: number, pageSize: number, total: number){
+    async getAllUsersSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
         const users = (await this.userRepository.find({where:{active:1}}));
         const sorted = sortByField(users, field, order);
         const paged = skipPage(sorted, current, pageSize, total);

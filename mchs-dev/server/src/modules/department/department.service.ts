@@ -7,6 +7,7 @@ import { DeptNotFoundException } from './exception/dept.not-found.exception';
 import { DeptUnitNotFoundException } from './exception/deptUnit.not-found.exception';
 import { CreateDeptDTO } from './dto/create-department.dto';
 import { CreateDeptUnitDTO } from './dto/create-departmentUnit.dto';
+import { skipPage, sortByField } from 'src/utils/utils';
 
 @Injectable()
 export class DepartmentService {
@@ -59,6 +60,13 @@ export class DepartmentService {
         }});
         return depts;
     }
+
+/*     async getAllDeptsSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
+        const objects = (await this.deptRepository.find({where:{active:1}}));
+        const sorted = sortByField(objects, field, order);
+        const paged = skipPage(sorted, current, pageSize, total);
+        return paged;
+    }  */
 
     async getAllDeptUnits(): Promise<SDeptUnits[]>{
         const depts = await this.deptUnitRepository.find();

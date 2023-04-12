@@ -92,11 +92,11 @@ export class UsersController {
         return users;
     }
 
-    @Get('/get/all/users/by/page')
+/*     @Get('/get/all/by/page')
     async getAllUsersWithRelationsByPages(@Query() pagination:Pagination){
         const users = this.usersService.getAllUsersWithRelationsByPages(pagination);
         return users;
-    }
+    } */
 
     @Put('/update')
     updateUser(){
@@ -131,11 +131,12 @@ export class UsersController {
         return this.usersService.getAllUsersAndSortBy(field, order);
     }
 
-    @Get('get/sort/page')
-    getAllUsersAndSortAndPage(@Query() params: Order, @Query() params2: Pagination){
+    @Get('get/all/sorted/by/page')
+    getAllUsersSortAndPage(@Query() params: Order, @Query() params2: Pagination){
         const {field, order} = params;
         const {current, pageSize, total} = params2;
-        return this.usersService.getAllUsersAndSortAndPage(field, order, current, pageSize, total);
+        console.log(typeof params.order);
+        return this.usersService.getAllUsersSortAndPage(field, order, current, pageSize, total);
     }
 //? по идее где нужна будет сортировка, там и пагинация нужна? мб тогда в один интерфейс..или нет..
 

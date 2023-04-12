@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { SubjectService } from './subject.service';
 import { CreateSubjectDTO } from './dto/create-subject.dto';
+import { Order, Pagination } from 'src/utils/utils';
 
 @Controller('subject')
 export class SubjectController {
@@ -14,6 +15,13 @@ export class SubjectController {
     @Get('/get/all')
     getAllSubj(){
         return this.subjService.getAllSubj();
+    }
+
+    @Get('get/all/sorted/by/page')
+    async getAllSubjSortAndPage(@Query() params: Order, @Query() params2: Pagination){
+        const {field, order} = params;
+        const {current, pageSize, total} = params2;
+        return this.subjService.getAllSubjSortAndPage(field, order, current, pageSize, total);
     }
 
     @Get('/get/id/:idSubj')
