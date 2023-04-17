@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+/* import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { UserGroupNotFoundException } from "./exception/user-group.not-found.exception";
@@ -11,6 +11,8 @@ export class UserGroupService {
     //getDateBegin
     
     //getDateEnd
+
+    
     
     async getAllUsersInGroupByGrId(idGroup: number): Promise<UserGroup[]>{
         const users = await this.userGroupRepository.find({where: {
@@ -29,5 +31,5 @@ export class UserGroupService {
 
     
 
-}
+} */
 

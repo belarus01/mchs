@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { SEventsOrder } from "../events/entity/eventsOrder.entity";
-import { UserGroup } from "../userGroup/user-group.entity";
+import { UserGroup } from "./entity/userGroup.entity";
+//import { UserGroup } from "../userGroup/user-group.entity";
 
 
 @Entity("group", { schema: "mchs" })
@@ -46,9 +47,9 @@ export class Group {
   })
   uid: number | null;
 
-  @OneToMany(() => SEventsOrder, (sEventsOrder) => sEventsOrder.idGroup)
+  @OneToMany(() => SEventsOrder, (sEventsOrder) => sEventsOrder.idGroup, {cascade: true})
   sEventsOrders: SEventsOrder[];
 
-  @OneToMany(() => UserGroup, (userGroup) => userGroup.idGroup2)
+  @OneToMany(() => UserGroup, (userGroup) => userGroup.idGroup2, {cascade: true, eager: true})
   userGroups: UserGroup[];
 }

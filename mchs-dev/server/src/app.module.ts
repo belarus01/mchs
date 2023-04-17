@@ -16,7 +16,7 @@ import { PermissionModule } from './modules/permission/permission.module';
 import { LocationModule } from './modules/location/location.module';
 import { ChlistModule } from './modules/chlist/chlist.module';
 import { MulterModule } from '@nestjs/platform-express';
-import { UserGroupModule } from './modules/userGroup/user-group.module';
+//import { UserGroupModule } from './modules/userGroup/user-group.module';
 import { SoatoModule } from './soato/soato.module';
 import { AteModule } from './modules/ate/ate.module';
 import { DocModule } from './modules/doc/doc.module';
@@ -50,9 +50,9 @@ import { TypeModule } from './modules/type/type.module';
     TypeOrmModule.forRoot({
      name: 'mchs_connection',
       type:'mysql',
-      host:'192.168.150.29',// 192.168.150.29 | localhost
+      host:'localhost',// 192.168.150.29 | localhost
       port: 3306,
-      username: 'serge',// serge | tanya | root
+      username: 'tanya',// serge | tanya | root
       password: '123456_Qq',// 123456_Qq | 123456
       database: 'mchs',
       
@@ -121,7 +121,7 @@ import { TypeModule } from './modules/type/type.module';
     PermissionModule,
     LocationModule,
     ChlistModule,
-    UserGroupModule,
+    //UserGroupModule,
     
     MulterModule.register({
       dest: './uploads',
@@ -149,6 +149,10 @@ import { TypeModule } from './modules/type/type.module';
   ],
   controllers: [AppController],
 //   providers: [
+/*     {
+        provide: APP_GUARD,
+        useClass: RolesGuard,
+        } */
 //     {
 //     provide: APP_INTERCEPTOR,
 //     //scope: Scope.REQUEST,

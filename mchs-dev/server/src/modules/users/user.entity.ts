@@ -13,8 +13,9 @@ import { SDeptJob } from "../jobTitle/jobTitle.entity";
 import { Notification } from "../notification/notification.entity";
 import { SSubjObj } from "../object/entity/object.entity";
 import { UserPermissions } from "../permission/entity/userPermission.entity";
-import { UserGroup } from "../userGroup/user-group.entity";
+//import { UserGroup } from "../userGroup/user-group.entity";
 import { SEventsPrivate } from "../events/entity/eventsPrivate.entity";
+import { UserGroup } from "../group/entity/userGroup.entity";
 
 @Index("IDX_a894a560d274a270f087c72ba0", ["user"], { unique: true })
 @Entity("users", { schema: "mchs" })
@@ -201,7 +202,7 @@ export class User {
   @JoinColumn([{ name: "id_dept_job", referencedColumnName: "idDeptJob" }])
   idDeptJob2: SDeptJob;
 
-  @OneToMany(() => UserGroup, (userGroup) => userGroup.uidGr2)
+  @OneToMany(() => UserGroup, (userGroup) => userGroup.uidGr2, {cascade: true})
   userGroups: UserGroup[];
 
   @OneToMany(() => Notification, (notification) => notification.toU)

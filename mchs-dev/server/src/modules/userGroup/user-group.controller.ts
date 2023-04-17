@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param } from "@nestjs/common";
+/* import { Body, Controller, Get, Param } from "@nestjs/common";
 import { UserGroupService } from "./user-group.service";
 
 @Controller('user_group')
@@ -10,4 +10,4 @@ export class UserGroupController {
         const users = this.userGroupService.getAllUsersInGroupByGrId(idGroup);
         return users;
     }
-}
+} */

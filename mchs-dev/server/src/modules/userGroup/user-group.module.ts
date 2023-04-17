@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+/* import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from '../users/users.module';
 import { UsersService } from '../users/users.service';
@@ -13,3 +13,4 @@ import { UserGroupService } from './user-group.service';
   exports:[UserGroupService]
 })
 export class UserGroupModule {}
+ */
