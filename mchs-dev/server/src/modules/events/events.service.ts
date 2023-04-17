@@ -197,7 +197,7 @@ export class EventsService {
     
     async getEventsByUserId(uid: number){
         const events = await this.eventsOrderRepository.manager.query(`SELECT
-        e.id_event,e.id_event_order,ss.event title,p.name_event private,DATE_FORMAT(DATE(e.date_begin), "%d.%m.%Y") start,
+        e.id_event,e.id_event_order,ss.event title,p.name_event private,e.date_begin start,
         e.date_end end,e.date_begin_fact b_fact,e.date_end_fact e_fact,e.date_stop d_stop,e.date_continue d_cont
       FROM mchs.s_events_order e
       left JOIN mchs.s_events ss ON ss.id_event=e.id_event
@@ -313,7 +313,6 @@ export class EventsService {
     }
 
     public async send(): Promise<void> {
-        
         console.log('Notification sent');
       }
 
