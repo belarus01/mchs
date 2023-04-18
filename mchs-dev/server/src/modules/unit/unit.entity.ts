@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { SQuestion } from "../question/entity/question.entity";
+import { SEventsOrder } from "../events/entity/eventsOrder.entity";
 /* import { SFireCardBuild } from "./SFireCardBuild";
 import { SQuestion } from "./SQuestion";
  */

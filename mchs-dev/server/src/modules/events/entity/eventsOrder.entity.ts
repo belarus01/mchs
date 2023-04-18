@@ -20,6 +20,7 @@ import { SEventsOrderDefMtx } from "./eventsOrderDefMtx.entity";
 import { SEventsOrderObj } from "./eventsOrderObj.entity";
 import { SEventsPrivate } from "./eventsPrivate.entity";
 import { SEventsOrderQueDef } from "./eventsOrderQueDef.entity";
+import { SUnits } from "src/modules/unit/unit.entity";
 
 @Index("FK_s_events_order_id_dept", ["idDept"], {})
 @Index("FK_s_events_order_id_group", ["idGroup"], {})
@@ -305,6 +306,13 @@ export class SEventsOrder {
   @JoinColumn([{ name: "id_dept", referencedColumnName: "idDept" }])
   idDept2: SDept;
 
+  @ManyToOne(() => SDept, (sDept) => sDept.sEventsOrders, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_dept_iss", referencedColumnName: "idDept" }])
+  idDeptIss2: SDept;
+
   @ManyToOne(() => SEvents, (sEvents) => sEvents.sEventsOrders, {
     onDelete: "NO ACTION",
     onUpdate: "CASCADE",
@@ -376,4 +384,5 @@ export class SEventsOrder {
 
   @OneToMany(() => Notification, (notification) => notification.idEventOrder2)
   notifications: Notification[];
+
 }

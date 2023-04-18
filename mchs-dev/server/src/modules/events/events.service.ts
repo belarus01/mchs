@@ -324,4 +324,20 @@ export class EventsService {
         return result;
     }
 
+    async getAllEventsOrders(){
+        const result = await this.eventsOrderRepository.find({
+                where:{
+                    active:1
+                }, 
+                relations:{
+                    idEvent2:true,
+                    idDept2:true,
+                    idGroup2:true,
+                    idDeptIss2:true
+                }
+        });
+        console.log(result);
+        return result;
+    }
+
 }
