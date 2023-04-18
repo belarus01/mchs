@@ -59,33 +59,74 @@ export class GroupService{
 //2. надо чтобы это отобразилось в таблице user_group: 
 
     async createG(dto: CreateUserGroupDTO, group: Group){
-        const newgroup = this.userGroupRepository.create(dto);
-        const created = this.groupRepository.save(group.userGroups = [...group.userGroups, newgroup]);
-        return created; 
+        /* const newgroup = this.userGroupRepository.create(dto);
+        //const created = this.groupRepository.save(group.userGroups = [...group.userGroups, newgroup]);
+        const created = this.groupRepository.save({...newgroup, userGroups});
+        console.log(created);
+        return created;  */
     }
 
 
+    async createB(groupDto: CreateGroupDTO, usergroupDto: CreateUserGroupDTO){
+        const newgroup = this.groupRepository.create(groupDto);
+        const created = this.groupRepository.save(newgroup);
+        const usergroups = this.userGroupRepository.create(usergroupDto);
+        usergroups.array.forEach(element => element.groupDto = created);
+        await this.userGroupRepository.save(usergroups);
+        console.log(created)
+        return created;
+    }
+
+
+    /**const projectToSave = Project.create(project);
+await projectToSave.save();
+
+const projectUsers = ProjectUser.create(project.projectUsers);
+projectUsers.forEach(p => p.project = projectToSave);
+await projectUsers.save(projectUsers);
+return projectToSave; 
+
+
+
+const projectUsers = await ProjectUser.save(ProjectUser.create(project.projectUsers));
+const projectToSave = Project.create(project);
+projectToSave.projectUsers = projectUsers;
+return await projectToSave.save();
+
+*/
+async createB2(group: Group){
+    const usergroups = this.userGroupRepository.save(this.userGroupRepository.create(group.userGroups));
+    const groups = this.groupRepository.create(group);
+    
+    return this.groupRepository.save(groups);
+}
+
+    /**
+     * public async getAccountByAccountIdWithRelations(accountId: string): Promise<Account> {
+    return await this.findOneOrFail({id: accountId}, {relations: ['address']});
+  }
+     */
 
 
 
 
 
-
-/* 
-    async createSmth0(dto: CreateGroupDTO, userGroup: UserGroup){ 
+    async createSmth0(dto: CreateGroupDTO){ 
         const group  = this.groupRepository.create(dto);
         const savedgroup = this.groupRepository.save(group);
-        const userGroupToFind = this.userGroupRepository.findOne({where: {
+        const userGroupToFind = this.groupRepository.findOne({where: {
             //userGroup.idGroup2,
             idGroup: (await savedgroup).idGroup
         },relations: ['userGroups']});
 
-        for(userGroup of userGroups){
+        console.log(userGroupToFind);
+        return savedgroup;
+/*         for(userGroup of userGroups){
             userGroups.push(group);
         }
-        return this.userGroupRepository.save(userGroups)
+        return this.userGroupRepository.save(userGroups) */
         //group.userGroups = ;
-    } */
+    }
 
     
 
@@ -97,7 +138,7 @@ export class GroupService{
     order: { ... }
 }); */
 
-    async createSmth(dto: CreateGroupDTO){
+    async createSmth(dto: CreateGroupDTO){// Cannot read properties of undefined (reading 'joinColumns')
         const group  = this.groupRepository.create(dto);
         const savedgroup = this.groupRepository.save(group);
        // const usergroup = this.userGroupRepository.findOneOrFail({loadRelationIds:{relations: (await savedgroup).idGroup, } });

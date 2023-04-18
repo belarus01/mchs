@@ -8,6 +8,7 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
   } from "typeorm";
+import { SFormReport } from "./formReport.entity";
 /*   import { SDefection } from "./SDefection";
   import { STypeDoc } from "./STypeDoc";
   import { SFormReport } from "./SFormReport"; */
@@ -120,9 +121,9 @@ import {
       onUpdate: "CASCADE",
     })
     @JoinColumn([{ name: "id_type_doc", referencedColumnName: "idTypeDoc" }])
-    idTypeDoc2: STypeDoc;
+    idTypeDoc2: STypeDoc; */
   
     @OneToMany(() => SFormReport, (sFormReport) => sFormReport.idForm2)
-    sFormReports: SFormReport[]; */
+    sFormReports: SFormReport[];
   }
   

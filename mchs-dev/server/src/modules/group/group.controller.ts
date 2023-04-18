@@ -4,6 +4,7 @@ import { DeleteGroupDTO } from './dto/delete-group.dto';
 import { GroupService } from './group.service';
 import { Order, Pagination } from 'src/utils/utils';
 import { CreateUserGroupDTO } from './dto/create_userGroup.dto';
+import { Group } from './group.entity';
 
 @Controller('group')
 export class GroupController {
@@ -39,8 +40,8 @@ export class GroupController {
     }
 
     @Post('/create/smth')
-    async createSmth(@Body() dto: CreateGroupDTO){
-        return this.groupService.createSmth2(dto);
+    async createB(@Body() groupDto: CreateGroupDTO, userGroupDto: CreateUserGroupDTO){
+        return this.groupService.createB(groupDto, userGroupDto);
     }
 
     @Put('/block')
