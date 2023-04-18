@@ -5,6 +5,7 @@ import { GroupService } from './group.service';
 import { Order, Pagination } from 'src/utils/utils';
 import { CreateUserGroupDTO } from './dto/create_userGroup.dto';
 import { Group } from './group.entity';
+import { UserGroup } from './entity/userGroup.entity';
 
 @Controller('group')
 export class GroupController {
@@ -34,14 +35,14 @@ export class GroupController {
         return this.groupService.createGroup(dto);
     }
 
-    @Post('/create/userGroup')
+/*     @Post('/create/userGroup')
     async createUserGroup(@Body() dto: CreateUserGroupDTO){
         return this.groupService.createUserGroup(dto);
-    }
+    } */
 
     @Post('/create/smth')
-    async createB(@Body() groupDto: CreateGroupDTO, userGroupDto: CreateUserGroupDTO){
-        return this.groupService.createB(groupDto, userGroupDto);
+    async createB(@Body() dto: CreateGroupDTO ){
+        return this.groupService.createGroupWithUserGroup(dto);
     }
 
     @Put('/block')
