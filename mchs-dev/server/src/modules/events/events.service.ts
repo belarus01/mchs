@@ -19,6 +19,10 @@ import { CreateEventDefDTO } from './dto/create-eventDef.dto';
 import { CreateEventQueDTO } from './dto/create-eventQue.dto';
 import { skipPage, sortByField } from 'src/utils/utils';
 import { CreateEventOrderDTO } from './dto/create-eventOrder';
+import { CreateEventOrderAdmForceDTO } from './dto/create-eventOrderAdmForce.dto';
+import { SEventsOrderAdmForce } from './entity/eventsOrderAdmForce.entity';
+import { SEventsOrderAdmBan } from './entity/eventsOrderAdmBan.entity';
+import { CreateEventOrderAdmBanDTO } from './dto/create-eventOrderAdmBan.dto';
 
 
 
@@ -28,6 +32,8 @@ export class EventsService {
     @InjectRepository(SEventsOrder, 'mchs_connection') private eventsOrderRepository: Repository<SEventsOrder>,
     @InjectRepository(SEventsQue, 'mchs_connection') private eventsQueRepository: Repository<SEventsQue>,
     @InjectRepository(SEventsDef, 'mchs_connection') private eventsDefRepository: Repository<SEventsDef>,
+    @InjectRepository(SEventsOrderAdmForce, 'mchs_connection') private eventsOrderAdmForceRepository: Repository<SEventsOrderAdmForce>,
+    @InjectRepository(SEventsOrderAdmBan, 'mchs_connection') private eventsOrderAdmBanRepository: Repository<SEventsOrderAdmBan>
     //@InjectRepository(SEventsPrivate, 'mchs_connection') private eventsPrivateRepository: Repository<SEventsPrivate>,
     
     //private moduleRef: ModuleRef,
@@ -85,6 +91,16 @@ export class EventsService {
         return this.eventsDefRepository.save(event);
     }
 
+    async createEventOrderAdmForce(dto: CreateEventOrderAdmForceDTO){
+        const event = this.eventsOrderAdmForceRepository.create(dto);
+        return this.eventsOrderAdmForceRepository.save(event);
+    }
+
+    async createEventOrderAdmBan(dto: CreateEventOrderAdmBanDTO){
+        const event = this.eventsOrderAdmBanRepository.create(dto);
+        return this.eventsOrderAdmBanRepository.save(event);
+    }
+
     async getAllEvents(): Promise<SEvents[]>{
         const events = await this.eventsRepository.find({where: {
             active:1
@@ -120,6 +136,19 @@ export class EventsService {
         return events;
     }
 
+    async getAllEventOrderAdmForces(){
+        const events = await this.eventsOrderAdmForceRepository.find({where: {
+            active:1
+        }});
+        return events;
+    }
+
+    async getAllEventOrderAdmBans(){
+        const events = await this.eventsOrderAdmBanRepository.find({where: {
+            active:1
+        }});
+        return events;
+    }
 
     async getPetyaTheBest(){
         console.log(moment(new Date(Date.now())).format('YYYY-MM-DD'));
@@ -181,6 +210,22 @@ export class EventsService {
         const event = await this.eventsQueRepository.findOneBy({idList});
         if(!event){
             throw new EventNotFoundException(`Event Que id = ${idList} not found!`);
+        }
+        return event;
+    }
+
+    async getEventOrderAdmForceById(idList: number){
+        const event = await this.eventsOrderAdmForceRepository.findOneBy({idList});
+        if(!event){
+            throw new EventNotFoundException(`Event Order Adm Force id = ${idList} not found!`);
+        }
+        return event;
+    }
+
+    async getEventOrderAdmBanById(idList: number){
+        const event = await this.eventsOrderAdmBanRepository.findOneBy({idList});
+        if(!event){
+            throw new EventNotFoundException(`Event Order Adm Ban id = ${idList} not found!`);
         }
         return event;
     }
@@ -294,6 +339,14 @@ export class EventsService {
         return await this.eventsDefRepository.update(idList, dto);
     }
 
+    async updateEventOrderAdmForce(idList: number, dto: CreateEventOrderAdmForceDTO){
+        return await this.eventsOrderAdmForceRepository.update(idList, dto);
+    }
+
+    async updateEventOrderAdmBan(idList: number, dto: CreateEventOrderAdmBanDTO){
+        return await this.eventsOrderAdmBanRepository.update(idList, dto);
+    }
+
     async updateEventQue(idList: number, dto: CreateEventQueDTO){
         return await this.eventsDefRepository.update(idList, dto);
     }
@@ -309,6 +362,16 @@ export class EventsService {
 
     async deleteEventQueById(idList: number){
         const result = await this.eventsDefRepository.update(idList, {active:0});
+        return result;
+    }
+
+    async deleteEventOrderAdmForceById(idList: number){
+        const result = await this.eventsOrderAdmForceRepository.update(idList, {active:2});
+        return result;
+    }
+
+    async deleteEventOrderAdmBanById(idList: number){
+        const result = await this.eventsOrderAdmBanRepository.update(idList, {active:2});
         return result;
     }
 

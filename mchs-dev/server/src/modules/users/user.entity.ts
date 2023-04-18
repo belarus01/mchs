@@ -203,6 +203,7 @@ export class User {
   idDeptJob2: SDeptJob;
 
   @OneToMany(() => UserGroup, (userGroup) => userGroup.uidGr2, {cascade: true})
+  //@JoinColumn(({name: "uid", referencedColumnName: "uid_gr"}))//тогда получается еще допом надо и для uid, кто изменил там запись | добавлено при наладке createSmth в group.service
   userGroups: UserGroup[];
 
   @OneToMany(() => Notification, (notification) => notification.toU)

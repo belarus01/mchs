@@ -8,6 +8,8 @@ import { CreateEventQueDTO } from './dto/create-eventQue.dto';
 import { CreateEventDefDTO } from './dto/create-eventDef.dto';
 import { Order, Pagination } from 'src/utils/utils';
 import { CreateEventOrderDTO } from './dto/create-eventOrder';
+import { CreateEventOrderAdmForceDTO } from './dto/create-eventOrderAdmForce.dto';
+import { CreateEventOrderAdmBanDTO } from './dto/create-eventOrderAdmBan.dto';
 
 
 @Controller('events')
@@ -32,6 +34,16 @@ export class EventsController {
     @Post('/create/eventQue')
     async createEventQue(@Body() dto: CreateEventQueDTO){
         return this.eventsService.createEventQue(dto);
+    }
+
+    @Post('create/eventOrderAdmForce')
+    async createEventOrderAdmForce(dto: CreateEventOrderAdmForceDTO){
+        return this.eventsService.createEventOrderAdmForce(dto);
+    }
+
+    @Post('create/eventOrderAdmBan')
+    async createEventOrderAdmBan(dto: CreateEventOrderAdmBanDTO){
+        return this.eventsService.createEventOrderAdmBan(dto);
     }
 
     @Post('/send')
@@ -63,9 +75,14 @@ export class EventsController {
         return this.eventsService.getAllEventDefs();
     }
 
-    @Get('/get/all/eventQues')
-    async getAllEventQues(){
-        return this.eventsService.getAllEventQues();
+    @Get('/get/all/eventOrderAdmForces')
+    async getAllEventOrderAdmForces(){
+        return this.eventsService.getAllEventOrderAdmForces();
+    }
+
+    @Get('/get/all/eventOrderAdmBans')
+    async getAllEventOrderAdmBans(){
+        return this.eventsService.getAllEventOrderAdmBans();
     }
  
     @Get('/get/all/day')
@@ -102,6 +119,16 @@ export class EventsController {
     @Get('/get/id/eventQue/:idList')
     async getEventQueById(@Param('idList') idList: number){
         return this.eventsService.getEventQueById(idList);
+    }
+
+    @Get('/get/id/eventOrderAdmForce/:idList')
+    async getEventOrderAdmForceById(@Param('idList') idList: number){
+        return this.eventsService.getEventOrderAdmForceById(idList);
+    }
+
+    @Get('/get/id/eventOrderAdmBan/:idList')
+    async getEventOrderAdmBanById(@Param('idList') idList: number){
+        return this.eventsService.getEventOrderAdmBanById(idList);
     }
 
     @Get('/get/:idEvent/beginDate')
@@ -148,6 +175,16 @@ export class EventsController {
         return this.eventsService.updateEventOrder(idEventOrder, eventDto);
     }
 
+    @Put('/update/eventOrderAdmForce/:idList')
+    async updateEventOrderAdmForce(idList: number, dto: CreateEventOrderAdmForceDTO){
+        return this.eventsService.updateEventOrderAdmForce(idList, dto);
+    }
+
+    @Put('/update/eventOrderAdmBan/:idList')
+    async updateEventOrderAdmBan(idList: number, dto: CreateEventOrderAdmBanDTO){
+        return this.eventsService.updateEventOrderAdmBan(idList, dto);
+    }
+
     @Put('/update/eventDef/:idList')
     async updateEventDef(idList: number, dto: CreateEventDefDTO){
         return this.eventsService.updateEventDef(idList, dto);
@@ -178,6 +215,15 @@ export class EventsController {
         return this.eventsService.deleteEventQueById(idList);
     }
     
+    @Put('/delete/eventOrderAdmForce/:idList')
+    async deleteEventOrderAdmForceById(idList: number){
+        return this.eventsService.deleteEventOrderAdmForceById(idList);
+    }
+
+    @Put('/delete/eventOrderAdmBan/:idList')
+    async deleteEventOrderAdmBanById(idList: number){
+        return this.eventsService.deleteEventOrderAdmBanById(idList);
+    }
 
     @Get('/get/all/userId=:uid')
     async getAllByUid(@Param('uid') uid:number){
