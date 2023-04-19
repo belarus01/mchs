@@ -9,9 +9,6 @@ import {
 import { SEventsOrder } from "./eventsOrder.entity";
 import { SEventsOrderQue } from "./eventsOrderQue.entity";
 import { SSubjObj } from "src/modules/object/entity/object.entity";
-/*   import { SEventsOrder } from "./SEventsOrder";
-  import { SEventsOrderQue } from "./SEventsOrderQue";
-  import { SSubjObj } from "./SSubjObj"; */
   
   @Index("FK_s_events_order_que_def_id_def2", ["idDef"], {})
   @Index("FK_s_events_order_que_def_id_event_order", ["idEventOrder"], {})

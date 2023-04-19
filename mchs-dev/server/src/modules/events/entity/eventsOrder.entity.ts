@@ -385,4 +385,9 @@ export class SEventsOrder {
   @OneToMany(() => Notification, (notification) => notification.idEventOrder2)
   notifications: Notification[];
 
+/*   @OneToMany(
+    () => SUnits,
+    (sUnits) => sUnits.idEventOrder2
+  )
+  sUnits: SUnits[]; */
 }

@@ -1,26 +1,32 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { SPooSubjPb } from "./pooSubjPb.entity";
 
-@Entity("s_poo", { schema: "doc" })
-export class SPoo {
-  @PrimaryGeneratedColumn({ type: "int", name: "id_poo", unsigned: true })
-  idPoo: number;
+@Entity("s_poo_docs", { schema: "doc" })
+export class SPooDocs {
+  @PrimaryGeneratedColumn({ type: "int", name: "id_num_reg", unsigned: true })
+  idNumReg: number;
+
+  @Column("int", {
+    name: "id_poo",
+    nullable: true,
+    comment: "ссылка на id_poo",
+    unsigned: true,
+  })
+  idPoo: number | null;
 
   @Column("varchar", {
-    name: "num",
+    name: "num_reg",
     nullable: true,
-    comment: "номер",
+    comment: "№ журнала регистра-ции ПОО",
     length: 25,
   })
-  num: string | null;
-
-  @Column("int", { name: "id_parent", nullable: true, unsigned: true })
-  idParent: number | null;
+  numReg: string | null;
 
   @Column("varchar", {
     name: "name",
     nullable: true,
-    comment: "наименование",
-    length: 715,
+    comment: "наименование документа",
+    length: 3400,
   })
   name: string | null;
 
@@ -36,22 +42,23 @@ export class SPoo {
     name: "date_record",
     nullable: true,
     comment: "Дата изменения записи",
+    default: () => "'now()'",
   })
-  dateRecord: string | null;
+  dateRecord: Date | null;
 
   @Column("date", {
     name: "date_begin",
     nullable: true,
     comment: "Дата начала действия записи",
   })
-  dateBegin: string | null;
+  dateBegin: Date | null;
 
   @Column("date", {
     name: "date_end",
     nullable: true,
     comment: "Дата окончания действия записи",
   })
-  dateEnd: string | null;
+  dateEnd: Date | null;
 
   @Column("tinyint", {
     name: "active",
@@ -68,4 +75,7 @@ export class SPoo {
     unsigned: true,
   })
   uid: number | null;
+
+  @OneToMany(() => SPooSubjPb, (sPooSubjPb) => sPooSubjPb.idNumReg2)
+  sPooSubjPbs: SPooSubjPb[];
 }
