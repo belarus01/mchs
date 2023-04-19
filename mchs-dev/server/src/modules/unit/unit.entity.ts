@@ -1,8 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { SQuestion } from "../question/entity/question.entity";
+import { SEventsOrder } from "../events/entity/eventsOrder.entity";
 /* import { SFireCardBuild } from "./SFireCardBuild";
-import { SQuestion } from "./SQuestion";
- */
+import { SPooSubjPb } from "./SPooSubjPb";
+import { SQuestion } from "./SQuestion"; */
+
 @Entity("s_units", { schema: "doc" })
 export class SUnits {
   @PrimaryGeneratedColumn({ type: "bigint", name: "id_unit", unsigned: true })
@@ -94,8 +96,20 @@ export class SUnits {
   sFireCardBuilds2: SFireCardBuild[];
 
   @OneToMany(() => SFireCardBuild, (sFireCardBuild) => sFireCardBuild.idUnit_2)
-  sFireCardBuilds3: SFireCardBuild[]; */
+  sFireCardBuilds3: SFireCardBuild[];
+
+  @OneToMany(() => SPooSubjPb, (sPooSubjPb) => sPooSubjPb.idUnit)
+  sPooSubjPbs: SPooSubjPb[]; */
 
   @OneToMany(() => SQuestion, (sQuestion) => sQuestion.idUnit)
   sQuestions: SQuestion[];
+
+/*   @ManyToOne(() => SEventsOrder, (sEventsOrder) => sEventsOrder.sUnits, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([
+    { name: "id_event_order", referencedColumnName: "idEventOrder" },
+  ])
+  idEventOrder2: SEventsOrder; */
 }

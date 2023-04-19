@@ -20,6 +20,7 @@ import { SEventsOrderDefMtx } from "./eventsOrderDefMtx.entity";
 import { SEventsOrderObj } from "./eventsOrderObj.entity";
 import { SEventsPrivate } from "./eventsPrivate.entity";
 import { SEventsOrderQueDef } from "./eventsOrderQueDef.entity";
+import { SUnits } from "src/modules/unit/unit.entity";
 
 @Index("FK_s_events_order_id_dept", ["idDept"], {})
 @Index("FK_s_events_order_id_group", ["idGroup"], {})
@@ -376,4 +377,10 @@ export class SEventsOrder {
 
   @OneToMany(() => Notification, (notification) => notification.idEventOrder2)
   notifications: Notification[];
+
+/*   @OneToMany(
+    () => SUnits,
+    (sUnits) => sUnits.idEventOrder2
+  )
+  sUnits: SUnits[]; */
 }
