@@ -137,9 +137,9 @@ export class UsersService{
 
     async getUserByLogin(user: string): Promise<User>{
         const login = await this.userRepository.findOneBy({user});
-        if(!login){
-            throw new UserNotFoundException(login.uid);
-        }
+        // if(!login){
+        //     throw new UserNotFoundException(1);
+        // }
         return login;
     }
 

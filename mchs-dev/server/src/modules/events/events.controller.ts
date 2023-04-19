@@ -292,4 +292,9 @@ export class EventsController {
     async getAllEventsBySubjectId(@Param('idSubj') idSubj: number){
         return this.eventsService.getAllEventsBySubjectId(idSubj);
     }
+
+    @Get('/get/all/eventsOrders')
+    async getAllEventsOrders(){
+        return this.eventsService.getAllEventsOrders();
+    }
 }

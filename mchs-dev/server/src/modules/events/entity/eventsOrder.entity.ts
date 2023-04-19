@@ -306,6 +306,13 @@ export class SEventsOrder {
   @JoinColumn([{ name: "id_dept", referencedColumnName: "idDept" }])
   idDept2: SDept;
 
+  @ManyToOne(() => SDept, (sDept) => sDept.sEventsOrders, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_dept_iss", referencedColumnName: "idDept" }])
+  idDeptIss2: SDept;
+
   @ManyToOne(() => SEvents, (sEvents) => sEvents.sEventsOrders, {
     onDelete: "NO ACTION",
     onUpdate: "CASCADE",
