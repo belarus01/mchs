@@ -40,6 +40,7 @@ import { PooModule } from './modules/poo/poo.module';
 import { OpoModule } from './modules/opo/opo.module';
 import { AdmModule } from './modules/adm/adm.module';
 import { TypeModule } from './modules/type/type.module';
+import { PogModule } from './modules/pog/pog.module';
 
 
 
@@ -146,6 +147,7 @@ import { TypeModule } from './modules/type/type.module';
     OpoModule,
     AdmModule,
     TypeModule,
+    PogModule,
   ],
   controllers: [AppController],
 //   providers: [

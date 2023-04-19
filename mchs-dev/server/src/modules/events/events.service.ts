@@ -252,7 +252,7 @@ export class EventsService {
     async getEventPrivateById(idPriv: number): Promise<SEventsPrivate>{
         const event = await this.eventsPrivateRepository.findOneBy({idPriv});
         if(!event){
-            throw new EventNotFoundException(`Event id = ${idPriv} not found!`);
+            throw new EventNotFoundException(`Event Private id = ${idPriv} not found!`);
         }
         return event;
     }

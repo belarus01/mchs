@@ -3,10 +3,11 @@ import { NotFoundException } from "src/modules/exception/not-found.exception";
 export const POO_NOT_FOUND_ERROR_CODE = 404;
 
 export class PooNotFoundException extends NotFoundException{
-        constructor(idPoo: number){
+        constructor(description?: string){
             super(
                 POO_NOT_FOUND_ERROR_CODE,
-                `Poo id = ${idPoo} not found!`
+                description
+                //`Poo .. id = ${id..} not found!`
             );
         }
 }

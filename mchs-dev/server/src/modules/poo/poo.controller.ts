@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { CreatePooDTO } from './dto/create-poo.dto';
 import { PooService } from './poo.service';
+import { CreatePooDocsDTO } from './dto/create-PooDocs.dto';
+import { CreatePooSubjPbDTO } from './dto/create-PooSubjPb.dto';
 
 @Controller('poo')
 export class PooController {
@@ -29,5 +31,55 @@ export class PooController {
     @Put('/delete/:idPoo')
     async deletePooById(@Param('idPoo') idPoo: number){
         return this.pooService.deletePooById(idPoo);
+    }
+
+    @Post('/create/pooDoc')
+    async createPooDoc(@Body() dto: CreatePooDocsDTO){
+        return this.pooService.createPooDoc(dto);
+    }
+
+    @Get('/get/pooDoc/id/:idNumReg')
+    async getPooDocsById(@Param('idNumReg') idNumReg: number){
+        return this.pooService.getPooDocById(idNumReg);
+    }
+
+    @Get('/get/all/pooDoc')
+    async getAllPooDocs(){
+        return this.pooService.getAllPooDocs();
+    }
+    
+    @Put('/update/pooDoc')
+    async updatePooDocs(@Param('idNumReg') idNumReg: number, @Body() dto: CreatePooDocsDTO){
+        return this.pooService.updatePooDoc(idNumReg, dto);
+    }
+
+    @Put('/delete/pooDoc/:idNumReg')
+    async deletePooDocsById(@Param('idNumReg') idNumReg: number){
+        return this.pooService.deletePooDocById(idNumReg);
+    }
+
+    @Post('/create/pooSubjPb')
+    async createPooSubjPb(@Body() dto: CreatePooSubjPbDTO){
+        return this.pooService.createPooSubjPb(dto);
+    }
+
+    @Get('/get/pooSubjPb/id/:idList')
+    async getPooSubjPbById(@Param('idList') idList: number){
+        return this.pooService.getPooSubjPbById(idList);
+    }
+
+    @Get('/get/all/pooSubjPb')
+    async getAllPooSubjPbs(){
+        return this.pooService.getAllPooSubjPbs();
+    }
+    
+    @Put('/update/pooSubjPb')
+    async updatePooSubjPb(@Param('idList') idList: number, @Body() dto: CreatePooSubjPbDTO){
+        return this.pooService.updatePooSubjPb(idList, dto);
+    }
+
+    @Put('/delete/pooSubjPb/:idList')
+    async deletePooSubjPbById(@Param('idList') idList: number){
+        return this.pooService.deletePooSubjPbById(idList);
     }
 }

@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { SQuestion } from "../question/entity/question.entity";
 import { SEventsOrder } from "../events/entity/eventsOrder.entity";
+import { SPooSubjPb } from "../poo/entity/pooSubjPb.entity";
 /* import { SFireCardBuild } from "./SFireCardBuild";
 import { SPooSubjPb } from "./SPooSubjPb";
 import { SQuestion } from "./SQuestion"; */
@@ -96,10 +97,10 @@ export class SUnits {
   sFireCardBuilds2: SFireCardBuild[];
 
   @OneToMany(() => SFireCardBuild, (sFireCardBuild) => sFireCardBuild.idUnit_2)
-  sFireCardBuilds3: SFireCardBuild[];
+  sFireCardBuilds3: SFireCardBuild[];*/
 
   @OneToMany(() => SPooSubjPb, (sPooSubjPb) => sPooSubjPb.idUnit)
-  sPooSubjPbs: SPooSubjPb[]; */
+  sPooSubjPbs: SPooSubjPb[]; 
 
   @OneToMany(() => SQuestion, (sQuestion) => sQuestion.idUnit)
   sQuestions: SQuestion[];

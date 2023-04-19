@@ -248,7 +248,7 @@ export class EventsController {
         return this.eventsService.deleteEventById(idEvent);
     }
 
-    @Delete('/delete/:idPriv')//поле active отсутствует в БД
+    @Delete('/delete/eventPrivate/:idPriv')//поле active отсутствует в БД
     async deleteEventPrivateById(@Param('idPriv') idPriv: number){
         return this.eventsService.deleteEventPrivateById(idPriv);
     }
