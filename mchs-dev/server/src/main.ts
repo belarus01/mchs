@@ -16,11 +16,11 @@ async function bootstrap() {
   app.enableCors();
   app.use(morgan('short', {stream: logStream}));
  // app.useGlobalFilters(new AllExceptionsFilter);// randomly added never tested in the prosess
-  app.useGlobalPipes(
-    new ValidationPipe({
-      exceptionFactory: errors => new ValidationException(errors) 
-    })
-  );
+  // app.useGlobalPipes(
+  //   new ValidationPipe({
+  //     exceptionFactory: errors => new ValidationException(errors) 
+  //   })
+  // );
   await app.listen(4000);
   
 }

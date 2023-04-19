@@ -97,14 +97,15 @@ export class AuthService {
     }
 
     async registration(userDto: CreateUserDto) {
+        //console.log(userDto);
         const candidate = await this.userService.getUserByLogin(userDto.user);
-        console.log(candidate);
+        //console.log(candidate);
         if (candidate) {
             throw new AuthBadRequestException('Пользователь с таким логином уже существует');
             //throw new HttpException('Пользователь с таким логином уже существует', HttpStatus.BAD_REQUEST);
         }
         const hashPassword = await bcrypt.hash(userDto.pas, 5);
-        console.log(hashPassword);
+        //console.log(hashPassword);
         userDto.pas = hashPassword;
         userDto.uidAdm = 1;
         const user = await this.userService.createUser(userDto);

@@ -57,9 +57,11 @@ export class UsersService{
 
     async getAllUsersWithRelations():Promise<User[]>{
         const users = await this.userRepository.
-        find({where:{
-            active:1
-        }, relations:{
+        find({where:[
+            {active:1},
+            {active:0}]
+            
+        , relations:{
             sSubjObjs:true,
             idDept2:true,
             idDeptJob2: true,    
@@ -95,6 +97,14 @@ export class UsersService{
     
     async blockUserById(uid:number){
         const userToBlock = this.userRepository.update(uid, {active: 0, dateRecord: new Date(Date.now())});
+        if(!userToBlock){
+            throw new UserNotFoundException(uid);
+        }
+        return userToBlock;
+    }
+
+    async unblockUserById(uid:number){
+        const userToBlock = this.userRepository.update(uid, {active: 1, dateRecord: new Date(Date.now())});
         if(!userToBlock){
             throw new UserNotFoundException(uid);
         }
@@ -149,8 +159,9 @@ export class UsersService{
         ); 
     }
 
-    async updateUser(user:User){ 
-        return this.userRepository.update(user.uid, user);
+    async updateUser(user:CreateUserDto){ 
+        console.log(user.user);
+        return this.userRepository.update({user:user.user}, user);
     }
 
     async updateUserPassword(user: string, params:any){
@@ -216,6 +227,15 @@ export class UsersService{
         return paged;
     }
 
+    async searchUsersSortAndPage(query:string, field:string, order:string, current: string, pageSize: string, total: number){
+        const users = (await this.userRepository.find({where:{active:1, }}));
+        const user = await this.userRepository.createQueryBuilder('users')
+        .where('users.active = 1')
+        .andWhere('user.')
+        const sorted = sortByField(users, field, order);
+        const paged = skipPage(sorted, current, pageSize, total);
+        return paged;
+    }
     
 
 

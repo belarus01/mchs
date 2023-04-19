@@ -50,9 +50,9 @@ import { TypeModule } from './modules/type/type.module';
     TypeOrmModule.forRoot({
      name: 'mchs_connection',
       type:'mysql',
-      host:'localhost',// 192.168.150.29 | localhost
+      host:'192.168.150.29',// 192.168.150.29 | localhost
       port: 3306,
-      username: 'tanya',// serge | tanya | root
+      username: 'serge',// serge | tanya | root
       password: '123456_Qq',// 123456_Qq | 123456
       database: 'mchs',
       

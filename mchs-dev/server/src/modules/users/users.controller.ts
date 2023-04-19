@@ -99,8 +99,10 @@ export class UsersController {
     } */
 
     @Put('/update')
-    updateUser(){
-        
+    async updateUser(@Body() dto: CreateUserDto){
+        console.log(dto);
+        const result = await this.usersService.updateUser(dto);
+        return result;
     }
 
     @Put('/updateOne')
@@ -111,6 +113,11 @@ export class UsersController {
     @Put('/block')
     blockUser(@Body() dto:DeleteUserDTO){
         return this.usersService.blockUserById(dto.uid);
+    }
+
+    @Put('/unblock')
+    unblockUser(@Body() dto:DeleteUserDTO){
+        return this.usersService.unblockUserById(dto.uid);
     }
 
     @Post('/passwords')

@@ -50,4 +50,9 @@ export class SubjectService {
        // return this.subjRepository.update(idSubj, {active:0, }) // + uid
     }
 
+    async getSubjectByUnp(unp:string){
+        const subject = await this.subjRepository.findOne({where:{active:1, unp:unp}});
+        console.log(subject);
+        return subject;
+    }
 }
