@@ -56,6 +56,11 @@ export class SopbController {
         return this.sopbService.getAllSopbCardSubjsSortAndPage(field, order, current, pageSize, total);
     }
 
+    @Get('/get/sopbCards/idSopb/:idSopb')
+    async getSopbCardBySopbId(@Param('idSopb') idSopb: number){
+        return await this.sopbService.getSopbCardsBySopbId(idSopb);
+    }
+
     @Put('/update/:idSopb')
     async updateSopb(@Param('idSopb') idSopb: number, @Body() dto: CreateSopbDTO){
         return this.sopbService.updateSopb(idSopb, dto);

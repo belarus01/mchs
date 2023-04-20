@@ -50,7 +50,17 @@ export class SopbService {
         return sopbCard;
     }
 
-    async getSopbCardSubjById(idData: number): Promise<SSopbCardSubj>{
+    async getSopbCardsBySopbId(idSopb: number): Promise<SSopbCard[]> {
+        const sopbCards = await this.sopbCardRepository.find({
+          where: { idSopb: idSopb },
+        });
+        if (!sopbCards) {
+          throw new SopbCardNotFoundException(idSopb);
+        }
+        return sopbCards;
+      }
+    
+      async getSopbCardSubjById(idData: number): Promise<SSopbCardSubj>{
         const sopbCardSubj = await this.sopbCardSubjRepository.findOneBy({idData});
         if(!sopbCardSubj){
             throw new SopbCardSubjNotFoundException(idData);
