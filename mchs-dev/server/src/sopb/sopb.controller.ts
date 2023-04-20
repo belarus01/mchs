@@ -1,7 +1,9 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CreateSopbDTO } from './dto/create-sopb.dto';
 import { CreateSopbCardDTO } from './dto/create-sopbCard.dto';
 import { SopbService } from './sopb.service';
+import { CreateSopbCardSubjDTO } from './dto/create-sopbCardSubj.dto';
+import { Order, Pagination } from 'src/utils/utils';
 
 @Controller('sopb')
 export class SopbController {
@@ -17,6 +19,11 @@ export class SopbController {
         return this.sopbService.createSopbCard(dto);
     }
 
+    @Post('/create/sopbCardSubj')
+    async createSopbCardSubj(@Body() dto: CreateSopbCardSubjDTO){
+        return this.sopbService.createSopbCardSubj(dto);
+    }
+
     @Get('/get/id/:idSopb')
     async getSopbById(@Param('idSopb') idSopb: number){
         return await this.sopbService.getSopbById(idSopb);
@@ -25,6 +32,11 @@ export class SopbController {
     @Get('/get/sopbCard/id/:idCard')
     async getSopbCardById(@Param('idCard') idCard: number){
         return await this.sopbService.getSopbCardById(idCard);
+    }
+
+    @Get('/get/sopbCardSubj/id/:idData')
+    async getSopbCardSubjById(@Param('idData') idData: number){
+        return await this.sopbService.getSopbCardSubjById(idData);
     }
 
     @Get('/get/all')
@@ -37,6 +49,13 @@ export class SopbController {
         return this.sopbService.getAllSopbCards();
     }
 
+    @Get('get/all/sopbCardSubjs/sorted/by/page')
+    async getAllObjectsSortAndPage(@Query() params: Order, @Query() params2: Pagination){
+        const {field, order} = params;
+        const {current, pageSize, total} = params2;
+        return this.sopbService.getAllSopbCardSubjsSortAndPage(field, order, current, pageSize, total);
+    }
+
     @Put('/update/:idSopb')
     async updateSopb(@Param('idSopb') idSopb: number, @Body() dto: CreateSopbDTO){
         return this.sopbService.updateSopb(idSopb, dto);
@@ -47,6 +66,11 @@ export class SopbController {
         return this.sopbService.updateSopbCard(idCard, dto);
     }
 
+    @Put('/update/sopbCardSubj/:idData')
+    async updateSopbCardSubj(@Param('idData') idData: number, @Body() dto: CreateSopbCardSubjDTO){
+        return this.sopbService.updateSopbCardSubj(idData, dto);
+    }
+
     @Put('/delete/:idSopb')
     async deleteSopbById(@Param('idSopb') idSopb: number){
         return this.sopbService.deleteSopbById(idSopb);
@@ -55,5 +79,10 @@ export class SopbController {
     @Put('/delete/sopbCard/:idCard')
     async deleteSopbCardById(idCard: number){
         return this.sopbService.deleteSopbCardById(idCard);
+    }
+
+    @Put('/delete/sopbCard/:idData')
+    async deleteSopbCardSubjById(idData: number){
+        return this.sopbService.deleteSopbCardSubjById(idData);
     }
 }
