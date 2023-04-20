@@ -172,6 +172,5 @@ export class UserGroup {
   })
   @JoinColumn([{ name: "uid_gr", referencedColumnName: "uid" }])
   uidGr2: User;
-    array: any;
 }
 
