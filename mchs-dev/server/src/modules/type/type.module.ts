@@ -5,7 +5,7 @@ import { STypeTest } from './entity/typeTest.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([STypeTest],'doc_connection')],
+  imports:[TypeOrmModule.forFeature([STypeTest],'mchs_connection')],
   providers: [TypeService],
   controllers: [TypeController]
 })

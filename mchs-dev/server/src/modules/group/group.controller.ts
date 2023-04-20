@@ -35,16 +35,6 @@ export class GroupController {
         return this.groupService.createGroup(dto);
     }
 
-/*     @Post('/create/userGroup')
-    async createUserGroup(@Body() dto: CreateUserGroupDTO){
-        return this.groupService.createUserGroup(dto);
-    } */
-
-    @Post('/create/smth')
-    async createB(@Body() dto: CreateGroupDTO ){
-        return this.groupService.createGroupWithUserGroup(dto);
-    }
-
     @Put('/block')
     blockGroup(@Body() dto: DeleteGroupDTO){
         return this.groupService.blockGroupById(dto.idGroup);

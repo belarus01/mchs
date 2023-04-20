@@ -62,19 +62,7 @@ import { PogModule } from './modules/pog/pog.module';
       synchronize:false,
       autoLoadEntities: true
     }),
-    TypeOrmModule.forRoot({
-      name: 'doc_connection',
-       type:'mysql',
-       host:'192.168.150.29',// 192.168.150.29 | localhost
-       port: 3306,
-       username: 'serge',// serge | tanya | root
-       password: '123456_Qq',// 123456_Qq | 123456
-       database: 'doc',
-       
-       entities:[],
-       synchronize:false,
-       autoLoadEntities: true
-     }),
+
 
     // TypeOrmModule.forRootAsync({
     //   name: 'mchs_connection',

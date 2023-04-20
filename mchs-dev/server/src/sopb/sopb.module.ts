@@ -15,7 +15,7 @@ import { SSopbCardUid } from './entity/sopbCardUid.entity';
     SSopbCardSubj,
     SSopbCardSubjState,
     SSopbCardUid 
-  ],'doc_connection')],
+  ],'mchs_connection')],
   providers: [SopbService],
   controllers: [SopbController]
 })

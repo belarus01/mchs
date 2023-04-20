@@ -7,7 +7,7 @@ import { TypeTestNotFoundException } from './exception/typeTest.not-found.except
 
 @Injectable()
 export class TypeService {
-    constructor(@InjectRepository(STypeTest, 'doc_connection') private typeTestRepository: Repository<STypeTest>){}
+    constructor(@InjectRepository(STypeTest, 'mchs_connection') private typeTestRepository: Repository<STypeTest>){}
 
     async createTypeTest(dto: CreateTypeTestDTO){
         const typeTest = this.typeTestRepository.create(dto);

@@ -16,11 +16,11 @@ import { CreatePogSubjWaterDTO } from './dto/create-pogSubjWater.dto';
 @Injectable()
 export class PogService {
     constructor(
-    @InjectRepository(SPogSubjAccidents, 'doc_connection') private pogSubjAccidentRepository: Repository<SPogSubjAccidents>,
-    @InjectRepository(SPogSubjAvia, 'doc_connection') private pogSubjAviaRepository: Repository<SPogSubjAvia>,
-    @InjectRepository(SPogSubjAuto, 'doc_connection') private pogSubjAutoRepository: Repository<SPogSubjAuto>,
-    @InjectRepository(SPogSubjRw, 'doc_connection') private pogSubjRwRepository: Repository<SPogSubjRw>,
-    @InjectRepository(SPogSubjWater, 'doc_connection') private pogSubjWaterRepository: Repository<SPogSubjWater>,
+    @InjectRepository(SPogSubjAccidents, 'mchs_connection') private pogSubjAccidentRepository: Repository<SPogSubjAccidents>,
+    @InjectRepository(SPogSubjAvia, 'mchs_connection') private pogSubjAviaRepository: Repository<SPogSubjAvia>,
+    @InjectRepository(SPogSubjAuto, 'mchs_connection') private pogSubjAutoRepository: Repository<SPogSubjAuto>,
+    @InjectRepository(SPogSubjRw, 'mchs_connection') private pogSubjRwRepository: Repository<SPogSubjRw>,
+    @InjectRepository(SPogSubjWater, 'mchs_connection') private pogSubjWaterRepository: Repository<SPogSubjWater>,
     ){}
 
     async createPogSubjAccident(dto: CreatePogSubjAccidentDTO){

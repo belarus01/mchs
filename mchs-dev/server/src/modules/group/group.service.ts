@@ -2,12 +2,11 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Group } from "./group.entity";
 import { UserGroup } from "./entity/userGroup.entity";
-import { Repository, createQueryBuilder } from "typeorm";
+import { Repository } from "typeorm";
 import { GroupNotFoundException } from "./exception/group.not-found.exception";
 import { Pagination, skipPage, sortByField } from "src/utils/utils";
 import { DeptNotFoundException } from "../department/exception/dept.not-found.exception";
 import { CreateGroupDTO } from "./dto/create-group.dto";
-import { CreateUserGroupDTO } from "./dto/create_userGroup.dto";
 import { DeleteGroupDTO } from "./dto/delete-group.dto";
 
 @Injectable()
@@ -52,15 +51,13 @@ export class GroupService{
 
     async createGroup(dto: CreateGroupDTO){
         const group = this.groupRepository.create(dto);
+        const userGroups:UserGroup[] = [];
+        dto.users.forEach(element=>{
+            const userGroup = this.userGroupRepository.create(element);
+            userGroups.push(userGroup);
+        })
+        group.userGroups = userGroups;
         return this.groupRepository.save(group);
-    }
-
-    async createGroupWithUserGroup(dto: CreateGroupDTO){
-        const group = this.groupRepository.create(dto);
-        const createdGroup = this.groupRepository.save(group);
-
-        
-        console.log();
     }
 
     async deleteGroup(dto: DeleteGroupDTO){

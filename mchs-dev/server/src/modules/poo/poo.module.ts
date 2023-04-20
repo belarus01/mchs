@@ -7,7 +7,7 @@ import { SPooSubjPb } from './entity/pooSubjPb.entity';
 import { SPooDocs } from './entity/pooDocs.entitty';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([SPoo, SPooSubjPb, SPooDocs],'doc_connection')],
+  imports:[TypeOrmModule.forFeature([SPoo, SPooSubjPb, SPooDocs],'mchs_connection')],
   providers: [PooService],
   controllers: [PooController]
 })

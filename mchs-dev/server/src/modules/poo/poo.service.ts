@@ -12,9 +12,9 @@ import { SPooDocs } from './entity/pooDocs.entitty';
 @Injectable()
 export class PooService {
     constructor(
-        @InjectRepository(SPoo, 'doc_connection') private pooRepository: Repository<SPoo>,
-        @InjectRepository(SPooSubjPb, 'doc_connection') private pooSubjPbRepository: Repository<SPooSubjPb>,
-        @InjectRepository(SPooDocs, 'doc_connection') private pooDocsRepository: Repository<SPooDocs>,
+        @InjectRepository(SPoo, 'mchs_connection') private pooRepository: Repository<SPoo>,
+        @InjectRepository(SPooSubjPb, 'mchs_connection') private pooSubjPbRepository: Repository<SPooSubjPb>,
+        @InjectRepository(SPooDocs, 'mchs_connection') private pooDocsRepository: Repository<SPooDocs>,
         ){}
 
     async createPoo(dto: CreatePooDTO){

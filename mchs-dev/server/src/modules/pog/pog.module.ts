@@ -9,7 +9,7 @@ import { SPogSubjRw } from './entity/pogSubjRw.entity';
 import { SPogSubjWater } from './entity/pogSubjWater.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([SPogSubjAccidents, SPogSubjAuto, SPogSubjAvia, SPogSubjRw, SPogSubjWater],'doc_connection')],
+  imports:[TypeOrmModule.forFeature([SPogSubjAccidents, SPogSubjAuto, SPogSubjAvia, SPogSubjRw, SPogSubjWater],'mchs_connection')],
   providers: [PogService],
   controllers: [PogController]
 })

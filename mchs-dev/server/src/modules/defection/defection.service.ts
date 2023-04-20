@@ -7,7 +7,7 @@ import { DefectionNotFoundException } from './exception/defection.not-found.exce
 
 @Injectable()
 export class DefectionService {
-    constructor(@InjectRepository(SDefection, 'doc_connection') private defectionRepository: Repository<SDefection>){}
+    constructor(@InjectRepository(SDefection, 'mchs_connection') private defectionRepository: Repository<SDefection>){}
 
     async createDefection(dto: CreateDefectionDTO): Promise<SDefection>{
         const defection = this.defectionRepository.create(dto);

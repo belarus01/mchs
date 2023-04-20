@@ -17,7 +17,7 @@ import { SFormReport } from './entity/formReport.entity';
     SFormBuild2,
     SFormBuildData,
     SFormReport
-  ], 'doc_connection'),],
+  ], 'mchs_connection'),],
   providers: [FormService],
   exports: [FormService],
   controllers: [FormController]

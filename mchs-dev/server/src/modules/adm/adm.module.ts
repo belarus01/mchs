@@ -6,7 +6,7 @@ import { SAdmBan } from './entity/admBan.entity';
 import { SAdmForce } from './entity/admForce.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([SAdmBan, SAdmForce],'doc_connection')],
+  imports:[TypeOrmModule.forFeature([SAdmBan, SAdmForce],'mchs_connection')],
   providers: [AdmService],
   controllers: [AdmController]
 })

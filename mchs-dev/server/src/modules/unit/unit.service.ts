@@ -7,7 +7,7 @@ import { CreateUnitDTO } from './dto/create-unit.dto';
 
 @Injectable()
 export class UnitService {
-    constructor(@InjectRepository(SUnits, 'doc_connection') private unitRepository: Repository<SUnits>){}
+    constructor(@InjectRepository(SUnits, 'mchs_connection') private unitRepository: Repository<SUnits>){}
 
     async createUnit(dto: CreateUnitDTO): Promise<SUnits>{
         const unit = this.unitRepository.create(dto);

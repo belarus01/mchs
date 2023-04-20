@@ -14,9 +14,9 @@ import { skipPage, sortByField } from 'src/utils/utils';
 
 @Injectable()
 export class SopbService {
-    constructor(@InjectRepository(SSopb, 'doc_connection') private sopbRepository: Repository<SSopb>,
-    @InjectRepository(SSopbCard, 'doc_connection') private sopbCardRepository: Repository<SSopbCard>,
-    @InjectRepository(SSopbCardSubj, 'doc_connection') private sopbCardSubjRepository: Repository<SSopbCardSubj>,
+    constructor(@InjectRepository(SSopb, 'mchs_connection') private sopbRepository: Repository<SSopb>,
+    @InjectRepository(SSopbCard, 'mchs_connection') private sopbCardRepository: Repository<SSopbCard>,
+    @InjectRepository(SSopbCardSubj, 'mchs_connection') private sopbCardSubjRepository: Repository<SSopbCardSubj>,
     ){}
 
     async createSopb(dto: CreateSopbDTO): Promise<SSopb>{

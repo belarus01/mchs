@@ -10,8 +10,8 @@ import { AdmForceNotFoundException } from './exception/admForce.not-found.except
 
 @Injectable()
 export class AdmService {
-    constructor(@InjectRepository(SAdmBan, 'doc_connection') private admBanRepository: Repository<SAdmBan>,
-    @InjectRepository(SAdmForce, 'doc_connection') private admForceRepository: Repository<SAdmForce>){}
+    constructor(@InjectRepository(SAdmBan, 'mchs_connection') private admBanRepository: Repository<SAdmBan>,
+    @InjectRepository(SAdmForce, 'mchs_connection') private admForceRepository: Repository<SAdmForce>){}
 
     async createAdmBan(dto: CreateAdmBanDTO){
         const admBan = this.admBanRepository.create(dto);

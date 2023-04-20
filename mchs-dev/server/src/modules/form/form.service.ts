@@ -17,12 +17,12 @@ import { CreateFormReportDTO } from './dto/create-formReport.dto';
 
 @Injectable()
 export class FormService {
-    constructor(@InjectRepository(SForm, 'doc_connection') private formRepository: Repository<SForm>,
-    @InjectRepository(SFormBuild, 'doc_connection') private formBuildRepository: Repository<SFormBuild>,
-    @InjectRepository(SFormBuild1, 'doc_connection') private formBuild1Repository: Repository<SFormBuild1>,
-    @InjectRepository(SFormBuild2, 'doc_connection') private formBuild2Repository: Repository<SFormBuild2>,
-    @InjectRepository(SFormBuildData, 'doc_connection') private formBuildDataRepository: Repository<SFormBuildData>,
-    @InjectRepository(SFormReport, 'doc_connection') private formReportRepository: Repository<SFormReport>){}
+    constructor(@InjectRepository(SForm, 'mchs_connection') private formRepository: Repository<SForm>,
+    @InjectRepository(SFormBuild, 'mchs_connection') private formBuildRepository: Repository<SFormBuild>,
+    @InjectRepository(SFormBuild1, 'mchs_connection') private formBuild1Repository: Repository<SFormBuild1>,
+    @InjectRepository(SFormBuild2, 'mchs_connection') private formBuild2Repository: Repository<SFormBuild2>,
+    @InjectRepository(SFormBuildData, 'mchs_connection') private formBuildDataRepository: Repository<SFormBuildData>,
+    @InjectRepository(SFormReport, 'mchs_connection') private formReportRepository: Repository<SFormReport>){}
 
     async createForm(dto: CreateFormDTO){
         const form = this.formRepository.create(dto);
