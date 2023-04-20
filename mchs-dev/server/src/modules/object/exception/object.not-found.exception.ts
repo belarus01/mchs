@@ -3,10 +3,11 @@ import { NotFoundException } from "src/modules/exception/not-found.exception";
 export const OBJECT_NOT_FOUND_ERROR_CODE = 404;
 
 export class ObjectNotFoundException extends NotFoundException{
-        constructor(idObj: number){
+        constructor(description?: string){
             super(
                 OBJECT_NOT_FOUND_ERROR_CODE,
-                `Object id = ${idObj} not found!`
+                description
+                //`Object .. id = ${id..} not found!`
             );
         }
 }
