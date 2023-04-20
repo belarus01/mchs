@@ -52,6 +52,12 @@ export class GroupService{
 
     async createGroup(dto: CreateGroupDTO){
         const group = this.groupRepository.create(dto);
+        const userGroups:UserGroup[] = [];
+        dto.users.forEach(element=>{
+            const userGroup = this.userGroupRepository.create(element);
+            userGroups.push(userGroup);
+        })
+        group.userGroups = userGroups;
         return this.groupRepository.save(group);
     }
 

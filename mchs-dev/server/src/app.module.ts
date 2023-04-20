@@ -41,6 +41,20 @@ import { OpoModule } from './modules/opo/opo.module';
 import { AdmModule } from './modules/adm/adm.module';
 import { TypeModule } from './modules/type/type.module';
 import { PogModule } from './modules/pog/pog.module';
+import { SAdmBan } from './modules/adm/entity/admBan.entity';
+import { SAdmForce } from './modules/adm/entity/admForce.entity';
+import { SDefection } from './modules/output/entities/SDefection';
+import { SFireCardAuto } from './modules/output/entities/SFireCardAuto';
+import { SFireCardBuild } from './modules/output/entities/SFireCardBuild';
+import { SFireCardCut } from './modules/output/entities/SFireCardCut';
+import { SFireCardExternal } from './modules/output/entities/SFireCardExternal';
+import { SFireCardForce } from './modules/output/entities/SFireCardForce';
+import { SFireCardInfo } from './modules/output/entities/SFireCardInfo';
+import { SFireCardInfoTo } from './modules/output/entities/SFireCardInfoTo';
+import { SFireCardInternal } from './modules/output/entities/SFireCardInternal';
+import { SFireCardRent } from './modules/output/entities/SFireCardRent';
+import { SFireCardSignal } from './modules/output/entities/SFireCardSignal';
+import { SFireCardStaff } from './modules/output/entities/SFireCardStaff';
 
 
 
@@ -51,10 +65,10 @@ import { PogModule } from './modules/pog/pog.module';
     TypeOrmModule.forRoot({
      name: 'mchs_connection',
       type:'mysql',
-      host:'192.168.150.29',// 192.168.150.29 | localhost
+      host:'localhost',// 192.168.150.29 | localhost
       port: 3306,
-      username: 'serge',// serge | tanya | root
-      password: '123456_Qq',// 123456_Qq | 123456
+      username: 'root',// serge | tanya | root
+      password: 'root',// 123456_Qq | 123456
       database: 'mchs',
       
       entities:[],
@@ -65,10 +79,10 @@ import { PogModule } from './modules/pog/pog.module';
     TypeOrmModule.forRoot({
       name: 'doc_connection',
        type:'mysql',
-       host:'192.168.150.29',// 192.168.150.29 | localhost
+       host:'localhost',// 192.168.150.29 | localhost
        port: 3306,
-       username: 'serge',// serge | tanya | root
-       password: '123456_Qq',// 123456_Qq | 123456
+       username: 'root',// serge | tanya | root
+       password: 'root',// 123456_Qq | 123456
        database: 'doc',
        
        entities:[],
