@@ -139,8 +139,17 @@ export class EventsService {
         const events = (await this.eventsOrderRepository.find({where:{
             active:1
         }, relations: {
-            //idUnit: true,
-            //sUnits: true,//раскомментить как получится связь настроить
+            idDept2: true,
+            idDeptIss2: true,
+            idEvent2: true,
+            idEventPlan2: true,
+            idGroup2: true,
+            idSubj2: true,
+            sphera2: true,
+            idUnit_2: true,
+            idUnit_3: true,
+            idUnit_4: true,
+            idUnit_5: true,
             sEventsOrderAdmBans: true,
             sEventsOrderAdmForces: true,
             sEventsOrderData: true,
@@ -149,7 +158,8 @@ export class EventsService {
             sEventsOrderObjs: true,
             sEventsOrderQueDefs: true,
             sEventsPrivates: true,
-            //notifications: true,
+            sFormReports: true,
+            notifications: true,
         }
     }));
     console.log(events);
@@ -162,7 +172,7 @@ export class EventsService {
         const events = (await this.eventsOrderQueDefRepository.find({where:{
             active:1
         }, relations: {
-            //sDefections: true //раскомментить как получится связь настроить
+            idDef2: true,
             idEventOrder2: true,
             idEventQue2: true,
             idObj2: true,
