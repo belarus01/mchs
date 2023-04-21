@@ -121,6 +121,21 @@ export class EventsService {
         return events;
     }
 
+    async getAllEventsWithRelations(): Promise<SEvents[]>{
+        const events = await this.eventsRepository.find({where: {
+            active:1
+        }, relations: {
+            idUnit: true,
+            sEventsDefs: true,
+            sEventsOrders: true, 
+            sEventsPlans: true,
+            sEventsQues: true,
+            sQuestions: true,
+        }
+    });
+        return events;
+    }
+
     async getAllEventsSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
         const events = (await this.eventsRepository.find({where:{active:1}}));
         const sorted = sortByField(events, field, order);

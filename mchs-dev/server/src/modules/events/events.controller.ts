@@ -68,6 +68,11 @@ export class EventsController {
         return this.eventsService.getAllEvents();
     }
 
+    @Get('/get/all/relations')
+    async getAllEventsWithRelations(){
+        return this.eventsService.getAllEventsWithRelations();
+    }
+
     @Get('get/all/sorted/by/page')
     async getAllEventsSortAndPage(@Query() params: Order, @Query() params2: Pagination){
         const {field, order} = params;

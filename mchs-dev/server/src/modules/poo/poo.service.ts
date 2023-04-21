@@ -8,6 +8,7 @@ import { CreatePooSubjPbDTO } from './dto/create-PooSubjPb.dto';
 import { SPooSubjPb } from './entity/pooSubjPb.entity';
 import { CreatePooDocsDTO } from './dto/create-PooDocs.dto';
 import { SPooDocs } from './entity/pooDocs.entitty';
+import { sortByField } from 'src/utils/utils';
 
 @Injectable()
 export class PooService {
@@ -57,6 +58,24 @@ export class PooService {
 
     async getAllPooSubjPbs(){
         return await this.pooSubjPbRepository.find();
+    }
+
+
+    async getAllPooSubjPbsWithRelationsSortedBy(field:string, order:string){
+        const poo = (await this.pooSubjPbRepository.find({where: {
+            active:1
+        }, relations: {
+            sPogSubjAvias: true,
+            sPogSubjRws: true,
+            sPogSubjWaters: true,
+            idNumReg2: true,
+            idSubj2: true,
+            idSubjObj2: true,
+            idUnit: true,
+        }
+    }));
+        const sorted = sortByField(poo, field, order);
+        return sorted;
     }
     
     async updatePooSubjPb(idList: number, dto: CreatePooSubjPbDTO){
