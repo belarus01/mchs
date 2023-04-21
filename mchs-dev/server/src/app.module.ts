@@ -39,10 +39,10 @@ import { NotificationGateway } from './modules/notification/notification.gateway
     TypeOrmModule.forRoot({
      name: 'mchs_connection',
       type:'mysql',
-      host:'192.168.150.29',// 192.168.150.29 | localhost
+      host:'192.168.150.183',// 192.168.150.29 | localhost
       port: 3306,
-      username: 'serge',// serge | tanya
-      password: '123456_Qq',
+      username: 'root',// serge | tanya
+      password: 'root',
       database: 'mchs',
       
       entities:[],
@@ -52,10 +52,10 @@ import { NotificationGateway } from './modules/notification/notification.gateway
     TypeOrmModule.forRoot({
       name: 'doc_connection',
        type:'mysql',
-       host:'192.168.150.29',// 192.168.150.29 | localhost
+       host:'192.168.150.183',// 192.168.150.29 | localhost
        port: 3306,
-       username: 'serge',// serge | tanya
-       password: '123456_Qq',
+       username: 'root',// serge | tanya
+       password: 'root',
        database: 'doc',
        
        entities:[],
@@ -127,11 +127,11 @@ import { NotificationGateway } from './modules/notification/notification.gateway
   ],
   controllers: [AppController],
   providers: [
-    {
-    provide: APP_INTERCEPTOR,
-    //scope: Scope.REQUEST,
-    useClass: ExceptionInterceptor,
-  },
+  //   {
+  //   provide: APP_INTERCEPTOR,
+  //   //scope: Scope.REQUEST,
+  //   useClass: ExceptionInterceptor,
+  // },
 /*{
     //add TimeoutInterceptor to consider When your endpoint doesn't return anything after a period of time
     provide: APP_INTERCEPTOR,
