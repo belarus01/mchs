@@ -63,6 +63,11 @@ export class ObjectService {
         return objectSpecif;
     }
 
+    async getObjSpecifByObjectId(idObj:number){
+        const result = await this.objectSpecifRepository.find({where:{idSubjObj:idObj}});
+        return result;
+    }
+
     async getObjectBySubjectId(idSubj:number){
         const objs = await this.objectRepository.find({where:{idSubj:idSubj}});
         return objs;
