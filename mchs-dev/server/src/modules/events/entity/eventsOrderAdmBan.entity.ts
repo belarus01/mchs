@@ -1,3 +1,4 @@
+import { SAdmBan } from "src/modules/adm/entity/admBan.entity";
 import {
   Column,
   Entity,
@@ -8,7 +9,11 @@ import {
 } from "typeorm";
 import { SEventsOrder } from "./eventsOrder.entity";
 import { SSubjObj } from "src/modules/object/entity/object.entity";
-
+import { SFormReport } from "src/modules/form/entity/formReport.entity";
+/* import { SAdmBan } from "./SAdmBan";
+import { SEventsOrder } from "./SEventsOrder";
+import { SSubjObj } from "./SSubjObj";
+import { SFormReport } from "./SFormReport"; */
 
 @Index("FK_s_events_order_adm_ban_id_ban", ["idBan"], {})
 @Index("FK_s_events_order_adm_ban_id_event_order", ["idEventOrder"], {})
@@ -142,6 +147,13 @@ export class SEventsOrderAdmBan {
   @Column("bigint", { name: "id_report", nullable: true, unsigned: true })
   idReport: number | null;
 
+  @ManyToOne(() => SAdmBan, (sAdmBan) => sAdmBan.sEventsOrderAdmBans, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_ban", referencedColumnName: "idBan" }])
+  idBan2: SAdmBan;
+
   @ManyToOne(
     () => SEventsOrder,
     (sEventsOrder) => sEventsOrder.sEventsOrderAdmBans,
@@ -158,4 +170,12 @@ export class SEventsOrderAdmBan {
   })
   @JoinColumn([{ name: "id_obj", referencedColumnName: "idObj" }])
   idObj2: SSubjObj;
+
+  @ManyToOne(
+    () => SFormReport,
+    (sFormReport) => sFormReport.sEventsOrderAdmBans,
+    { onDelete: "NO ACTION", onUpdate: "CASCADE" }
+  )
+  @JoinColumn([{ name: "id_report", referencedColumnName: "idList" }])
+  idReport2: SFormReport;
 }

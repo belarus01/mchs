@@ -3,6 +3,7 @@ import { SAteRayon } from "src/modules/ate/entity/ateRayon.entity";
 import { SEventsOrder } from "src/modules/events/entity/eventsOrder.entity";
 import { SEventsPlan } from "src/modules/events/entity/eventsPlan.entity";
 import { User } from "src/modules/users/user.entity";
+import { SSopbCard } from "src/sopb/entity/sopbCard.entity";
 import {
   Column,
   Entity,
@@ -177,8 +178,14 @@ export class SDept {
   @OneToMany(() => SEventsOrder, (sEventsOrder) => sEventsOrder.idDept2)
   sEventsOrders: SEventsOrder[];
 
+  @OneToMany(() => SEventsOrder, (sEventsOrder) => sEventsOrder.idDeptIss2)
+  sEventsOrders2: SEventsOrder[];
+
   @OneToMany(() => SEventsPlan, (sEventsPlan) => sEventsPlan.idDept2)
   sEventsPlans: SEventsPlan[];
+
+  @OneToMany(() => SSopbCard, (sSopbCard) => sSopbCard.idDeptRequest2)
+  sSopbCards: SSopbCard[];
 
   @OneToMany(() => User, (users) => users.idDept)
   users: User[];

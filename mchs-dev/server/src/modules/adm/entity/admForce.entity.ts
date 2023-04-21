@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { SEventsOrderAdmForce } from "src/modules/events/entity/eventsOrderAdmForce.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("s_adm_force", { schema: "doc" })
+@Entity("s_adm_force", { schema: "mchs" })
 export class SAdmForce {
   @PrimaryGeneratedColumn({ type: "int", name: "id_force", unsigned: true })
   idForce: number;
@@ -69,21 +70,21 @@ export class SAdmForce {
     nullable: true,
     comment: "Дата изменения записи",
   })
-  dateRecord: string | null;
+  dateRecord: Date | null;
 
   @Column("date", {
     name: "date_begin",
     nullable: true,
     comment: "Дата начала действия записи",
   })
-  dateBegin: string | null;
+  dateBegin: Date | null;
 
   @Column("date", {
     name: "date_end",
     nullable: true,
     comment: "Дата окончания действия записи",
   })
-  dateEnd: string | null;
+  dateEnd: Date | null;
 
   @Column("tinyint", {
     name: "active",
@@ -100,4 +101,10 @@ export class SAdmForce {
     unsigned: true,
   })
   uid: number | null;
+
+  @OneToMany(
+    () => SEventsOrderAdmForce,
+    (sEventsOrderAdmForce) => sEventsOrderAdmForce.idForce2
+  )
+  sEventsOrderAdmForces: SEventsOrderAdmForce[];
 }

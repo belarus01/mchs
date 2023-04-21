@@ -1,3 +1,11 @@
+import { SEventsOrderAdmBan } from "src/modules/events/entity/eventsOrderAdmBan.entity";
+import { SEventsOrderAdmForce } from "src/modules/events/entity/eventsOrderAdmForce.entity";
+import { SEventsOrderObj } from "src/modules/events/entity/eventsOrderObj.entity";
+import { SEventsOrderQueDef } from "src/modules/events/entity/eventsOrderQueDef.entity";
+import { SPooSubjPb } from "src/modules/poo/entity/pooSubjPb.entity";
+import { SSubj } from "src/modules/subject/entity/subject.entity";
+import { User } from "src/modules/users/user.entity";
+import { SSopbCardSubj } from "src/sopb/entity/sopbCardSubj.entity";
 import {
   Column,
   Entity,
@@ -7,12 +15,6 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { SEventsOrderAdmBan } from "../../events/entity/eventsOrderAdmBan.entity";
-import { SEventsOrderAdmForce } from "../../events/entity/eventsOrderAdmForce.entity";
-import { SEventsOrderObj } from "../../events/entity/eventsOrderObj.entity";
-import { SSubj } from "../../subject/entity/subject.entity";
-import { User } from "../../users/user.entity";
-import { SEventsOrderQueDef } from "../../events/entity/eventsOrderQueDef.entity";
 
 @Index("id_subj", ["idSubj"], {})
 @Index("s_subj_obj_FK_1", ["uid"], {})
@@ -164,6 +166,12 @@ export class SSubjObj {
     (sEventsOrderQueDef) => sEventsOrderQueDef.idObj2
   )
   sEventsOrderQueDefs: SEventsOrderQueDef[];
+
+  @OneToMany(() => SPooSubjPb, (sPooSubjPb) => sPooSubjPb.idSubjObj2)
+  sPooSubjPbs: SPooSubjPb[];
+
+  @OneToMany(() => SSopbCardSubj, (sSopbCardSubj) => sSopbCardSubj.idObj2)
+  sSopbCardSubjs: SSopbCardSubj[];
 
   @ManyToOne(() => User, (users) => users.sSubjObjs, {
     onDelete: "NO ACTION",

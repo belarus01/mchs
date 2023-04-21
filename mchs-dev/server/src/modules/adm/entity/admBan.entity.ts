@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { SEventsOrderAdmBan } from "src/modules/events/entity/eventsOrderAdmBan.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("s_adm_ban", { schema: "doc" })
+@Entity("s_adm_ban", { schema: "mchs" })
 export class SAdmBan {
   @PrimaryGeneratedColumn({ type: "int", name: "id_ban", unsigned: true })
   idBan: number;
@@ -101,4 +102,10 @@ export class SAdmBan {
 
   @Column("varchar", { name: "id_", nullable: true, length: 255 })
   id: string | null;
+
+  @OneToMany(
+    () => SEventsOrderAdmBan,
+    (sEventsOrderAdmBan) => sEventsOrderAdmBan.idBan2
+  )
+  sEventsOrderAdmBans: SEventsOrderAdmBan[];
 }

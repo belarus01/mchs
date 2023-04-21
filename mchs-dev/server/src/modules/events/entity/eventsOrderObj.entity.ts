@@ -8,7 +8,12 @@ import {
 } from "typeorm";
 import { SEventsOrder } from "./eventsOrder.entity";
 import { SSubjObj } from "src/modules/object/entity/object.entity";
-
+import { STypeTest } from "src/modules/type/entity/typeTest.entity";
+import { SUnits } from "src/modules/unit/unit.entity";
+/* import { SEventsOrder } from "./SEventsOrder";
+import { SSubjObj } from "./SSubjObj";
+import { STypeTest } from "./STypeTest";
+import { SUnits } from "./SUnits"; */
 
 @Index("FK_s_events_order_obj_id_event_order", ["idEventOrder"], {})
 @Index("FK_s_events_order_obj_id_obj", ["idObj"], {})
@@ -23,7 +28,7 @@ export class SEventsOrderObj {
     name: "id_obj_order",
     unsigned: true,
   })
-  idObjOrder: string;
+  idObjOrder: number;
 
   @Column("bigint", {
     name: "id_event_order",
@@ -31,7 +36,7 @@ export class SEventsOrderObj {
     comment: "Мероприятие",
     unsigned: true,
   })
-  idEventOrder: string | null;
+  idEventOrder: number | null;
 
   @Column("varchar", {
     name: "name",
@@ -42,7 +47,7 @@ export class SEventsOrderObj {
   name: string | null;
 
   @Column("bigint", { name: "id_obj", nullable: true, unsigned: true })
-  idObj: string | null;
+  idObj: number | null;
 
   @Column("date", {
     name: "date_record",
@@ -50,7 +55,7 @@ export class SEventsOrderObj {
     comment: "Дата изменения записи",
     default: () => "'now()'",
   })
-  dateRecord: string | null;
+  dateRecord: Date | null;
 
   @Column("int", {
     name: "id_type_test",
@@ -126,10 +131,10 @@ export class SEventsOrderObj {
     comment: "Катег.зданий/нар.уст.по взрывопож.и пожарной опасности",
     unsigned: true,
   })
-  idUnit_41: string | null;
+  idUnit_41: number | null;
 
   @Column("decimal", { name: "area", nullable: true, precision: 10, scale: 3 })
-  area: string | null;
+  area: number | null;
 
   @Column("bigint", {
     name: "id_unit_6",
@@ -138,7 +143,7 @@ export class SEventsOrderObj {
       "doc.s_units.id_unit (где type_unit=6)Классы функциональной пожарной безопасности",
     unsigned: true,
   })
-  idUnit_6: string | null;
+  idUnit_6: number | null;
 
   @Column("bigint", {
     name: "id_unit_17",
@@ -146,23 +151,12 @@ export class SEventsOrderObj {
     comment: "'Катег.зданий/нар.уст.по взрывопож.и пожарной опасности",
     unsigned: true,
   })
-  idUnit_17: string | null;
+  idUnit_17: number | null;
 
-  @Column("int", {
-    name: "id_sub_obj",
-    nullable: true,
-    comment: "Подобъект объекта (подъемный кран, склад, установка......)",
-    unsigned: true,
-  })
+  @Column("int", { name: "id_sub_obj", nullable: true, unsigned: true })
   idSubObj: number | null;
 
-  @Column("tinyint", {
-    name: "type_sub_obj",
-    nullable: true,
-    comment:
-      "Таблица с подобъектами.1-mchs.s_subj_obj_specif (Здания),\r\n2-doc.s_sopb_card_subj (СПБиП),\r\n3-s_poo_subj_pb (ПБ),\r\n4-s_pog_subj_auto (ПОГ авто),\r\n5-s_pog_subj_avia (ПОГ авиа\r\n6-s_pog_subj_rw (ПОГ жд\r\n7-s_pog_subj_water (ПОГ вода),",
-    unsigned: true,
-  })
+  @Column("tinyint", { name: "type_sub_obj", nullable: true, unsigned: true })
   typeSubObj: number | null;
 
   @ManyToOne(
@@ -181,4 +175,32 @@ export class SEventsOrderObj {
   })
   @JoinColumn([{ name: "id_obj", referencedColumnName: "idObj" }])
   idObj2: SSubjObj;
+
+  @ManyToOne(() => STypeTest, (sTypeTest) => sTypeTest.sEventsOrderObjs, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_type_test", referencedColumnName: "idTypeTest" }])
+  idTypeTest2: STypeTest;
+
+  @ManyToOne(() => SUnits, (sUnits) => sUnits.sEventsOrderObjs, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_unit_17", referencedColumnName: "idUnit" }])
+  idUnit: SUnits;
+
+  @ManyToOne(() => SUnits, (sUnits) => sUnits.sEventsOrderObjs2, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_unit_41", referencedColumnName: "idUnit" }])
+  idUnit_2: SUnits;
+
+  @ManyToOne(() => SUnits, (sUnits) => sUnits.sEventsOrderObjs3, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_unit_6", referencedColumnName: "idUnit" }])
+  idUnit_3: SUnits;
 }

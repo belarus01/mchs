@@ -1,12 +1,21 @@
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { SQuestion } from "../question/entity/question.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { SEvents } from "../events/entity/events.entity";
 import { SEventsOrder } from "../events/entity/eventsOrder.entity";
+import { SEventsOrderObj } from "../events/entity/eventsOrderObj.entity";
+import { SEventsPlan } from "../events/entity/eventsPlan.entity";
 import { SPooSubjPb } from "../poo/entity/pooSubjPb.entity";
-/* import { SFireCardBuild } from "./SFireCardBuild";
+import { SQuestion } from "../question/entity/question.entity";
+import { SSubjObjSpecif } from "../object/entity/objectSpecif.entity";
+/* import { SEvents } from "./SEvents";
+import { SEventsOrder } from "./SEventsOrder";
+import { SEventsOrderObj } from "./SEventsOrderObj";
+import { SEventsPlan } from "./SEventsPlan";
+import { SFireCardBuild } from "./SFireCardBuild";
 import { SPooSubjPb } from "./SPooSubjPb";
-import { SQuestion } from "./SQuestion"; */
+import { SQuestion } from "./SQuestion";
+import { SSubjObjSpecif } from "./SSubjObjSpecif"; */
 
-@Entity("s_units", { schema: "doc" })
+@Entity("s_units", { schema: "mchs" })
 export class SUnits {
   @PrimaryGeneratedColumn({ type: "bigint", name: "id_unit", unsigned: true })
   idUnit: number;
@@ -87,8 +96,41 @@ export class SUnits {
   })
   uid: number | null;
 
-  @Column("varchar", { name: "comm", nullable: true, length: 55 })
+  @Column("varchar", { name: "comm", nullable: true, length: 155 })
   comm: string | null;
+
+  @OneToMany(() => SEvents, (sEvents) => sEvents.idUnit)
+  sEvents: SEvents[];
+
+  @OneToMany(() => SEventsOrder, (sEventsOrder) => sEventsOrder.idUnit_2)
+  sEventsOrders: SEventsOrder[];
+
+  @OneToMany(() => SEventsOrder, (sEventsOrder) => sEventsOrder.idUnit_5)
+  sEventsOrders2: SEventsOrder[];
+
+  @OneToMany(() => SEventsOrder, (sEventsOrder) => sEventsOrder.sphera2)
+  sEventsOrders3: SEventsOrder[];
+
+  @OneToMany(() => SEventsOrderObj, (sEventsOrderObj) => sEventsOrderObj.idUnit)
+  sEventsOrderObjs: SEventsOrderObj[];
+
+  @OneToMany(
+    () => SEventsOrderObj,
+    (sEventsOrderObj) => sEventsOrderObj.idUnit_2
+  )
+  sEventsOrderObjs2: SEventsOrderObj[];
+
+  @OneToMany(
+    () => SEventsOrderObj,
+    (sEventsOrderObj) => sEventsOrderObj.idUnit_3
+  )
+  sEventsOrderObjs3: SEventsOrderObj[];
+
+  @OneToMany(() => SEventsPlan, (sEventsPlan) => sEventsPlan.idUnit)
+  sEventsPlans: SEventsPlan[];
+
+  @OneToMany(() => SEventsPlan, (sEventsPlan) => sEventsPlan.idUnit_2)
+  sEventsPlans2: SEventsPlan[];
 
 /*   @OneToMany(() => SFireCardBuild, (sFireCardBuild) => sFireCardBuild.idUnit_17)
   sFireCardBuilds: SFireCardBuild[];
@@ -97,20 +139,20 @@ export class SUnits {
   sFireCardBuilds2: SFireCardBuild[];
 
   @OneToMany(() => SFireCardBuild, (sFireCardBuild) => sFireCardBuild.idUnit_2)
-  sFireCardBuilds3: SFireCardBuild[];*/
+  sFireCardBuilds3: SFireCardBuild[]; */
 
   @OneToMany(() => SPooSubjPb, (sPooSubjPb) => sPooSubjPb.idUnit)
-  sPooSubjPbs: SPooSubjPb[]; 
+  sPooSubjPbs: SPooSubjPb[];
 
   @OneToMany(() => SQuestion, (sQuestion) => sQuestion.idUnit)
   sQuestions: SQuestion[];
 
-/*   @ManyToOne(() => SEventsOrder, (sEventsOrder) => sEventsOrder.sUnits, {
-    onDelete: "NO ACTION",
-    onUpdate: "CASCADE",
-  })
-  @JoinColumn([
-    { name: "id_event_order", referencedColumnName: "idEventOrder" },
-  ])
-  idEventOrder2: SEventsOrder; */
+  @OneToMany(() => SSubjObjSpecif, (sSubjObjSpecif) => sSubjObjSpecif.idUnit)
+  sSubjObjSpecifs: SSubjObjSpecif[];
+
+  @OneToMany(() => SSubjObjSpecif, (sSubjObjSpecif) => sSubjObjSpecif.idUnit_2)
+  sSubjObjSpecifs2: SSubjObjSpecif[];
+
+  @OneToMany(() => SSubjObjSpecif, (sSubjObjSpecif) => sSubjObjSpecif.idUnit_3)
+  sSubjObjSpecifs3: SSubjObjSpecif[];
 }

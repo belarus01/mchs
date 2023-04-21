@@ -1,6 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { SEventsOrderPoo } from "src/modules/events/entity/eventsOrderPoo.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("s_poo", { schema: "doc" })
+
+@Entity("s_poo", { schema: "mchs" })
 export class SPoo {
   @PrimaryGeneratedColumn({ type: "int", name: "id_poo", unsigned: true })
   idPoo: number;
@@ -68,4 +70,7 @@ export class SPoo {
     unsigned: true,
   })
   uid: number | null;
+
+  @OneToMany(() => SEventsOrderPoo, (sEventsOrderPoo) => sEventsOrderPoo.idPoo2)
+  sEventsOrderPoos: SEventsOrderPoo[];
 }

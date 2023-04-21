@@ -1,5 +1,4 @@
-import { SDept } from "src/modules/department/entity/department.entity";
-import { Notification } from "src/modules/notification/notification.entity";
+import { SFormReport } from "src/modules/form/entity/formReport.entity";
 import {
   Column,
   Entity,
@@ -9,20 +8,40 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { SEvents } from "./events.entity";
-import { Group } from "src/modules/group/group.entity";
-import { SSubj } from "src/modules/subject/entity/subject.entity";
-import { SEventsOrderAdmBan } from "./eventsOrderAdmBan.entity";
-import { SEventsOrderAdmForce } from "./eventsOrderAdmForce.entity";
-import { SEventsOrderData } from "./eventsOrderData.entity";
-import { SEventsOrderDef } from "./eventsOrderDef.entity";
-import { SEventsOrderDefMtx } from "./eventsOrderDefMtx.entity";
-import { SEventsOrderObj } from "./eventsOrderObj.entity";
 import { SEventsPrivate } from "./eventsPrivate.entity";
 import { SEventsOrderQueDef } from "./eventsOrderQueDef.entity";
+import { SEventsOrderObj } from "./eventsOrderObj.entity";
+import { SEventsOrderDefMtx } from "./eventsOrderDefMtx.entity";
+import { SEventsOrderDef } from "./eventsOrderDef.entity";
+import { SEventsOrderData } from "./eventsOrderData.entity";
+import { SEventsOrderAdmForce } from "./eventsOrderAdmForce.entity";
+import { SEventsOrderAdmBan } from "./eventsOrderAdmBan.entity";
 import { SUnits } from "src/modules/unit/unit.entity";
+import { SSubj } from "src/modules/subject/entity/subject.entity";
+import { Group } from "src/modules/group/group.entity";
+import { SEventsPlan } from "./eventsPlan.entity";
+import { SEvents } from "./events.entity";
+import { SDept } from "src/modules/department/entity/department.entity";
+import { Notification } from "src/modules/notification/notification.entity";
+/* import { SDept } from "./SDept";
+import { SEvents } from "./SEvents";
+import { SEventsPlan } from "./SEventsPlan";
+import { Group } from "./Group";
+import { SSubj } from "./SSubj";
+import { SUnits } from "./SUnits";
+import { SEventsOrderAdmBan } from "./SEventsOrderAdmBan";
+import { SEventsOrderAdmForce } from "./SEventsOrderAdmForce";
+import { SEventsOrderData } from "./SEventsOrderData";
+import { SEventsOrderDef } from "./SEventsOrderDef";
+import { SEventsOrderDefMtx } from "./SEventsOrderDefMtx";
+import { SEventsOrderObj } from "./SEventsOrderObj";
+import { SEventsOrderQueDef } from "./SEventsOrderQueDef";
+import { SEventsPrivate } from "./SEventsPrivate";
+import { SFormReport } from "./SFormReport"; */
 
 @Index("FK_s_events_order_id_dept", ["idDept"], {})
+@Index("FK_s_events_order_id_dept_iss", ["idDeptIss"], {})
+@Index("FK_s_events_order_id_event_plan", ["idEventPlan"], {})
 @Index("FK_s_events_order_id_group", ["idGroup"], {})
 @Index("FK_s_events_order_id_subj2", ["idSubj"], {})
 @Index("FK_s_events_order_id_unit", ["idUnit"], {})
@@ -35,6 +54,7 @@ export class SEventsOrder {
   @PrimaryGeneratedColumn({
     type: "bigint",
     name: "id_event_order",
+    comment: "Сведения о принятии решения о назначении внеплановой проверки",
     unsigned: true,
   })
   idEventOrder: number;
@@ -111,6 +131,9 @@ export class SEventsOrder {
   })
   idUnit_4: number | null;
 
+  @Column("int", { name: "id_event_plan", nullable: true, unsigned: true })
+  idEventPlan: number | null;
+
   @Column("bigint", {
     name: "sphera",
     nullable: true,
@@ -183,7 +206,7 @@ export class SEventsOrder {
     comment:
       "Статус задачи:1-не спланирована,2-в работе,3- завершена, 4-просрочена",
     length: 50,
-    default: () => "'wait'",
+    default: () => "'1'",
   })
   status: string | null;
 
@@ -293,11 +316,13 @@ export class SEventsOrder {
   })
   nameAgent: string | null;
 
-  @Column("varchar", { name: "other_info", nullable: true, length: 1255 })
+  @Column("varchar", {
+    name: "other_info",
+    nullable: true,
+    comment: "Сведения о проблемных вопросах (карта учеа субъекта)",
+    length: 1255,
+  })
   otherInfo: string | null;
-
-  @Column("int", { name: "id_event_plan", nullable: true, unsigned: true })
-  idEventPlan: number | null;
 
   @ManyToOne(() => SDept, (sDept) => sDept.sEventsOrders, {
     onDelete: "NO ACTION",
@@ -306,7 +331,7 @@ export class SEventsOrder {
   @JoinColumn([{ name: "id_dept", referencedColumnName: "idDept" }])
   idDept2: SDept;
 
-  @ManyToOne(() => SDept, (sDept) => sDept.sEventsOrders, {
+  @ManyToOne(() => SDept, (sDept) => sDept.sEventsOrders2, {
     onDelete: "NO ACTION",
     onUpdate: "CASCADE",
   })
@@ -319,6 +344,13 @@ export class SEventsOrder {
   })
   @JoinColumn([{ name: "id_event", referencedColumnName: "idEvent" }])
   idEvent2: SEvents;
+
+  @ManyToOne(() => SEventsPlan, (sEventsPlan) => sEventsPlan.sEventsOrders, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_event_plan", referencedColumnName: "idEventPlan" }])
+  idEventPlan2: SEventsPlan;
 
   @ManyToOne(() => Group, (group) => group.sEventsOrders, {
     onDelete: "NO ACTION",
@@ -333,6 +365,27 @@ export class SEventsOrder {
   })
   @JoinColumn([{ name: "id_subj", referencedColumnName: "idSubj" }])
   idSubj2: SSubj;
+
+  @ManyToOne(() => SUnits, (sUnits) => sUnits.sEventsOrders, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "id_unit_3", referencedColumnName: "idUnit" }])
+  idUnit_2: SUnits;
+
+  @ManyToOne(() => SUnits, (sUnits) => sUnits.sEventsOrders2, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_unit_4", referencedColumnName: "idUnit" }])
+  idUnit_5: SUnits;
+
+  @ManyToOne(() => SUnits, (sUnits) => sUnits.sEventsOrders3, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "sphera", referencedColumnName: "idUnit" }])
+  sphera2: SUnits;
 
   @OneToMany(
     () => SEventsOrderAdmBan,
@@ -382,12 +435,9 @@ export class SEventsOrder {
   )
   sEventsPrivates: SEventsPrivate[];
 
+  @OneToMany(() => SFormReport, (sFormReport) => sFormReport.idEventOrder2)
+  sFormReports: SFormReport[];
+
   @OneToMany(() => Notification, (notification) => notification.idEventOrder2)
   notifications: Notification[];
-
-/*   @OneToMany(
-    () => SUnits,
-    (sUnits) => sUnits.idEventOrder2
-  )
-  sUnits: SUnits[]; */
 }

@@ -1,6 +1,8 @@
 import { SEventsOrder } from "src/modules/events/entity/eventsOrder.entity";
 import { SSubjObj } from "src/modules/object/entity/object.entity";
+import { SPooSubjPb } from "src/modules/poo/entity/pooSubjPb.entity";
 import { SVedomstva } from "src/modules/vedomstva/vedomstva.entity";
+import { SSopbCardSubj } from "src/sopb/entity/sopbCardSubj.entity";
 import {
   Column,
   Entity,
@@ -10,6 +12,12 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+/* import { SEventsOrder } from "./SEventsOrder";
+import { SFireCardStaff } from "./SFireCardStaff";
+import { SPooSubjPb } from "./SPooSubjPb";
+import { SSopbCardSubj } from "./SSopbCardSubj";
+import { SVedomstva } from "./SVedomstva";
+import { SSubjObj } from "./SSubjObj"; */
 
 @Index("num_opo", ["numOpo"], {})
 @Index("s_subj_FK", ["codeSoatoYur"], {})
@@ -24,7 +32,7 @@ export class SSubj {
     name: "num_opo",
     nullable: true,
     comment:
-      "Индивидуальный номер ОПО согласно государственному реестру опасных производственных объектов",
+      "не используетсяИндивидуальный номер ОПО согласно государственному реестру опасных производственных объектов",
     length: 50,
   })
   numOpo: string | null;
@@ -65,6 +73,7 @@ export class SSubj {
     name: "date_record",
     nullable: true,
     comment: "Дата свидетельства о регистрации ОПО",
+    default: () => "'now()'",
   })
   dateRecord: Date | null;
 
@@ -308,8 +317,20 @@ export class SSubj {
   })
   contactData: string | null;
 
+  @Column("varchar", { name: "banc_data", nullable: true, length: 855 })
+  bancData: string | null;
+
   @OneToMany(() => SEventsOrder, (sEventsOrder) => sEventsOrder.idSubj2)
   sEventsOrders: SEventsOrder[];
+
+/*   @OneToMany(() => SFireCardStaff, (sFireCardStaff) => sFireCardStaff.idSubj2)
+  sFireCardStaffs: SFireCardStaff[]; */
+
+  @OneToMany(() => SPooSubjPb, (sPooSubjPb) => sPooSubjPb.idSubj2)
+  sPooSubjPbs: SPooSubjPb[];
+
+  @OneToMany(() => SSopbCardSubj, (sSopbCardSubj) => sSopbCardSubj.idSubj2)
+  sSopbCardSubjs: SSopbCardSubj[];
 
   @ManyToOne(() => SVedomstva, (sVedomstva) => sVedomstva.sSubjs, {
     onDelete: "NO ACTION",

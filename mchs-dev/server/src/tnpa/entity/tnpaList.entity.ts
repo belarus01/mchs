@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { STnpaDoc } from "./tnpaDoc.entity";
+import { SQuestion1 } from "src/modules/question/entity/question1.entity";
 
 
 @Entity("s_tnpa_list", { schema: "mchs" })
@@ -101,6 +102,9 @@ export class STnpaList {
     unsigned: true,
   })
   uid: number | null;
+
+  @OneToMany(() => SQuestion1, (sQuestion1) => sQuestion1.idTnpa2)
+  sQuestions: SQuestion1[];
 
   @OneToMany(() => STnpaDoc, (sTnpaDoc) => sTnpaDoc.idList2)
   sTnpaDocs: STnpaDoc[];

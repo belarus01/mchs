@@ -11,7 +11,7 @@ export class CreatePogSubjAutoDTO{
 
     numReg?: number;
 
-    numGosnadz?: number;
+    numGosnadz?: string;
 
     numOrder?: string;
 
@@ -77,7 +77,7 @@ export class CreatePogSubjAutoDTO{
 
     preExploit?: number;
 
-    sizeTanc?: string;
+    sizeTanc?: number;
 
     numSections?: number;
  
