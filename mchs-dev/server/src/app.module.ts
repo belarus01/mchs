@@ -50,10 +50,10 @@ import { TypeModule } from './modules/type/type.module';
     TypeOrmModule.forRoot({
      name: 'mchs_connection',
       type:'mysql',
-      host:'192.168.150.29',// 192.168.150.29 | localhost
+      host:'192.168.150.183',// 192.168.150.29 | localhost
       port: 3306,
-      username: 'serge',// serge | tanya | root
-      password: '123456_Qq',// 123456_Qq | 123456
+      username: 'root',// serge | tanya | root
+      password: 'root',// 123456_Qq | 123456
       database: 'mchs',
       
       entities:[],
@@ -64,10 +64,10 @@ import { TypeModule } from './modules/type/type.module';
     TypeOrmModule.forRoot({
       name: 'doc_connection',
        type:'mysql',
-       host:'192.168.150.29',// 192.168.150.29 | localhost
+       host:'192.168.150.183',// 192.168.150.29 | localhost
        port: 3306,
-       username: 'serge',// serge | tanya | root
-       password: '123456_Qq',// 123456_Qq | 123456
+       username: 'root',// serge | tanya | root
+       password: 'root',// 123456_Qq | 123456
        database: 'doc',
        
        entities:[],
@@ -168,5 +168,21 @@ import { TypeModule } from './modules/type/type.module';
 //     useClass: AllExceptionsFilter,//added globaly in main.ts    
 // },*/
 // ],
+  providers: [
+  //   {
+  //   provide: APP_INTERCEPTOR,
+  //   //scope: Scope.REQUEST,
+  //   useClass: ExceptionInterceptor,
+  // },
+/*{
+    //add TimeoutInterceptor to consider When your endpoint doesn't return anything after a period of time
+    provide: APP_INTERCEPTOR,
+    useClass: TimeInterceptor
+  }, */
+/* {
+    provide: APP_FILTER,
+    useClass: AllExceptionsFilter,//added globaly in main.ts    
+},*/
+],
 })
 export class AppModule {}
