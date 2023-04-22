@@ -73,4 +73,9 @@ export class ObjectController {
     deleteObjSpecifById(@Param('idSpecif') idSpecif: number){
         return this.objectService.deleteObjById(idSpecif);
     } 
+
+    @Get('get/objectSpecif/idSubjObj/:idSubjObj')
+    getObjSpecifBySubjObjId(@Param('idSubjObj') idSubjObj:number){
+        return this.objectService.getObjSpecifByObjectId(idSubjObj);
+    }
 }

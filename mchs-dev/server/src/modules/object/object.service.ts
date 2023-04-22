@@ -92,5 +92,11 @@ export class ObjectService {
         return objSpecifToDelete.active === 0;
     }
 
+    async getObjSpecifByObjectId(idObj:number){
+        const result = await this.objectSpecifRepository.find({where:{idSubjObj:idObj}});
+        console.log(result);
+        return result;
+    }
+
 
 }
