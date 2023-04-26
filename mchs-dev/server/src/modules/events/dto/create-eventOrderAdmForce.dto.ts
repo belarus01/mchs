@@ -1,14 +1,13 @@
 export class CreateEventOrderAdmForceDTO{
-idEventOrder?: number;
+  idEventOrder?: number;
 
   idObj?: number;
 
+  idSubObj?: number;
 
   idForce?: number;
 
   org?: number;
-
-  dateRecord?: Date;
 
   dateBegin?: Date;
 
@@ -18,19 +17,17 @@ idEventOrder?: number;
 
   uid?: number;
 
-
   dateForce?: Date;
-
 
   numCase?: string;
 
-
   staff?: string;
-
 
   fio?: string;
 
   idTypeCase?: number;
+
+  dateCath?: Date;
 
   obstSposob?: string;
 

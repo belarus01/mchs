@@ -10,10 +10,7 @@ import { SEventsOrder } from "./eventsOrder.entity";
 import { SAdmForce } from "src/modules/adm/entity/admForce.entity";
 import { SSubjObj } from "src/modules/object/entity/object.entity";
 import { SFormReport } from "src/modules/form/entity/formReport.entity";
-/* import { SEventsOrder } from "./SEventsOrder";
-import { SAdmForce } from "./SAdmForce";
-import { SSubjObj } from "./SSubjObj";
-import { SFormReport } from "./SFormReport"; */
+
 
 @Index("FK_s_events_order_adm_force_id_event_order", ["idEventOrder"], {})
 @Index("FK_s_events_order_adm_force_id_force", ["idForce"], {})
@@ -39,6 +36,9 @@ export class SEventsOrderAdmForce {
     unsigned: true,
   })
   idObj: number | null;
+
+  @Column("bigint", { name: "id_sub_obj", nullable: true, unsigned: true })
+  idSubObj: number | null;
 
   @Column("int", {
     name: "id_force",

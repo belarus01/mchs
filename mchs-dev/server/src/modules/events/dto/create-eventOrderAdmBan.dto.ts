@@ -1,9 +1,11 @@
 export class CreateEventOrderAdmBanDTO{
-    idEventOrder?: number;
+  idEventOrder?: number;
 
   idObj?: number;
 
-  idForce?: number;
+  idSubObj?: number;
+
+  idBan?: number;
 
   org?: number;
 
@@ -11,19 +13,21 @@ export class CreateEventOrderAdmBanDTO{
 
   dateEnd?: Date;
 
+  dateDecision?: Date;
+
+  numCase?: string;
+
+  decision?: string;
+
   active?: number;
 
   uid?: number;
 
-  dateForce?: Date;
-
-  numCase?: string;
-
-  staff?: string;
-
-  fio?: string;
-
   idTypeCase?: number;
+
+  place?: string;
+
+  dateCatch?: Date;
 
   obstSposob?: string;
 

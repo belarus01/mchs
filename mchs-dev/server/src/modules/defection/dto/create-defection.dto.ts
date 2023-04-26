@@ -1,4 +1,5 @@
 export class CreateDefectionDTO{
+    idTnpa?: number;
     numReg?: number;
     nameDef?: string;
     recomend?: string;

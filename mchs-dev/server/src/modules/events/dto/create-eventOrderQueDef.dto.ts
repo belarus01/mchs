@@ -5,6 +5,8 @@ export class CreateEventOrderQueDefDTO{
  
     idObj?: number;
 
+    idSubObj?: number;
+
     idDef?: number;
  
     numReg?: number;
@@ -22,4 +24,8 @@ export class CreateEventOrderQueDefDTO{
     dateCheckFix?: Date;
  
     transferData?: string;
+
+    chlFlYes?: number;
+
+    chlComm?: string;
 }

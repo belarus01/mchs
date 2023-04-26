@@ -19,13 +19,30 @@ export class SEventsOrderQue {
   @Column("bigint", { name: "id_event_order", nullable: true, unsigned: true })
   idEventOrder: number | null;
 
+  @Column("bigint", {
+    name: "id_obj",
+    nullable: true,
+    comment: "Объект ОПО или структурное подразделение, к которму евопросы",
+    unsigned: true,
+  })
+  idObj: number | null;
+
+  @Column("bigint", {
+    name: "id_sub_obj",
+    nullable: true,
+    comment: "Подобъект, который остановили на дороге, например",
+    unsigned: true,
+  })
+  idSubObj: number | null;
+
   @Column("bigint", { name: "id_que", nullable: true, unsigned: true })
   idQue: number | null;
 
   @Column("tinyint", {
     name: "fl_ok",
     nullable: true,
-    comment: "0-исправлено, 1-нет,2 частично,3-перенесено",
+    comment:
+      "0 - вопросы МТХ,\r\n1 - вопросы ЧЛ, \r\n2 - дополнительные вопросы проверки. могут быть помимо вопросов чек-листа",
     unsigned: true,
   })
   flOk: number | null;
@@ -57,14 +74,14 @@ export class SEventsOrderQue {
   @Column("date", {
     name: "date_fix",
     nullable: true,
-    comment: "Дата устранения замечаний(срок устранения).",
+    comment: "не используется Дата устранения замечаний(срок устранения).",
   })
   dateFix: Date | null;
 
   @Column("date", {
     name: "date_inform",
     nullable: true,
-    comment: "Дата информирования об устранении нарушения",
+    comment: "не используется Дата информирования об устранении нарушения",
   })
   dateInform: Date | null;
 
@@ -79,7 +96,7 @@ export class SEventsOrderQue {
     name: "transfer_data",
     nullable: true,
     comment:
-      "сведения о переносе сроков устранения нарушения: наим.докум.,вход.№, дата",
+      "не используется. сведения о переносе сроков устранения нарушения: наим.докум.,вход.№, дата",
     length: 855,
   })
   transferData: string | null;
@@ -88,7 +105,7 @@ export class SEventsOrderQue {
     name: "problem_info",
     nullable: true,
     comment:
-      "В карточке учета субъекта пром.безопасности.Сведения о проблемных вопросах",
+      "не используется В карточке учета субъекта пром.безопасности.Сведения о проблемных вопросах",
     length: 850,
   })
   problemInfo: string | null;
@@ -106,21 +123,3 @@ export class SEventsOrderQue {
   )
   sEventsOrderQueDefs: SEventsOrderQueDef[];
 }
-
-  
-  /*     @ManyToOne(
-      () => SEventsOrder,
-      (sEventsOrder) => sEventsOrder.sEventsOrderQues,
-      { onDelete: "NO ACTION", onUpdate: "CASCADE" }
-    )
-    @JoinColumn([
-      { name: "id_event_order", referencedColumnName: "idEventOrder" },
-    ])
-    idEventOrder2: SEventsOrder; *///ВЗАИМОСВЯЗЬ В БД УБРАНА
-  
-/*     @ManyToOne(() => SEventsQue, (sEventsQue) => sEventsQue.sEventsOrderQues, {
-      onDelete: "NO ACTION",
-      onUpdate: "CASCADE",
-    })
-    @JoinColumn([{ name: "id_event_que", referencedColumnName: "idList" }])
-    idEventQue2: SEventsQue; *////ВЗАИМОСВЯЗЬ В БД УБРАНА

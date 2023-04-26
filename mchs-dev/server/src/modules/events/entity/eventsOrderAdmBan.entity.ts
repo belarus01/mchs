@@ -10,10 +10,6 @@ import {
 import { SEventsOrder } from "./eventsOrder.entity";
 import { SSubjObj } from "src/modules/object/entity/object.entity";
 import { SFormReport } from "src/modules/form/entity/formReport.entity";
-/* import { SAdmBan } from "./SAdmBan";
-import { SEventsOrder } from "./SEventsOrder";
-import { SSubjObj } from "./SSubjObj";
-import { SFormReport } from "./SFormReport"; */
 
 @Index("FK_s_events_order_adm_ban_id_ban", ["idBan"], {})
 @Index("FK_s_events_order_adm_ban_id_event_order", ["idEventOrder"], {})
@@ -40,6 +36,14 @@ export class SEventsOrderAdmBan {
     unsigned: true,
   })
   idObj: number | null;
+
+  @Column("bigint", {
+    name: "id_sub_obj",
+    nullable: true,
+    comment: "Что приостановлено(запрещено)",
+    unsigned: true,
+  })
+  idSubObj: number | null;
 
   @Column("int", { name: "id_ban", nullable: true, unsigned: true })
   idBan: number | null;
@@ -72,14 +76,6 @@ export class SEventsOrderAdmBan {
     comment: "дата вынесения",
   })
   dateDecision: Date | null;
-
-  @Column("varchar", {
-    name: "ban_obj",
-    nullable: true,
-    comment: "Что приостановлено(запрещено)",
-    length: 1255,
-  })
-  banObj: string | null;
 
   @Column("varchar", {
     name: "num_case",

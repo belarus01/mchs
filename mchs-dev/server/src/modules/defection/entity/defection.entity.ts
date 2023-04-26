@@ -1,6 +1,7 @@
 import { SEventsOrderDefMtx } from "src/modules/events/entity/eventsOrderDefMtx.entity";
 import { SEventsOrderQueDef } from "src/modules/events/entity/eventsOrderQueDef.entity";
 import { SForm } from "src/modules/form/entity/form.entity";
+import { STnpaList } from "src/tnpa/entity/tnpaList.entity";
 import {
   Column,
   Entity,
@@ -12,7 +13,7 @@ import {
 } from "typeorm";
 
 @Index("FK_s_defection_id_form", ["idForm"], {})
-@Index("UK_s_defection", ["idTnpa", "numReg", "idForm", "org", "active"], {
+@Index("UK_s_defection", ["idTnpa", "numReg", "org", "idForm", "active"], {
   unique: true,
 })
 @Entity("s_defection", { schema: "mchs" })
@@ -24,6 +25,7 @@ export class SDefection {
     name: "id_tnpa",
     nullable: true,
     comment: "Ид.ТНПА, пункт которого нарушен ",
+    unsigned: true,
   })
   idTnpa: number | null;
 
@@ -31,6 +33,7 @@ export class SDefection {
     name: "num_reg",
     nullable: true,
     comment: "Порядковый номер нарушения",
+    unsigned: true,
   })
   numReg: number | null;
 
@@ -152,7 +155,7 @@ export class SDefection {
     name: "rule_punct",
     nullable: true,
     comment: "Пункт Правил",
-    length: 855,
+    length: 2550,
   })
   rulePunct: string | null;
 
@@ -170,7 +173,8 @@ export class SDefection {
   @Column("tinyint", {
     name: "type_def",
     nullable: true,
-    comment: "0-нарушения МТХ,1-нарушения ЧЛ",
+    comment:
+      "0 - вопросы/нарушения МТХ,\r\n1 - вопросы/нарушения ЧЛ, \r\n2 - дополнительные вопросы проверки",
     unsigned: true,
     default: () => "'0'",
   })
@@ -220,6 +224,13 @@ export class SDefection {
   })
   @JoinColumn([{ name: "id_form", referencedColumnName: "idForm" }])
   idForm2: SForm;
+
+  @ManyToOne(() => STnpaList, (sTnpaList) => sTnpaList.sDefections, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_tnpa", referencedColumnName: "idList" }])
+  idTnpa2: STnpaList;
 
   @OneToMany(
     () => SEventsOrderDefMtx,

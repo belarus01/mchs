@@ -26,11 +26,24 @@ export class SEventsOrderQueDef {
   @Column("int", { name: "id_event_que", nullable: true, unsigned: true })
   idEventQue: number | null;
 
-  @Column("bigint", { name: "id_obj", nullable: true, unsigned: true })
-  idObj: number | null;
-
   @Column("bigint", { name: "id_def", nullable: true, unsigned: true })
   idDef: number | null;
+
+  @Column("bigint", {
+    name: "id_obj",
+    nullable: true,
+    comment: "Объект, который застукали",
+    unsigned: true,
+  })
+  idObj: number | null;
+
+  @Column("bigint", {
+    name: "id_sub_obj",
+    nullable: true,
+    comment: "подобъект, который застукали",
+    unsigned: true,
+  })
+  idSubObj: number | null;
 
   @Column("int", {
     name: "num_reg",
@@ -42,7 +55,7 @@ export class SEventsOrderQueDef {
 
   @Column("tinyint", {
     name: "fl_ok",
-    comment: "0-исправлено, 1-нет,2 частично,3-перенесено",
+    comment: "0-исправлено, 1-не исправлено,2 частично,3-перенесено",
     unsigned: true,
     default: () => "'1'",
   })
@@ -101,6 +114,31 @@ export class SEventsOrderQueDef {
     length: 855,
   })
   transferData: string | null;
+
+  @Column("tinyint", {
+    name: "chl_fl_yes",
+    nullable: true,
+    comment: "Для чеклистов!!!0-да,1 нет,2-не требуется",
+    unsigned: true,
+  })
+  chlFlYes: number | null;
+
+  @Column("decimal", {
+    name: "chl_num_index",
+    nullable: true,
+    comment: "Для чеклистров .колтчественный показатель",
+    precision: 10,
+    scale: 2,
+  })
+  chlNumIndex: number | null;
+
+  @Column("varchar", {
+    name: "chl_comm",
+    nullable: true,
+    comment: "Примечание для чеклиста",
+    length: 1255,
+  })
+  chlComm: string | null;
 
   @ManyToOne(() => SDefection, (sDefection) => sDefection.sEventsOrderQueDefs, {
     onDelete: "NO ACTION",
