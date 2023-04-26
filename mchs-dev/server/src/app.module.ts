@@ -1,4 +1,4 @@
-import { Module, Scope } from '@nestjs/common';
+ import { Module, Scope } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AuthModule } from './modules/auth/auth.module';
@@ -19,7 +19,6 @@ import { MulterModule } from '@nestjs/platform-express';
 //import { UserGroupModule } from './modules/userGroup/user-group.module';
 import { SoatoModule } from './soato/soato.module';
 import { AteModule } from './modules/ate/ate.module';
-//import { DocModule } from './modules/doc/doc.module';
 import { UnitModule } from './modules/unit/unit.module';
 import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
 import { TnpaModule } from './tnpa/tnpa.module';
@@ -41,6 +40,7 @@ import { OpoModule } from './modules/opo/opo.module';
 import { AdmModule } from './modules/adm/adm.module';
 import { TypeModule } from './modules/type/type.module';
 import { PogModule } from './modules/pog/pog.module';
+import { FileModule } from './file/file.module';
 
 
 
@@ -127,10 +127,10 @@ import { PogModule } from './modules/pog/pog.module';
     MulterModule.register({
       dest: './uploads',
     }),
+    FileModule,
 
     SoatoModule,
     AteModule,
-    //DocModule,
     UnitModule,
     TnpaModule,
     OkedModule,
@@ -148,6 +148,7 @@ import { PogModule } from './modules/pog/pog.module';
     AdmModule,
     TypeModule,
     PogModule,
+    FileModule,
   ],
   controllers: [AppController],
 //   providers: [

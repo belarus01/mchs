@@ -106,14 +106,39 @@ export class EventsController {
         return this.eventsService.getAllEventDefs();
     }
 
+    @Get('/get/all/eventDefs/with/relations')
+    async getAllEventDefsWithRelations(){
+        return this.eventsService.getAllEventDefsWithRelations();
+    }
+
+    @Get('/get/all/eventQues')
+    async getAllEventQues(){
+        return this.eventsService.getAllEventQues();
+    }
+
+    @Get('/get/all/eventQues/with/relations')
+    async getAllEventQuesWithRelations(){
+        return this.eventsService.getAllEventQuesWithRelations();
+    }
+
     @Get('/get/all/eventOrderAdmForces')
     async getAllEventOrderAdmForces(){
         return this.eventsService.getAllEventOrderAdmForces();
     }
 
+    @Get('/get/all/eventOrderAdmForces/with/relations')
+    async getAllEventOrderAdmForcesWithRelations(){
+        return this.eventsService.getAllEventOrderAdmForcesWithRelations();
+    }
+
     @Get('/get/all/eventOrderAdmBans')
     async getAllEventOrderAdmBans(){
         return this.eventsService.getAllEventOrderAdmBans();
+    }
+
+    @Get('/get/all/eventOrderAdmBans/with/relations')
+    async getAllEventOrderAdmBansWithRelations(){
+        return this.eventsService.getAllEventOrderAdmBansWithRelations();
     }
  
     @Get('/get/all/day')

@@ -26,6 +26,7 @@ import { CreateEventOrderAdmBanDTO } from './dto/create-eventOrderAdmBan.dto';
 import { SEventsOrderQueDef } from './entity/eventsOrderQueDef.entity';
 import { CreateEventPrivateDTO } from './dto/create-eventPrivate.dto';
 import { CreateEventOrderQueDefDTO } from './dto/create-eventOrderQueDef.dto';
+import { SEventsOrderDefMtx } from './entity/eventsOrderDefMtx.entity';
 
 
 
@@ -39,6 +40,7 @@ export class EventsService {
     @InjectRepository(SEventsOrderAdmBan, 'mchs_connection') private eventsOrderAdmBanRepository: Repository<SEventsOrderAdmBan>,
     @InjectRepository(SEventsOrderQueDef, 'mchs_connection') private eventsOrderQueDefRepository: Repository<SEventsOrderQueDef>,
     @InjectRepository(SEventsPrivate, 'mchs_connection') private eventsPrivateRepository: Repository<SEventsPrivate>,
+    @InjectRepository(SEventsOrderDefMtx, 'mchs_connection') private eventsOrderDefMtx: Repository<SEventsOrderDefMtx>,
     
     //private moduleRef: ModuleRef,
     ){
@@ -137,7 +139,7 @@ export class EventsService {
     }
 
     async getAllEventsSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
-        const events = (await this.eventsRepository.find({where:{active:1}}));
+        const events = (await this.eventsRepository.find({where:{active:1}}));//нужны ли тут рилейшены...
         const sorted = sortByField(events, field, order);
         const paged = skipPage(sorted, current, pageSize, total);
         return paged;
@@ -206,10 +208,31 @@ export class EventsService {
         return events;
     }
 
-    async getAllEventQues(){
+    async getAllEventDefsWithRelations(){
         const events = await this.eventsDefRepository.find({where: {
             active:1
+        }, relations: {
+            idEvent2: true
+        }
+    });
+        return events;
+    }
+
+    async getAllEventQues(){
+        const events = await this.eventsQueRepository.find({where: {
+            active:1
         }});
+        return events;
+    }
+
+    async getAllEventQuesWithRelations(){
+        const events = await this.eventsQueRepository.find({where: {
+            active:1
+        }, relations: {
+            idEvent2: true,
+            idQue2: true,
+        }
+    });
         return events;
     }
 
@@ -220,10 +243,36 @@ export class EventsService {
         return events;
     }
 
+    async getAllEventOrderAdmForcesWithRelations(){
+        const events = await this.eventsOrderAdmForceRepository.find({where: {
+            active:1
+        }, relations: {
+            idEventOrder2: true,
+            idForce2: true,
+            idObj2: true,
+            idReport2: true
+        }
+    });
+        return events;
+    }
+
     async getAllEventOrderAdmBans(){
         const events = await this.eventsOrderAdmBanRepository.find({where: {
             active:1
         }});
+        return events;
+    }
+
+    async getAllEventOrderAdmBansWithRelations(){
+        const events = await this.eventsOrderAdmBanRepository.find({where: {
+            active:1
+        }, relations: {
+            idBan2: true,
+            idEventOrder2: true,
+            idObj2: true,
+            idReport2: true
+        }
+    });
         return events;
     }
 

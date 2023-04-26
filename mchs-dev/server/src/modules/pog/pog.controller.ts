@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { PogService } from './pog.service';
 import { CreatePogSubjAccidentDTO } from './dto/create-pogSubjAccident.dto';
 import { CreatePogSubjAviaDTO } from './dto/create-pogSubjAvia.dto';
 import { CreatePogSubjRwDTO } from './dto/create-pogSubjRw.dto';
 import { CreatePogSubjAutoDTO } from './dto/create-pogSubjAuto.dto';
 import { CreatePogSubjWaterDTO } from './dto/create-pogSubjWater.dto';
+import { Order, Pagination } from 'src/utils/utils';
 
 @Controller('pog')
 export class PogController {
@@ -99,6 +100,13 @@ export class PogController {
     @Get('/get/all/pogSubjAuto')
     async getAllPogSubjAutos(){
         return this.pogService.getAllPogSubjAutos();
+    }
+
+    @Get('/get/all/pogSubjAutos/with/relations/sorted/by/page')
+    async getAllPogSubjAutosWithRelationsSortAndPage(@Query() params: Order, @Query() params2: Pagination){
+        const {field, order} = params;
+        const {current, pageSize, total} = params2;
+        return this.pogService.getAllPogSubjAutosWithRelationsSortAndPage(field, order, current, pageSize, total);
     }
     
     @Put('/update/pogSubjAuto')
