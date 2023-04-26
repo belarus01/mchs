@@ -8,22 +8,25 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { SChlistTnpa } from "../chlist/entity/chlistTnpa.entity";
+import { SEventsPrivate } from "../events/entity/eventsPrivate.entity";
+import { SSopbCard } from "src/sopb/entity/sopbCard.entity";
+import { SSopbCardSubj } from "src/sopb/entity/sopbCardSubj.entity";
+import { SSopbCardSubjState } from "src/sopb/entity/sopbCardSubjState.entity";
+import { SSopbCardUid } from "src/sopb/entity/sopbCardUid.entity";
+import { SSubjObj } from "../object/entity/object.entity";
+import { UserGroup } from "../group/entity/userGroup.entity";
+import { UserPermissions } from "../permission/entity/userPermission.entity";
 import { SDept } from "../department/entity/department.entity";
 import { SDeptJob } from "../jobTitle/jobTitle.entity";
 import { Notification } from "../notification/notification.entity";
-import { SSubjObj } from "../object/entity/object.entity";
-import { UserPermissions } from "../permission/entity/userPermission.entity";
-//import { UserGroup } from "../userGroup/user-group.entity";
-import { SEventsPrivate } from "../events/entity/eventsPrivate.entity";
-import { UserGroup } from "../group/entity/userGroup.entity";
 
+@Index("fullText1", ["lName", "sName"], { fulltext: true })
 @Index("IDX_a894a560d274a270f087c72ba0", ["user"], { unique: true })
 @Entity("users", { schema: "mchs" })
 export class User {
   @PrimaryGeneratedColumn({ type: "int", name: "uid", unsigned: true })
   uid: number;
 
- 
   @Column("varchar", {
     name: "user",
     unique: true,
@@ -39,7 +42,6 @@ export class User {
     length: 100,
   })
   lName: string | null;
-
 
   @Column("varchar", { name: "f_name", comment: "имя", length: 255 })
   fName: string;
@@ -87,7 +89,7 @@ export class User {
 
   @Column("tinyint", {
     name: "active",
-    comment: "2-неакт.1-актвн.0-заблокирован",
+    comment: "2-удален.1-актвен.0-заблокирован",
     width: 1,
     default: () => "'0'",
   })
@@ -121,10 +123,11 @@ export class User {
 
   @Column("tinyint", {
     name: "obj_rights",
+    nullable: true,
     comment: "Права управления объектами по битам: add,edit,del",
     unsigned: true,
   })
-  objRights: number;
+  objRights: number | null;
 
   @Column("int", {
     name: "user_role",
@@ -179,11 +182,41 @@ export class User {
   })
   flPass: number | null;
 
+  @Column("tinyint", {
+    name: "org",
+    nullable: true,
+    comment: "0-госпромнадзор,1-пожарники",
+    unsigned: true,
+    default: () => "'1'",
+  })
+  org: number | null;
+
   @OneToMany(() => SChlistTnpa, (sChlistTnpa) => sChlistTnpa.u)
   sChlistTnpas: SChlistTnpa[];
 
+  @OneToMany(() => SEventsPrivate, (sEventsPrivate) => sEventsPrivate.u)
+  sEventsPrivates: SEventsPrivate[];
+
+  @OneToMany(() => SSopbCard, (sSopbCard) => sSopbCard.u)
+  sSopbCards: SSopbCard[];
+
+  @OneToMany(() => SSopbCardSubj, (sSopbCardSubj) => sSopbCardSubj.u)
+  sSopbCardSubjs: SSopbCardSubj[];
+
+  @OneToMany(
+    () => SSopbCardSubjState,
+    (sSopbCardSubjState) => sSopbCardSubjState.u
+  )
+  sSopbCardSubjStates: SSopbCardSubjState[];
+
+  @OneToMany(() => SSopbCardUid, (sSopbCardUid) => sSopbCardUid.u)
+  sSopbCardUs: SSopbCardUid[];
+
   @OneToMany(() => SSubjObj, (sSubjObj) => sSubjObj.u)
   sSubjObjs: SSubjObj[];
+
+  @OneToMany(() => UserGroup, (userGroup) => userGroup.uidGr2)
+  userGroups: UserGroup[];
 
   @OneToMany(() => UserPermissions, (userPermissions) => userPermissions.u)
   userPermissions: UserPermissions[];
@@ -202,15 +235,9 @@ export class User {
   @JoinColumn([{ name: "id_dept_job", referencedColumnName: "idDeptJob" }])
   idDeptJob2: SDeptJob;
 
-  @OneToMany(() => UserGroup, (userGroup) => userGroup.uidGr2, {cascade: true})
-  userGroups: UserGroup[];
-
   @OneToMany(() => Notification, (notification) => notification.toU)
   notifications: Notification[];
 
   @OneToMany(() => Notification, (notification) => notification.fromU)
   notifications2: Notification[];
-
-  @OneToMany(() => SEventsPrivate, (sEventsPrivate) => sEventsPrivate.u)
-  sEventsPrivates: SEventsPrivate[];
 }

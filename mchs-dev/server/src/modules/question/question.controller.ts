@@ -21,6 +21,17 @@ export class QuestionController {
         return this.questionService.getAllQuestions();
     }
 
+    @Get('/get/all/relations')
+    async getAllQuestionsWithRelations(){
+        return this.questionService.getAllQuestionsWithRelations();
+    }
+
+    @Get('/get/all/question1s/relations')
+    async getAllQuestion1sWithRelations(){
+        return this.questionService.getAllQuestion1sWithRelations();
+    }
+
+
     @Put('/update')
     async updateQuestion(@Param('idQue') idQue: number, @Body() dto: CreateQuestionDTO){
         return this.questionService.updateQuestion(idQue, dto);

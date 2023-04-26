@@ -5,6 +5,7 @@ import { CreateFormBuild1DTO } from './dto/create-formBuild1.dto';
 import { CreateFormBuildDTO } from './dto/create-formBuild.dto';
 import { CreateFormBuild2DTO } from './dto/create-formBuild2.dto';
 import { CreateFormBuildDataDTO } from './dto/create-formBuildData.dto';
+import { CreateFormReportDTO } from './dto/create-formReport.dto';
 
 @Controller('form')
 export class FormController {
@@ -35,6 +36,11 @@ export class FormController {
         return this.formService.createFormBuildData(dto);
     }
 
+    @Post('/create/formReport')
+    async createFormReport(@Body() dto: CreateFormReportDTO){
+        return this.formService.createFormReport(dto);
+    }
+
 
     @Get('/get/formBuild/id/:idBuild')
     async getFormBuildById(@Param('idBuild') idBuild: number){
@@ -54,6 +60,11 @@ export class FormController {
     @Get('/get/formBuildData/id/:idData')
     async getFormBuildDataById(@Param('idData') idData: number){
         return this.formService.getFormBuildDataById(idData);
+    }
+
+    @Get('/get/formReport/id/:idList')
+    async getFormReportById(@Param('idList') idList: number){
+        return this.formService.getFormReportById(idList);
     }
 
     @Get('/get/id/:idForm')
@@ -87,6 +98,11 @@ export class FormController {
         return this.formService.getAllFormBuildData();
     }
 
+    @Get('/get/all/formReports')
+    async getAllFormReports(){
+        return this.formService.getAllFormReports();
+    }
+
 
     @Put('/update')
     async updateForm(@Param('idForm') idForm: number, @Body() dto: CreateFormDTO){
@@ -113,6 +129,11 @@ export class FormController {
         return this.formService.updateFormBuildData(idData, dto);
     }
 
+    @Put('/update/formReport')
+    async updateFormReport(@Param('idList') idList: number, @Body() dto: CreateFormReportDTO){
+        return this.formService.updateFormBuildData(idList, dto);
+    }
+
 
     @Put('/delete/:idForm')
     async deleteFormById(@Param('idForm') idForm: number){
@@ -134,6 +155,10 @@ export class FormController {
         return this.formService.deleteFormBuild1ById(idBuild2);
     }
     
+    @Put('/delete/:idList')
+    async deleteFormReportById(@Param('idList') idList: number){
+        return this.formService.deleteFormReportById(idList);
+    }
 
     @Put('/delete/:idData')
     async deleteFormBuildDataById(@Param('idData') idData: number){

@@ -1,11 +1,11 @@
 import { SDept } from "src/modules/department/entity/department.entity";
-import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-
+import { SPogSubjAuto } from "src/modules/pog/entity/pogSubjAuto.entity";
+import { Column, Entity, Index, OneToMany } from "typeorm";
 
 @Index("name_obl", ["nameObl"], {})
 @Entity("s_ate_obl", { schema: "mchs" })
 export class SAteObl {
-  @PrimaryGeneratedColumn({ type: "int", name: "id_obl" })
+  @Column("int", { primary: true, name: "id_obl" })
   idObl: number;
 
   @Column("varchar", {
@@ -33,4 +33,7 @@ export class SAteObl {
 
   @OneToMany(() => SDept, (sDept) => sDept.idObl2)
   sDepts: SDept[];
+
+  @OneToMany(() => SPogSubjAuto, (sPogSubjAuto) => sPogSubjAuto.idOblSubj2)
+  sPogSubjAutos: SPogSubjAuto[];
 }

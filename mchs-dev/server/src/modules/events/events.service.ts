@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, LessThan, Repository } from 'typeorm';
+import { Between, In, LessThan, Repository } from 'typeorm';
 import { CreateEventDTO } from './dto/create-event.dto';
 import { SEvents } from './entity/events.entity';
 import { Observable, from, throwError } from 'rxjs';
@@ -19,6 +19,13 @@ import { CreateEventDefDTO } from './dto/create-eventDef.dto';
 import { CreateEventQueDTO } from './dto/create-eventQue.dto';
 import { skipPage, sortByField } from 'src/utils/utils';
 import { CreateEventOrderDTO } from './dto/create-eventOrder';
+import { CreateEventOrderAdmForceDTO } from './dto/create-eventOrderAdmForce.dto';
+import { SEventsOrderAdmForce } from './entity/eventsOrderAdmForce.entity';
+import { SEventsOrderAdmBan } from './entity/eventsOrderAdmBan.entity';
+import { CreateEventOrderAdmBanDTO } from './dto/create-eventOrderAdmBan.dto';
+import { SEventsOrderQueDef } from './entity/eventsOrderQueDef.entity';
+import { CreateEventPrivateDTO } from './dto/create-eventPrivate.dto';
+import { CreateEventOrderQueDefDTO } from './dto/create-eventOrderQueDef.dto';
 
 
 
@@ -28,7 +35,10 @@ export class EventsService {
     @InjectRepository(SEventsOrder, 'mchs_connection') private eventsOrderRepository: Repository<SEventsOrder>,
     @InjectRepository(SEventsQue, 'mchs_connection') private eventsQueRepository: Repository<SEventsQue>,
     @InjectRepository(SEventsDef, 'mchs_connection') private eventsDefRepository: Repository<SEventsDef>,
-    //@InjectRepository(SEventsPrivate, 'mchs_connection') private eventsPrivateRepository: Repository<SEventsPrivate>,
+    @InjectRepository(SEventsOrderAdmForce, 'mchs_connection') private eventsOrderAdmForceRepository: Repository<SEventsOrderAdmForce>,
+    @InjectRepository(SEventsOrderAdmBan, 'mchs_connection') private eventsOrderAdmBanRepository: Repository<SEventsOrderAdmBan>,
+    @InjectRepository(SEventsOrderQueDef, 'mchs_connection') private eventsOrderQueDefRepository: Repository<SEventsOrderQueDef>,
+    @InjectRepository(SEventsPrivate, 'mchs_connection') private eventsPrivateRepository: Repository<SEventsPrivate>,
     
     //private moduleRef: ModuleRef,
     ){
@@ -47,8 +57,7 @@ export class EventsService {
                 } else{ 
                     throw new //EventServerException();
                 } */
-            }
-            
+            }           
     }
 
     
@@ -70,9 +79,19 @@ export class EventsService {
         }
     }
 
+    async createEventPrivate(dto: CreateEventPrivateDTO){
+        const event = this.eventsPrivateRepository.create(dto);
+        return this.eventsPrivateRepository.save(event);
+    }
+
     async createEventOrder(dto: CreateEventOrderDTO){
         const event = this.eventsOrderRepository.create(dto);
         return this.eventsOrderRepository.save(event);
+    }
+
+    async createEventOrderQueDef(dto: CreateEventOrderQueDefDTO){
+        const event = this.eventsOrderQueDefRepository.create(dto);
+        return this.eventsOrderQueDefRepository.save(event);
     }
 
     async createEventDef(dto: CreateEventDefDTO){
@@ -85,10 +104,35 @@ export class EventsService {
         return this.eventsDefRepository.save(event);
     }
 
+    async createEventOrderAdmForce(dto: CreateEventOrderAdmForceDTO){
+        const event = this.eventsOrderAdmForceRepository.create(dto);
+        return this.eventsOrderAdmForceRepository.save(event);
+    }
+
+    async createEventOrderAdmBan(dto: CreateEventOrderAdmBanDTO){
+        const event = this.eventsOrderAdmBanRepository.create(dto);
+        return this.eventsOrderAdmBanRepository.save(event);
+    }
+
     async getAllEvents(): Promise<SEvents[]>{
         const events = await this.eventsRepository.find({where: {
             active:1
         }});
+        return events;
+    }
+
+    async getAllEventsWithRelations(): Promise<SEvents[]>{
+        const events = await this.eventsRepository.find({where: {
+            active:1
+        }, relations: {
+            idUnit: true,
+            sEventsDefs: true,
+            sEventsOrders: true, 
+            sEventsPlans: true,
+            sEventsQues: true,
+            sQuestions: true,
+        }
+    });
         return events;
     }
 
@@ -99,8 +143,57 @@ export class EventsService {
         return paged;
     }
 
-    async getAllEventsOrdersSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
-        const events = (await this.eventsOrderRepository.find({where:{active:1}}));
+    async getAllEventsPrivateSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
+        const events = (await this.eventsPrivateRepository.find());//поле active отсутствует
+        const sorted = sortByField(events, field, order);
+        const paged = skipPage(sorted, current, pageSize, total);
+        return paged;
+    }
+
+    async getAllEventsOrdersWithRelationsSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
+        const events = (await this.eventsOrderRepository.find({where:{
+            active:1
+        }, relations: {
+            idDept2: true,
+            idDeptIss2: true,
+            idEvent2: true,
+            idEventPlan2: true,
+            idGroup2: true,
+            idSubj2: true,
+            sphera2: true,
+            idUnit_2: true,
+            idUnit_3: true,
+            idUnit_4: true,
+            idUnit_5: true,
+            sEventsOrderAdmBans: true,
+            sEventsOrderAdmForces: true,
+            sEventsOrderData: true,
+            sEventsOrderDefs: true,
+            sEventsOrderDefMtxes: true,
+            sEventsOrderObjs: true,
+            sEventsOrderQueDefs: true,
+            sEventsPrivates: true,
+            sFormReports: true,
+            notifications: true,
+        }
+    }));
+    console.log(events);
+        const sorted = sortByField(events, field, order);
+        const paged = skipPage(sorted, current, pageSize, total);
+        return paged;
+    }
+
+    async getAllEventsOrderQueDefsWithRelationsSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
+        const events = (await this.eventsOrderQueDefRepository.find({where:{
+            active:1
+        }, relations: {
+            idDef2: true,
+            idEventOrder2: true,
+            idEventQue2: true,
+            idObj2: true,
+        }
+    }));
+    console.log(events);
         const sorted = sortByField(events, field, order);
         const paged = skipPage(sorted, current, pageSize, total);
         return paged;
@@ -120,6 +213,19 @@ export class EventsService {
         return events;
     }
 
+    async getAllEventOrderAdmForces(){
+        const events = await this.eventsOrderAdmForceRepository.find({where: {
+            active:1
+        }});
+        return events;
+    }
+
+    async getAllEventOrderAdmBans(){
+        const events = await this.eventsOrderAdmBanRepository.find({where: {
+            active:1
+        }});
+        return events;
+    }
 
     async getPetyaTheBest(){
         console.log(moment(new Date(Date.now())).format('YYYY-MM-DD'));
@@ -168,6 +274,13 @@ export class EventsService {
         return event;
     }
 
+    async getEventPrivateById(idPriv: number): Promise<SEventsPrivate>{
+        const event = await this.eventsPrivateRepository.findOneBy({idPriv});
+        if(!event){
+            throw new EventNotFoundException(`Event Private id = ${idPriv} not found!`);
+        }
+        return event;
+    }
 
     async getEventDefById(idList: number){
         const event = await this.eventsDefRepository.findOneBy({idList});
@@ -185,6 +298,22 @@ export class EventsService {
         return event;
     }
 
+    async getEventOrderAdmForceById(idList: number){
+        const event = await this.eventsOrderAdmForceRepository.findOneBy({idList});
+        if(!event){
+            throw new EventNotFoundException(`Event Order Adm Force id = ${idList} not found!`);
+        }
+        return event;
+    }
+
+    async getEventOrderAdmBanById(idList: number){
+        const event = await this.eventsOrderAdmBanRepository.findOneBy({idList});
+        if(!event){
+            throw new EventNotFoundException(`Event Order Adm Ban id = ${idList} not found!`);
+        }
+        return event;
+    }
+
     async getEventBeginDateById(idEvent: number){
         const eventBeginDate = (await (this.eventsRepository.findOneBy({ idEvent }))).dateBegin;
         return  eventBeginDate;
@@ -197,7 +326,7 @@ export class EventsService {
     
     async getEventsByUserId(uid: number){
         const events = await this.eventsOrderRepository.manager.query(`SELECT
-        e.id_event,e.id_event_order,ss.event title,p.name_event private,DATE_FORMAT(DATE(e.date_begin), "%d.%m.%Y") start,
+        e.id_event,e.id_event_order,ss.event title,p.name_event private,e.date_begin start,
         e.date_end end,e.date_begin_fact b_fact,e.date_end_fact e_fact,e.date_stop d_stop,e.date_continue d_cont
       FROM mchs.s_events_order e
       left JOIN mchs.s_events ss ON ss.id_event=e.id_event
@@ -221,6 +350,14 @@ export class EventsService {
       WHERE u.uid=1 and p.id_event_order IS NULL #ORDER BY p.date_begin`);
       console.log(events);
       return events;
+    }
+
+    async getEventOrderQueDefById(idList: number){
+        const event = await this.eventsOrderQueDefRepository.findOneBy({idList});
+        if(!event){
+            throw new EventNotFoundException(`Event Order Que Def id = ${idList} not found!`);
+        }
+        return event;
     }
 
 /*     async getUnitTypeUnit(idUnit: number): Promise<SEventsOrder[]>{
@@ -286,20 +423,45 @@ export class EventsService {
         return await this.eventsRepository.update(idEvent,eventDto);
     }
 
+    async updateEventPrivate(idPriv:number, eventDto: CreateEventPrivateDTO){
+        return await this.eventsPrivateRepository.update(idPriv,eventDto);
+    }
+
     async updateEventOrder(idEventOrder: number, dto: CreateEventOrderDTO){
         return await this.eventsOrderRepository.update(idEventOrder, dto);
+    }
+
+    async updateEventOrderQueDef(idList: number, dto: CreateEventOrderQueDefDTO){
+        return await this.eventsOrderQueDefRepository.update(idList, dto);
     }
 
     async updateEventDef(idList: number, dto: CreateEventDefDTO){
         return await this.eventsDefRepository.update(idList, dto);
     }
 
+    async updateEventOrderAdmForce(idList: number, dto: CreateEventOrderAdmForceDTO){
+        return await this.eventsOrderAdmForceRepository.update(idList, dto);
+    }
+
+    async updateEventOrderAdmBan(idList: number, dto: CreateEventOrderAdmBanDTO){
+        return await this.eventsOrderAdmBanRepository.update(idList, dto);
+    }
+
     async updateEventQue(idList: number, dto: CreateEventQueDTO){
         return await this.eventsDefRepository.update(idList, dto);
     }
 
+    async deleteEventPrivateById(idPriv: number){
+        return await this.eventsPrivateRepository.delete(idPriv);//поле active в БД отсутствует
+    }
+
     async deleteEventOrderById(idEventOrder: number){
         return await this.eventsOrderRepository.update(idEventOrder, {active:0});
+    }
+
+    async deleteEventOrderQueDefById(idList: number){
+        const result = await this.eventsOrderQueDefRepository.update(idList, {active:0});
+        return result;
     }
 
     async deleteEventDefById(idList: number){
@@ -312,8 +474,17 @@ export class EventsService {
         return result;
     }
 
+    async deleteEventOrderAdmForceById(idList: number){
+        const result = await this.eventsOrderAdmForceRepository.update(idList, {active:2});
+        return result;
+    }
+
+    async deleteEventOrderAdmBanById(idList: number){
+        const result = await this.eventsOrderAdmBanRepository.update(idList, {active:2});
+        return result;
+    }
+
     public async send(): Promise<void> {
-        
         console.log('Notification sent');
       }
 
@@ -322,6 +493,22 @@ export class EventsService {
             idEvent2:true, 
             idDept2:true,
         }});
+        return result;
+    }
+
+    async getAllEventsOrders(){
+        const result = await this.eventsOrderRepository.find({
+                where:{
+                    active:1
+                }, 
+                relations:{
+                    idEvent2:true,
+                    idDept2:true,
+                    idGroup2:true,
+                    idDeptIss2:true
+                }
+        });
+        console.log(result);
         return result;
     }
 

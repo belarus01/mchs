@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SOon } from './entity/oon.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([SOon],'doc_connection')],
+  imports:[TypeOrmModule.forFeature([SOon],'mchs_connection')],
   providers: [OonService],
   controllers: [OonController]
 })

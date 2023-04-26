@@ -7,7 +7,10 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { SEventsOrder } from "./eventsOrder.entity";
+import { SAdmForce } from "src/modules/adm/entity/admForce.entity";
 import { SSubjObj } from "src/modules/object/entity/object.entity";
+import { SFormReport } from "src/modules/form/entity/formReport.entity";
+
 
 @Index("FK_s_events_order_adm_force_id_event_order", ["idEventOrder"], {})
 @Index("FK_s_events_order_adm_force_id_force", ["idForce"], {})
@@ -34,7 +37,15 @@ export class SEventsOrderAdmForce {
   })
   idObj: number | null;
 
-  @Column("int", { name: "id_force", nullable: true, unsigned: true })
+  @Column("bigint", { name: "id_sub_obj", nullable: true, unsigned: true })
+  idSubObj: number | null;
+
+  @Column("int", {
+    name: "id_force",
+    nullable: true,
+    comment: "тип нарушения",
+    unsigned: true,
+  })
   idForce: number | null;
 
   @Column("tinyint", {
@@ -122,6 +133,14 @@ export class SEventsOrderAdmForce {
   })
   idTypeCase: number | null;
 
+  @Column("datetime", {
+    name: "date_cath",
+    nullable: true,
+    comment:
+      "Дата, время выявленных нарушений законодательства о пожарной безопасности",
+  })
+  dateCath: Date | null;
+
   @Column("text", {
     name: "obst_sposob",
     nullable: true,
@@ -129,7 +148,12 @@ export class SEventsOrderAdmForce {
   })
   obstSposob: string | null;
 
-  @Column("bigint", { name: "id_report", nullable: true, unsigned: true })
+  @Column("bigint", {
+    name: "id_report",
+    nullable: true,
+    comment: "ид. записи составленного документа",
+    unsigned: true,
+  })
   idReport: number | null;
 
   @ManyToOne(
@@ -142,10 +166,25 @@ export class SEventsOrderAdmForce {
   ])
   idEventOrder2: SEventsOrder;
 
+  @ManyToOne(() => SAdmForce, (sAdmForce) => sAdmForce.sEventsOrderAdmForces, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_force", referencedColumnName: "idForce" }])
+  idForce2: SAdmForce;
+
   @ManyToOne(() => SSubjObj, (sSubjObj) => sSubjObj.sEventsOrderAdmForces, {
     onDelete: "NO ACTION",
     onUpdate: "CASCADE",
   })
   @JoinColumn([{ name: "id_obj", referencedColumnName: "idObj" }])
   idObj2: SSubjObj;
+
+  @ManyToOne(
+    () => SFormReport,
+    (sFormReport) => sFormReport.sEventsOrderAdmForces,
+    { onDelete: "NO ACTION", onUpdate: "CASCADE" }
+  )
+  @JoinColumn([{ name: "id_report", referencedColumnName: "idList" }])
+  idReport2: SFormReport;
 }

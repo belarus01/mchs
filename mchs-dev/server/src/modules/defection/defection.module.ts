@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SDefection } from './entity/defection.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([SDefection], 'doc_connection'),],
+  imports:[TypeOrmModule.forFeature([SDefection], 'mchs_connection'),],
   providers: [DefectionService],
   controllers: [DefectionController]
 })

@@ -19,7 +19,7 @@ import { MulterModule } from '@nestjs/platform-express';
 //import { UserGroupModule } from './modules/userGroup/user-group.module';
 import { SoatoModule } from './soato/soato.module';
 import { AteModule } from './modules/ate/ate.module';
-import { DocModule } from './modules/doc/doc.module';
+//import { DocModule } from './modules/doc/doc.module';
 import { UnitModule } from './modules/unit/unit.module';
 import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
 import { TnpaModule } from './tnpa/tnpa.module';
@@ -40,6 +40,7 @@ import { PooModule } from './modules/poo/poo.module';
 import { OpoModule } from './modules/opo/opo.module';
 import { AdmModule } from './modules/adm/adm.module';
 import { TypeModule } from './modules/type/type.module';
+import { PogModule } from './modules/pog/pog.module';
 
 
 
@@ -129,7 +130,7 @@ import { TypeModule } from './modules/type/type.module';
 
     SoatoModule,
     AteModule,
-    DocModule,
+    //DocModule,
     UnitModule,
     TnpaModule,
     OkedModule,
@@ -146,6 +147,7 @@ import { TypeModule } from './modules/type/type.module';
     OpoModule,
     AdmModule,
     TypeModule,
+    PogModule,
   ],
   controllers: [AppController],
 //   providers: [

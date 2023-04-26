@@ -7,6 +7,7 @@ import { SFormBuild } from './entity/formBuild.entity';
 import { SFormBuild1 } from './entity/formBuild1.entity';
 import { SFormBuild2 } from './entity/formbuild2.entity';
 import { SFormBuildData } from './entity/formBuildData.entity';
+import { SFormReport } from './entity/formReport.entity';
 
 @Module({
   imports:[TypeOrmModule.forFeature([
@@ -14,8 +15,9 @@ import { SFormBuildData } from './entity/formBuildData.entity';
     SFormBuild, 
     SFormBuild1,
     SFormBuild2,
-    SFormBuildData
-  ], 'doc_connection'),],
+    SFormBuildData,
+    SFormReport
+  ], 'mchs_connection'),],
   providers: [FormService],
   exports: [FormService],
   controllers: [FormController]

@@ -7,7 +7,7 @@ import { OpoNotFoundException } from './exception/opo.not-found.exception';
 
 @Injectable()
 export class OpoService {
-    constructor(@InjectRepository(SOpo, 'doc_connection') private opoRepository: Repository<SOpo>){}
+    constructor(@InjectRepository(SOpo, 'mchs_connection') private opoRepository: Repository<SOpo>){}
 
     async createOpo(dto: CreateOpoDTO){
         const opo = this.opoRepository.create(dto);

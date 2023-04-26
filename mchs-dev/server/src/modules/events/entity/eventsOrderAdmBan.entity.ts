@@ -1,3 +1,4 @@
+import { SAdmBan } from "src/modules/adm/entity/admBan.entity";
 import {
   Column,
   Entity,
@@ -8,7 +9,7 @@ import {
 } from "typeorm";
 import { SEventsOrder } from "./eventsOrder.entity";
 import { SSubjObj } from "src/modules/object/entity/object.entity";
-
+import { SFormReport } from "src/modules/form/entity/formReport.entity";
 
 @Index("FK_s_events_order_adm_ban_id_ban", ["idBan"], {})
 @Index("FK_s_events_order_adm_ban_id_event_order", ["idEventOrder"], {})
@@ -35,6 +36,14 @@ export class SEventsOrderAdmBan {
     unsigned: true,
   })
   idObj: number | null;
+
+  @Column("bigint", {
+    name: "id_sub_obj",
+    nullable: true,
+    comment: "Что приостановлено(запрещено)",
+    unsigned: true,
+  })
+  idSubObj: number | null;
 
   @Column("int", { name: "id_ban", nullable: true, unsigned: true })
   idBan: number | null;
@@ -67,14 +76,6 @@ export class SEventsOrderAdmBan {
     comment: "дата вынесения",
   })
   dateDecision: Date | null;
-
-  @Column("varchar", {
-    name: "ban_obj",
-    nullable: true,
-    comment: "Что приостановлено(запрещено)",
-    length: 1255,
-  })
-  banObj: string | null;
 
   @Column("varchar", {
     name: "num_case",
@@ -142,6 +143,13 @@ export class SEventsOrderAdmBan {
   @Column("bigint", { name: "id_report", nullable: true, unsigned: true })
   idReport: number | null;
 
+  @ManyToOne(() => SAdmBan, (sAdmBan) => sAdmBan.sEventsOrderAdmBans, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_ban", referencedColumnName: "idBan" }])
+  idBan2: SAdmBan;
+
   @ManyToOne(
     () => SEventsOrder,
     (sEventsOrder) => sEventsOrder.sEventsOrderAdmBans,
@@ -158,4 +166,12 @@ export class SEventsOrderAdmBan {
   })
   @JoinColumn([{ name: "id_obj", referencedColumnName: "idObj" }])
   idObj2: SSubjObj;
+
+  @ManyToOne(
+    () => SFormReport,
+    (sFormReport) => sFormReport.sEventsOrderAdmBans,
+    { onDelete: "NO ACTION", onUpdate: "CASCADE" }
+  )
+  @JoinColumn([{ name: "id_report", referencedColumnName: "idList" }])
+  idReport2: SFormReport;
 }

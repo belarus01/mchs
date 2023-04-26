@@ -7,7 +7,7 @@ import { OonNotFoundException } from './exception/oon.not-found.exception';
 
 @Injectable()
 export class OonService {
-    constructor(@InjectRepository(SOon, 'doc_connection') private oonRepository: Repository<SOon>){}
+    constructor(@InjectRepository(SOon, 'mchs_connection') private oonRepository: Repository<SOon>){}
 
     async createOon(dto: CreateOonDTO){
         const oon = this.oonRepository.create(dto);

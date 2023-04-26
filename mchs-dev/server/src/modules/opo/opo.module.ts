@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SOpo } from './entity/opo.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([SOpo],'doc_connection')],
+  imports:[TypeOrmModule.forFeature([SOpo],'mchs_connection')],
   providers: [OpoService],
   controllers: [OpoController]
 })

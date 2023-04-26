@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { SEventsOrder } from "../events/entity/eventsOrder.entity";
 import { UserGroup } from "./entity/userGroup.entity";
 //import { UserGroup } from "../userGroup/user-group.entity";
@@ -51,5 +51,6 @@ export class Group {
   sEventsOrders: SEventsOrder[];
 
   @OneToMany(() => UserGroup, (userGroup) => userGroup.idGroup2, {cascade: true, eager: true})
+  //@JoinColumn([{name: "id_group", referencedColumnName: "id_group"}])//createSmth
   userGroups: UserGroup[];
 }

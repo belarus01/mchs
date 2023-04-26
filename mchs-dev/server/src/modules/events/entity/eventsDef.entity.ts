@@ -1,7 +1,15 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { SEventsOrderDef } from "./eventsOrderDef.entity";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { SEvents } from "./events.entity";
 
-
+@Index("FK_s_events_def_id_def", ["idDef"], {})
+@Index("FK_s_events_def_id_event", ["idEvent"], {})
 @Entity("s_events_def", { schema: "mchs" })
 export class SEventsDef {
   @PrimaryGeneratedColumn({ type: "bigint", name: "id_list", unsigned: true })
@@ -61,9 +69,10 @@ export class SEventsDef {
   })
   info: string | null;
 
-  @OneToMany(
-    () => SEventsOrderDef,
-    (sEventsOrderDef) => sEventsOrderDef.idEventDef2
-  )
-  sEventsOrderDefs: SEventsOrderDef[];
+  @ManyToOne(() => SEvents, (sEvents) => sEvents.sEventsDefs, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_event", referencedColumnName: "idEvent" }])
+  idEvent2: SEvents;
 }

@@ -5,7 +5,7 @@ import { SState } from './state.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([SState],'doc_connection')],
+  imports:[TypeOrmModule.forFeature([SState],'mchs_connection')],
   providers: [StateService],
   controllers: [StateController]
 })

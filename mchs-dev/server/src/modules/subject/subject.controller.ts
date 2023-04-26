@@ -39,4 +39,10 @@ export class SubjectController {
     async deleteSubjById(@Param('idSubj') idSubj: number){
         return this.subjService.deleteSubjById(idSubj);
     }
+
+    @Get('/get/unp/:unp')
+    async getSubjectByUnp(@Param('unp') unp:string){
+        console.log(unp);
+        return this.subjService.getSubjectByUnp(unp);
+    }
 }

@@ -12,14 +12,17 @@ import { SFormBuild } from './entity/formBuild.entity';
 import { CreateFormBuild1DTO } from './dto/create-formBuild1.dto';
 import { CreateFormBuild2DTO } from './dto/create-formBuild2.dto';
 import { CreateFormBuildDataDTO } from './dto/create-formBuildData.dto';
+import { SFormReport } from './entity/formReport.entity';
+import { CreateFormReportDTO } from './dto/create-formReport.dto';
 
 @Injectable()
 export class FormService {
-    constructor(@InjectRepository(SForm, 'doc_connection') private formRepository: Repository<SForm>,
-    @InjectRepository(SFormBuild, 'doc_connection') private formBuildRepository: Repository<SFormBuild>,
-    @InjectRepository(SFormBuild1, 'doc_connection') private formBuild1Repository: Repository<SFormBuild1>,
-    @InjectRepository(SFormBuild2, 'doc_connection') private formBuild2Repository: Repository<SFormBuild2>,
-    @InjectRepository(SFormBuildData, 'doc_connection') private formBuildDataRepository: Repository<SFormBuildData>,){}
+    constructor(@InjectRepository(SForm, 'mchs_connection') private formRepository: Repository<SForm>,
+    @InjectRepository(SFormBuild, 'mchs_connection') private formBuildRepository: Repository<SFormBuild>,
+    @InjectRepository(SFormBuild1, 'mchs_connection') private formBuild1Repository: Repository<SFormBuild1>,
+    @InjectRepository(SFormBuild2, 'mchs_connection') private formBuild2Repository: Repository<SFormBuild2>,
+    @InjectRepository(SFormBuildData, 'mchs_connection') private formBuildDataRepository: Repository<SFormBuildData>,
+    @InjectRepository(SFormReport, 'mchs_connection') private formReportRepository: Repository<SFormReport>){}
 
     async createForm(dto: CreateFormDTO){
         const form = this.formRepository.create(dto);
@@ -44,6 +47,11 @@ export class FormService {
     async createFormBuildData(dto: CreateFormBuildDataDTO){
         const form = this.formBuild2Repository.create(dto);
         return this.formBuild2Repository.save(form);
+    }
+
+    async createFormReport(dto: CreateFormReportDTO){
+        const form = this.formReportRepository.create(dto);
+        return this.formReportRepository.save(form);
     }
 
 
@@ -79,6 +87,14 @@ export class FormService {
         return form;
     }
 
+    async getFormReportById(idList: number){
+        const form = await this.formReportRepository.findOneBy({idList});
+        if(!form){
+            throw new FormNotFoundException(idList);
+        }
+        return form;
+    }
+
     async getFormById(idForm: number){
         const form = await this.formRepository.findOneBy({idForm});
         if(!form){
@@ -104,6 +120,10 @@ export class FormService {
         return await this.formRepository.find();
     }
 
+    async getAllFormReports(){
+        return await this.formReportRepository.find();
+    }
+
     async getAllForms(){
         return await this.formRepository.find();
     }
@@ -123,6 +143,10 @@ export class FormService {
 
     async updateFormBuildData(idData: number, dto: CreateFormBuildDataDTO){
         return await this.formBuildDataRepository.update(idData, dto);
+    }
+
+    async updateFormReport(idList: number, dto: CreateFormReportDTO){
+        return await this.formReportRepository.update(idList, dto);
     }
 
     async updateForm(idForm: number, dto: CreateFormDTO){
@@ -148,5 +172,9 @@ export class FormService {
 
     async deleteFormById(idForm: number){
         return await this.formRepository.update(idForm, {active: 2});
+    }
+
+    async deleteFormReportById(idList: number){
+        return await this.formReportRepository.update(idList, {active: 2});
     }
 }

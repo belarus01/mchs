@@ -5,7 +5,7 @@ import { UnitController } from './unit.controller';
 import { SUnits } from './unit.entity';
 
 @Module({
-    imports:[TypeOrmModule.forFeature([SUnits],'doc_connection')],
+    imports:[TypeOrmModule.forFeature([SUnits],'mchs_connection')],
     providers: [UnitService],
     controllers: [UnitController]
 })

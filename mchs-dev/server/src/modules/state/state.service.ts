@@ -6,7 +6,7 @@ import { SState } from './state.entity';
 
 @Injectable()
 export class StateService {
-    constructor(@InjectRepository(SState, 'doc_connection') private stateRepository: Repository<SState>){}
+    constructor(@InjectRepository(SState, 'mchs_connection') private stateRepository: Repository<SState>){}
 
     async getStateById(idState: number): Promise<SState>{
         const state = await this.stateRepository.findOneBy({idState});

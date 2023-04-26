@@ -1,13 +1,27 @@
+import { SUnits } from "src/modules/unit/unit.entity";
 import {
   Column,
   Entity,
   Index,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { SEventsDef } from "./eventsDef.entity";
 import { SEventsOrder } from "./eventsOrder.entity";
+import { SEventsPlan } from "./eventsPlan.entity";
 import { SEventsQue } from "./eventsQue.entity";
+import { SQuestion1 } from "src/modules/question/entity/question1.entity";
 
+/* import { SUnits } from "./SUnits";
+import { SEventsDef } from "./SEventsDef";
+import { SEventsOrder } from "./SEventsOrder";
+import { SEventsPlan } from "./SEventsPlan";
+import { SEventsQue } from "./SEventsQue";
+import { SQuestion1 } from "./SQuestion1"; */
+
+@Index("FK_s_events_id_unit_4", ["idUnit_4"], {})
 @Index("type_event", ["numEvent"], {})
 @Entity("s_events", { schema: "mchs" })
 export class SEvents {
@@ -64,7 +78,13 @@ export class SEvents {
   })
   active: number;
 
-
+  @Column("bigint", {
+    name: "id_unit_4",
+    nullable: true,
+    comment: "тип проверки, 1-МТХ, 2-проверка,3-мониторинг",
+    unsigned: true,
+  })
+  idUnit_4: number | null;
 
   @Column("text", { name: "data", nullable: true })
   data: string | null;
@@ -77,9 +97,25 @@ export class SEvents {
   })
   uid: number | null;
 
+  @ManyToOne(() => SUnits, (sUnits) => sUnits.sEvents, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_unit_4", referencedColumnName: "idUnit" }])
+  idUnit: SUnits;
+
+  @OneToMany(() => SEventsDef, (sEventsDef) => sEventsDef.idEvent2)
+  sEventsDefs: SEventsDef[];
+
   @OneToMany(() => SEventsOrder, (sEventsOrder) => sEventsOrder.idEvent2)
   sEventsOrders: SEventsOrder[];
 
+  @OneToMany(() => SEventsPlan, (sEventsPlan) => sEventsPlan.idEvent2)
+  sEventsPlans: SEventsPlan[];
+
   @OneToMany(() => SEventsQue, (sEventsQue) => sEventsQue.idEvent2)
   sEventsQues: SEventsQue[];
+
+  @OneToMany(() => SQuestion1, (sQuestion1) => sQuestion1.idEvent2)
+  sQuestions: SQuestion1[];
 }

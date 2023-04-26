@@ -1,4 +1,13 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { SUnits } from "src/modules/unit/unit.entity";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+
 
 @Index("FK_s_subj_obj_specif_id_unit_17", ["idUnit_17"], {})
 @Index("FK_s_subj_obj_specif_id_unit_41", ["idUnit_41"], {})
@@ -90,6 +99,14 @@ export class SSubjObjSpecif {
   })
   telAgent: string | null;
 
+  @Column("varchar", {
+    name: "addr_agent",
+    nullable: true,
+    comment: "Адрес службы/ответственного",
+    length: 125,
+  })
+  addrAgent: string | null;
+
   @Column("tinyint", {
     name: "active",
     comment: "0-удалена,1-действует",
@@ -97,6 +114,14 @@ export class SSubjObjSpecif {
     default: () => "'1'",
   })
   active: number;
+
+  @Column("varchar", {
+    name: "addr_exect",
+    nullable: true,
+    comment: "Уточнение места нахождения",
+    length: 255,
+  })
+  addrExect: string | null;
 
   @Column("date", {
     name: "date_record",
@@ -113,4 +138,25 @@ export class SSubjObjSpecif {
     unsigned: true,
   })
   uid: number | null;
+
+  @ManyToOne(() => SUnits, (sUnits) => sUnits.sSubjObjSpecifs, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_unit_17", referencedColumnName: "idUnit" }])
+  idUnit: SUnits;
+
+  @ManyToOne(() => SUnits, (sUnits) => sUnits.sSubjObjSpecifs2, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_unit_41", referencedColumnName: "idUnit" }])
+  idUnit_2: SUnits;
+
+  @ManyToOne(() => SUnits, (sUnits) => sUnits.sSubjObjSpecifs3, {
+    onDelete: "NO ACTION",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_unit_6", referencedColumnName: "idUnit" }])
+  idUnit_3: SUnits;
 }

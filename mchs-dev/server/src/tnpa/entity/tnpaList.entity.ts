@@ -1,6 +1,7 @@
+import { SDefection } from "src/modules/defection/entity/defection.entity";
+import { SQuestion1 } from "src/modules/question/entity/question1.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { STnpaDoc } from "./tnpaDoc.entity";
-
 
 @Entity("s_tnpa_list", { schema: "mchs" })
 export class STnpaList {
@@ -101,6 +102,12 @@ export class STnpaList {
     unsigned: true,
   })
   uid: number | null;
+
+  @OneToMany(() => SDefection, (sDefection) => sDefection.idTnpa2)
+  sDefections: SDefection[];
+
+  @OneToMany(() => SQuestion1, (sQuestion1) => sQuestion1.idTnpa2)
+  sQuestions: SQuestion1[];
 
   @OneToMany(() => STnpaDoc, (sTnpaDoc) => sTnpaDoc.idList2)
   sTnpaDocs: STnpaDoc[];
