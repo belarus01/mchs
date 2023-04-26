@@ -44,9 +44,9 @@ export class EventCardService {
     # 3 страница (1-8, 13-15, 18-25)
     #     III. Данные по надзорно-профилактическому мероприятию
               
-    (SELECT u.name FROM doc.s_units u WHERE type_unit=4 AND id_unit = d.id_unit_4 AND active=1) type_check,#1
-    (SELECT u.name FROM doc.s_units u WHERE type_unit=3 AND id_unit = d.id_unit_3 AND active=1) type_order,#2
-    (SELECT u.name FROM doc.s_units u WHERE type_unit=0 AND id_unit = d.id_unit   AND active=1) sphera,#3
+    (SELECT u.name FROM s_units u WHERE type_unit=4 AND id_unit = d.id_unit_4 AND active=1) type_check,#1
+    (SELECT u.name FROM s_units u WHERE type_unit=3 AND id_unit = d.id_unit_3 AND active=1) type_order,#2
+    (SELECT u.name FROM s_units u WHERE type_unit=0 AND id_unit = d.id_unit   AND active=1) sphera,#3
     
     CASE 
       WHEN d.id_event_plan IS NULL THEN CONCAT_WS(' ',IFNULL(d.name_order,""), IFNULL(d.reason_order,""))
@@ -59,12 +59,12 @@ export class EventCardService {
     d.fio_post_title,#6
     (SELECT GROUP_CONCAT(CASE r.id_form WHEN 1002 THEN "Предписание на проведение проверки № " WHEN 1008 THEN "Решение о проведении мониторинга № " ELSE "" END,
                           IFNULL(r.num_doc,"") )
-     FROM doc.s_form_report r WHERE r.id_form IN (1002,1008) AND r.id_event_order = @io  AND r.active=1) num_order,#7_1
+     FROM s_form_report r WHERE r.id_form IN (1002,1008) AND r.id_event_order = @io  AND r.active=1) num_order,#7_1
     d.num_order,#7
     
     (
     SELECT GROUP_CONCAT(IFNULL(DATE_FORMAT(date(r.date_doc), "%d.%m.%Y"),""))
-     FROM doc.s_form_report r WHERE r.id_form IN (1002,1008) AND r.id_event_order = @io  AND r.active=1
+     FROM s_form_report r WHERE r.id_form IN (1002,1008) AND r.id_event_order = @io  AND r.active=1
      ) date_order,#8_1
     IFNULL(DATE_FORMAT(DATE(d.date_order), "%d.%m.%Y"),"")date_order, #8
     
@@ -90,7 +90,7 @@ export class EventCardService {
     LEFT JOIN mchs.s_oked             oked ON s.id_oked=oked.id_oked
     LEFT JOIN mchs.s_vedomstva        ved ON s.id_ved=ved.id_ved
     LEFT JOIN mchs.s_subj_obj_specif  eo  ON eo.id_subj_obj=so.id_obj
-    #LEFT JOIN doc.s_form_report       r   ON r.id_event_order=d.id_event_order AND r.id_form  IN (1002,1008)  
+    #LEFT JOIN s_form_report       r   ON r.id_event_order=d.id_event_order AND r.id_form  IN (1002,1008)  
     #LEFT JOIN mchs.s_events_plan     p   ON p.id_event = d.id_event 
     WHERE d.id_event_order=1
     GROUP BY so.id_subj
@@ -149,7 +149,7 @@ export class EventCardService {
         //     LEFT JOIN mchs.users u          ON u.uid= ug.uid_gr
         //     LEFT JOIN mchs.s_dept sd        ON sd.id_dept=u.id_dept
         //     LEFT JOIN mchs.s_dept_job j     ON j.id_dept_job=u.id_dept_job
-        //     LEFT JOIN doc.s_form_report fr  ON fr.id_event_order=e.id_event_order AND fr.id_form IN (1002,1008)
+        //     LEFT JOIN s_form_report fr  ON fr.id_event_order=e.id_event_order AND fr.id_form IN (1002,1008)
         //      WHERE e.id_event_order=1 AND fr.active=1 AND fr.active=1
         //     LIMIT 1
 
@@ -185,7 +185,7 @@ export class EventCardService {
         const result5 = await this.eventsRepository.manager.query(`#вопросы по мроприятию # 16
             SELECT sq.name_que FROM 
             mchs.s_events_order_que e
-            LEFT JOIN doc.s_question sq ON e.id_que=sq.id_que
+            LEFT JOIN s_question sq ON e.id_que=sq.id_que
             WHERE e.id_event_order=1;`);
 
         //3 страница (26-29)
@@ -196,7 +196,7 @@ export class EventCardService {
             GROUP_CONCAT(IFNULL(DATE_FORMAT(date(r.date_doc), "%d.%m.%Y"),""))date_doc ,    #27
             GROUP_CONCAT(IFNULL(DATE_FORMAT(date(r.date_rec), "%d.%m.%Y"),""))date_rec,     #28
             COUNT(r.other_info) other_info #29
-            FROM doc.s_form_report r WHERE r.id_form IN (1003,1004,1018) AND r.id_event_order = 1  AND r.active=1
+            FROM s_form_report r WHERE r.id_form IN (1003,1004,1018) AND r.id_event_order = 1  AND r.active=1
             ;`);
 
         //3 страница (30-31)
@@ -204,7 +204,7 @@ export class EventCardService {
             SELECT 
             IFNULL(r.comm,"")resh , #30
             IFNULL(DATE_FORMAT(date(r.date_doc), "%d.%m.%Y"),"")date_resh #31
-            FROM doc.s_form_report r WHERE r.id_form IN (1019) AND r.id_event_order = 1  AND r.active=1;
+            FROM s_form_report r WHERE r.id_form IN (1019) AND r.id_event_order = 1  AND r.active=1;
             `);
 
         //3 страница (32, 38-42)
@@ -224,7 +224,7 @@ export class EventCardService {
             END fl_ok,    #41
             d.transfer_data  #сведения о переносе сроков устранения нарушения: наим.докум.,вход.№, дата
             FROM mchs.s_events_order_que_def d
-            LEFT JOIN doc.s_defection dd ON dd.id_def=d.id_def
+            LEFT JOIN s_defection dd ON dd.id_def=d.id_def
             WHERE d.id_event_order=1 ORDER BY  d.fl_ok;`);
 
         //3 страница (43)
@@ -232,14 +232,14 @@ export class EventCardService {
             #43 Сведения о принятии решения о назначении внеплановой проверки (да/нет)
             SELECT 
             IF(COUNT(r.id_list)>0,"да","нет")num  #43
-            FROM doc.s_form_report r WHERE r.id_form IN (1020) AND r.id_event_order = 1  AND r.active=1;`);
+            FROM s_form_report r WHERE r.id_form IN (1020) AND r.id_event_order = 1  AND r.active=1;`);
 
         //3 страница (33)
         const result10 = await this.eventsRepository.manager.query(`
             #33 свед о принятых мерах адм. принуждения
             SELECT CONCAT_WS(": ",ff.name_im,count(ff.name_im)) adm_force #33
              FROM mchs.s_events_order_adm_force f
-            LEFT JOIN doc.s_adm_force ff ON ff.id_force=f.id_force
+            LEFT JOIN s_adm_force ff ON ff.id_force=f.id_force
             WHERE f.id_event_order=1 AND f.active=1 GROUP BY f.id_force;`);
 
         //3 страница (34)
@@ -247,7 +247,7 @@ export class EventCardService {
             #34 свед о принятых мерах адм. пресечения
             SELECT CONCAT_WS(": ",ff.name_im,count(ff.name_im)) adm_ban #34
             FROM mchs.s_events_order_adm_ban  f
-            LEFT JOIN doc.s_adm_ban ff ON ff.id_ban=f.id_ban
+            LEFT JOIN s_adm_ban ff ON ff.id_ban=f.id_ban
             WHERE f.id_event_order=1 AND f.active=1 GROUP BY f.id_ban;`);
 
         //3 страница (35-37)
@@ -258,7 +258,7 @@ export class EventCardService {
             IFNULL(DATE_FORMAT(date(r.date_doc), "%d.%m.%Y"),"")date_doc, #36
             IFNULL(DATE_FORMAT(date(r.date_rec), "%d.%m.%Y"),"")date_rec #37
 
-            FROM doc.s_form_report r WHERE r.id_form IN (1019) AND r.id_event_order = 1  AND r.active=1 GROUP BY r.id_list;`);
+            FROM s_form_report r WHERE r.id_form IN (1019) AND r.id_event_order = 1  AND r.active=1 GROUP BY r.id_list;`);
 
         //4 страница (1)
         const result13 = await this.eventsRepository.manager.query(`
@@ -268,8 +268,8 @@ export class EventCardService {
         SELECT COUNT(e.id_event_order) num,   
         GROUP_CONCAT(CONCAT_WS (" ",uu.name,u.name)) name 
         FROM mchs.s_events_order e 
-        LEFT JOIN doc.s_units u ON u.id_unit=e.id_unit_3
-        LEFT JOIN doc.s_units uu ON uu.id_unit=e.id_unit_4
+        LEFT JOIN s_units u ON u.id_unit=e.id_unit_3
+        LEFT JOIN s_units uu ON uu.id_unit=e.id_unit_4
         WHERE e.id_subj=1460  AND e.org=1 AND
          e.active=1  GROUP BY e.id_unit_4,e.id_unit_3;`);
 
@@ -291,7 +291,7 @@ export class EventCardService {
         END vid_doc,#вид документа
         COUNT(r.id_form) sum_exit_docs,#кол-во выходных документов
         COUNT(r.id_event_order) sum_events #кол-во проверок
-        FROM doc.s_form_report r 
+        FROM s_form_report r 
         LEFT JOIN mchs.s_events_order e ON e.id_event_order=r.id_event_order
         WHERE r.id_form IN (1003,1004,1018,16,18,41) AND e.id_subj=1460 AND e.org=1 AND r.active=1  #AND r.id_event_order = 1  AND r.active=1 
         GROUP BY r.id_form;`);
@@ -304,7 +304,7 @@ export class EventCardService {
         COUNT(e.id_unit) #sum_events
         FROM
         mchs.s_events_order e
-        LEFT JOIN doc.s_units s ON s.id_unit=e.id_unit
+        LEFT JOIN s_units s ON s.id_unit=e.id_unit
         WHERE e.id_subj=1460  AND e.org=1
         GROUP BY e.id_unit;`);
 
@@ -313,7 +313,7 @@ export class EventCardService {
         #5  количество и вид принятых мер адм.принуждения
         SELECT CONCAT_WS(": ",ff.name_im,count(ff.name_im)) adm_force #33
          FROM mchs.s_events_order_adm_force f
-        LEFT JOIN doc.s_adm_force ff ON ff.id_force=f.id_force
+        LEFT JOIN s_adm_force ff ON ff.id_force=f.id_force
         LEFT JOIN mchs.s_events_order e ON e.id_event_order=f.id_event_order
         WHERE e.id_subj=1460  AND e.org=1 AND f.active=1 GROUP BY f.id_force;`);
 
@@ -322,7 +322,7 @@ export class EventCardService {
         #6  количество и вид принятых мер адм.принуждения
         SELECT CONCAT_WS(": ",ff.name_im,count(ff.name_im)) adm_ban #34
         FROM mchs.s_events_order_adm_ban  f
-        LEFT JOIN doc.s_adm_ban ff ON ff.id_ban=f.id_ban
+        LEFT JOIN s_adm_ban ff ON ff.id_ban=f.id_ban
         LEFT JOIN mchs.s_events_order e ON e.id_event_order=f.id_event_order
         WHERE e.id_subj=1460 AND e.org=1 AND f.active=1 GROUP BY  f.id_ban;`);
 

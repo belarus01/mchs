@@ -17,6 +17,8 @@ import { SEventsQue } from './entity/eventsQue.entity';
 import { SEventsPlan } from './entity/eventsPlan.entity';
 import { SEventsOrderQueDef } from './entity/eventsOrderQueDef.entity';
 import { SEventsOrderPoo } from './entity/eventsOrderPoo.entity';
+import { EventCardService } from './eventCard.service';
+import { EventCardController } from './eventCard.controller';
 
 
 @Module({
@@ -37,8 +39,8 @@ import { SEventsOrderPoo } from './entity/eventsOrderPoo.entity';
     SEventsPlan,
     SEventsOrderPoo
   ], 'mchs_connection'),],
-  providers: [EventsService, ],
-  exports: [EventsService],
-  controllers: [EventsController]
+  providers: [EventsService, EventCardService ],
+  exports: [EventsService, EventCardService],
+  controllers: [EventsController, EventCardController]
 })
 export class EventsModule {}

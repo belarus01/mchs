@@ -51,10 +51,10 @@ import { PogModule } from './modules/pog/pog.module';
     TypeOrmModule.forRoot({
      name: 'mchs_connection',
       type:'mysql',
-      host:'192.168.150.183',// 192.168.150.29 | localhost
+      host:'192.168.150.29',// 192.168.150.29 | localhost
       port: 3306,
-      username: 'root',// serge | tanya | root
-      password: 'root',// 123456_Qq | 123456
+      username: 'serge',// serge | tanya | root
+      password: '123456_Qq',// 123456_Qq | 123456
       database: 'mchs',
       
       entities:[],
@@ -62,7 +62,7 @@ import { PogModule } from './modules/pog/pog.module';
       synchronize:false,
       autoLoadEntities: true
     }),
-    TypeOrmModule.forRoot({
+/*     TypeOrmModule.forRoot({
       name: 'doc_connection',
        type:'mysql',
        host:'192.168.150.183',// 192.168.150.29 | localhost
@@ -74,7 +74,7 @@ import { PogModule } from './modules/pog/pog.module';
        entities:[],
        synchronize:false,
        autoLoadEntities: true
-     }),
+     }), */
 
     // TypeOrmModule.forRootAsync({
     //   name: 'mchs_connection',
