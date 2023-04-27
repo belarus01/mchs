@@ -10,14 +10,9 @@ import {
 } from "typeorm";
 import { SSopb } from "./sopb.entity";
 import { User } from "src/modules/users/user.entity";
-import { SSopbCardSubj } from "./sopbCardSubj.entity";
+import { SSopbCardSubjList } from "./sopbCardSubjList.entity";
 import { SSopbCardUid } from "./sopbCardUid.entity";
-/* import { SDept } from "./SDept";
-import { SSopb } from "./SSopb";
-import { Users } from "./Users";
-import { SSopbCardSubj } from "./SSopbCardSubj";
-import { SSopbCardUid } from "./SSopbCardUid";
- */
+
 @Index("FK_s_sopb_card_id_dept_request", ["idDeptRequest"], {})
 @Index("FK_s_sopb_card_id_sopb", ["idSopb"], {})
 @Index("FK_s_sopb_card_uid2", ["uid"], {})
@@ -209,8 +204,11 @@ export class SSopbCard {
   @JoinColumn([{ name: "uid", referencedColumnName: "uid" }])
   u: User;
 
-  @OneToMany(() => SSopbCardSubj, (sSopbCardSubj) => sSopbCardSubj.idCard2)
-  sSopbCardSubjs: SSopbCardSubj[];
+  @OneToMany(
+    () => SSopbCardSubjList,
+    (sSopbCardSubjList) => sSopbCardSubjList.idCard2
+  )
+  sSopbCardSubjLists: SSopbCardSubjList[];
 
   @OneToMany(() => SSopbCardUid, (sSopbCardUid) => sSopbCardUid.idCard2)
   sSopbCardUs: SSopbCardUid[];

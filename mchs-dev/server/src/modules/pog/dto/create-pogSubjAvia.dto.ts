@@ -5,6 +5,8 @@ export class CreatePogSubjAviaDTO{
 
     idObl?: number;
 
+    idSubj?: number;
+
     idSubjObj?: number;
 
     idNumReg?: number;

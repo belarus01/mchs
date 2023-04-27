@@ -39,6 +39,8 @@ export class PogService {
     async getAllPogSubjAccidents(){
         return await this.pogSubjAccidentRepository.find();
     }
+
+
     
     async updatePogSubjAccident(idList: number, dto: CreatePogSubjAccidentDTO){
         return await this.pogSubjAccidentRepository.update(idList, dto);
@@ -89,6 +91,15 @@ export class PogService {
 
     async getAllPogSubjAutos(){
         return await this.pogSubjAutoRepository.find();
+    }
+
+    async getAllPogSubjAutosWithRelationsSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
+        const autos = (await this.pogSubjAutoRepository.find({where:{
+            active: 1
+        }, relations: {
+           idOblSubj2: true, 
+        }
+    }))
     }
     
     async updatePogSubjAuto(idList: number, dto: CreatePogSubjAutoDTO){

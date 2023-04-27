@@ -1,17 +1,13 @@
 export class CreateSopbCardSubjDTO{
     idSubj?: number;
 
-    idCard?: number;
+    idSubjObj?: number;
 
-    idBuildData?: number;
+    flProizv?: number;
 
-    name?: string;
+    flRozn?: number;
 
-    brend?: string;
-
-    model?: string;
-
-    flMnfExp?: number;
+    flOpt?: number;
 
     uid?: number;
 

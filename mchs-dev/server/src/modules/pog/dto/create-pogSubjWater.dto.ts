@@ -3,6 +3,8 @@ export class CreatePogSubjWaterDTO{
 
     idDeptDom?: number;
 
+    idSubj?: number;
+
     idObl?: number;
 
     idSubjObj?: number;
