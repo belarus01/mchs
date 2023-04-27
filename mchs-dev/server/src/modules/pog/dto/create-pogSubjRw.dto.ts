@@ -4,6 +4,8 @@ export class CreatePogSubjRwDTO{
     idDeptDom?: number;
 
     idObl?: number;
+
+    idSubj?: number;
  
     idSubjObj?: number;
 

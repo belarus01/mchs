@@ -1,4 +1,6 @@
 import { SAteObl } from "src/modules/ate/entity/ateObl.entity";
+import { SSubjObj } from "src/modules/object/entity/object.entity";
+import { SSubj } from "src/modules/subject/entity/subject.entity";
 import {
   Column,
   Entity,
@@ -8,8 +10,9 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-@Index("FK_s_pog_subj_auto_id_subj_obj2", ["idSubjObj"], {})
 @Index("FK_s_pog_subj_auto_id_obl_subj", ["idOblSubj"], {})
+@Index("FK_s_pog_subj_auto_id_subj", ["idSubj"], {})
+@Index("FK_s_pog_subj_auto_id_subj_obj2", ["idSubjObj"], {})
 @Entity("s_pog_subj_auto", { schema: "mchs" })
 export class SPogSubjAuto {
   @PrimaryGeneratedColumn({ type: "int", name: "id_list", unsigned: true })
@@ -39,6 +42,9 @@ export class SPogSubjAuto {
     default: () => "'1'",
   })
   idObl: number | null;
+
+  @Column("bigint", { name: "id_subj", nullable: true, unsigned: true })
+  idSubj: number | null;
 
   @Column("bigint", { name: "id_subj_obj", nullable: true, unsigned: true })
   idSubjObj: number | null;
@@ -526,4 +532,18 @@ export class SPogSubjAuto {
   })
   @JoinColumn([{ name: "id_obl_subj", referencedColumnName: "idObl" }])
   idOblSubj2: SAteObl;
+
+  @ManyToOne(() => SSubj, (sSubj) => sSubj.sPogSubjAutos, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "id_subj", referencedColumnName: "idSubj" }])
+  idSubj2: SSubj;
+
+  @ManyToOne(() => SSubjObj, (sSubjObj) => sSubjObj.sPogSubjAutos, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "id_subj_obj", referencedColumnName: "idObj" }])
+  idSubjObj2: SSubjObj;
 }

@@ -2,10 +2,14 @@ import { SEventsOrderAdmBan } from "src/modules/events/entity/eventsOrderAdmBan.
 import { SEventsOrderAdmForce } from "src/modules/events/entity/eventsOrderAdmForce.entity";
 import { SEventsOrderObj } from "src/modules/events/entity/eventsOrderObj.entity";
 import { SEventsOrderQueDef } from "src/modules/events/entity/eventsOrderQueDef.entity";
+import { SPogSubjAccidents } from "src/modules/pog/entity/pogSubjAccident.entity";
+import { SPogSubjAuto } from "src/modules/pog/entity/pogSubjAuto.entity";
+import { SPogSubjAvia } from "src/modules/pog/entity/pogSubjAvia.entity";
+import { SPogSubjRw } from "src/modules/pog/entity/pogSubjRw.entity";
+import { SPogSubjWater } from "src/modules/pog/entity/pogSubjWater.entity";
 import { SPooSubjPb } from "src/modules/poo/entity/pooSubjPb.entity";
 import { SSubj } from "src/modules/subject/entity/subject.entity";
 import { User } from "src/modules/users/user.entity";
-import { SSopbCardSubj } from "src/sopb/entity/sopbCardSubj.entity";
 import {
   Column,
   Entity,
@@ -167,11 +171,26 @@ export class SSubjObj {
   )
   sEventsOrderQueDefs: SEventsOrderQueDef[];
 
+  @OneToMany(
+    () => SPogSubjAccidents,
+    (sPogSubjAccidents) => sPogSubjAccidents.idObj2
+  )
+  sPogSubjAccidents: SPogSubjAccidents[];
+
+  @OneToMany(() => SPogSubjAuto, (sPogSubjAuto) => sPogSubjAuto.idSubjObj2)
+  sPogSubjAutos: SPogSubjAuto[];
+
+  @OneToMany(() => SPogSubjAvia, (sPogSubjAvia) => sPogSubjAvia.idSubjObj2)
+  sPogSubjAvias: SPogSubjAvia[];
+
+  @OneToMany(() => SPogSubjRw, (sPogSubjRw) => sPogSubjRw.idSubjObj2)
+  sPogSubjRws: SPogSubjRw[];
+
+  @OneToMany(() => SPogSubjWater, (sPogSubjWater) => sPogSubjWater.idSubjObj2)
+  sPogSubjWaters: SPogSubjWater[];
+
   @OneToMany(() => SPooSubjPb, (sPooSubjPb) => sPooSubjPb.idSubjObj2)
   sPooSubjPbs: SPooSubjPb[];
-
-  @OneToMany(() => SSopbCardSubj, (sSopbCardSubj) => sSopbCardSubj.idObj2)
-  sSopbCardSubjs: SSopbCardSubj[];
 
   @ManyToOne(() => User, (users) => users.sSubjObjs, {
     onDelete: "NO ACTION",

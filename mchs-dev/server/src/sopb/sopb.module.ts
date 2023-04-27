@@ -7,6 +7,7 @@ import { SSopbCard } from './entity/sopbCard.entity';
 import { SSopbCardSubj } from './entity/sopbCardSubj.entity';
 import { SSopbCardSubjState } from './entity/sopbCardSubjState.entity';
 import { SSopbCardUid } from './entity/sopbCardUid.entity';
+import { SSopbCardSubjList } from './entity/sopbCardSubjList.entity';
 
 @Module({
   imports:[TypeOrmModule.forFeature([
@@ -14,7 +15,8 @@ import { SSopbCardUid } from './entity/sopbCardUid.entity';
     SSopbCard, 
     SSopbCardSubj,
     SSopbCardSubjState,
-    SSopbCardUid 
+    SSopbCardUid,
+    SSopbCardSubjList, 
   ],'mchs_connection')],
   providers: [SopbService],
   controllers: [SopbController]

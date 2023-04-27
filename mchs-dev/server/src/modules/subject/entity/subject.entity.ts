@@ -1,5 +1,10 @@
 import { SEventsOrder } from "src/modules/events/entity/eventsOrder.entity";
 import { SSubjObj } from "src/modules/object/entity/object.entity";
+import { SPogSubjAccidents } from "src/modules/pog/entity/pogSubjAccident.entity";
+import { SPogSubjAuto } from "src/modules/pog/entity/pogSubjAuto.entity";
+import { SPogSubjAvia } from "src/modules/pog/entity/pogSubjAvia.entity";
+import { SPogSubjRw } from "src/modules/pog/entity/pogSubjRw.entity";
+import { SPogSubjWater } from "src/modules/pog/entity/pogSubjWater.entity";
 import { SPooSubjPb } from "src/modules/poo/entity/pooSubjPb.entity";
 import { SVedomstva } from "src/modules/vedomstva/vedomstva.entity";
 import { SSopbCardSubj } from "src/sopb/entity/sopbCardSubj.entity";
@@ -14,15 +19,20 @@ import {
 } from "typeorm";
 /* import { SEventsOrder } from "./SEventsOrder";
 import { SFireCardStaff } from "./SFireCardStaff";
+import { SPogSubjAccidents } from "./SPogSubjAccidents";
+import { SPogSubjAuto } from "./SPogSubjAuto";
+import { SPogSubjAvia } from "./SPogSubjAvia";
+import { SPogSubjRw } from "./SPogSubjRw";
+import { SPogSubjWater } from "./SPogSubjWater";
 import { SPooSubjPb } from "./SPooSubjPb";
 import { SSopbCardSubj } from "./SSopbCardSubj";
 import { SVedomstva } from "./SVedomstva";
 import { SSubjObj } from "./SSubjObj"; */
 
+@Index("FK_s_subj_id_ved", ["idVed"], {})
 @Index("num_opo", ["numOpo"], {})
 @Index("s_subj_FK", ["codeSoatoYur"], {})
 @Index("s_subj_FK_1", ["idOked"], {})
-@Index("FK_s_subj_id_ved", ["idVed"], {})
 @Entity("s_subj", { schema: "mchs" })
 export class SSubj {
   @PrimaryGeneratedColumn({ type: "bigint", name: "id_subj", unsigned: true })
@@ -325,6 +335,24 @@ export class SSubj {
 
 /*   @OneToMany(() => SFireCardStaff, (sFireCardStaff) => sFireCardStaff.idSubj2)
   sFireCardStaffs: SFireCardStaff[]; */
+
+  @OneToMany(
+    () => SPogSubjAccidents,
+    (sPogSubjAccidents) => sPogSubjAccidents.idSubj2
+  )
+  sPogSubjAccidents: SPogSubjAccidents[];
+
+  @OneToMany(() => SPogSubjAuto, (sPogSubjAuto) => sPogSubjAuto.idSubj2)
+  sPogSubjAutos: SPogSubjAuto[];
+
+  @OneToMany(() => SPogSubjAvia, (sPogSubjAvia) => sPogSubjAvia.idSubj2)
+  sPogSubjAvias: SPogSubjAvia[];
+
+  @OneToMany(() => SPogSubjRw, (sPogSubjRw) => sPogSubjRw.idSubj2)
+  sPogSubjRws: SPogSubjRw[];
+
+  @OneToMany(() => SPogSubjWater, (sPogSubjWater) => sPogSubjWater.idSubj2)
+  sPogSubjWaters: SPogSubjWater[];
 
   @OneToMany(() => SPooSubjPb, (sPooSubjPb) => sPooSubjPb.idSubj2)
   sPooSubjPbs: SPooSubjPb[];

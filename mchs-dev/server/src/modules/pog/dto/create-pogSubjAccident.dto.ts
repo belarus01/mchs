@@ -7,6 +7,8 @@ export class CreatePogSubjAccidentDTO{
 
     idSubj?: number;
 
+    idObj?: number;
+
     flAccid?: number;
 
     typeOrg?: number;

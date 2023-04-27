@@ -4,6 +4,8 @@ export class CreatePogSubjAutoDTO{
     idDeptDom?: number;
 
     idObl?: number;
+
+    idSubj?: number;
   
     idSubjObj?: number;
 

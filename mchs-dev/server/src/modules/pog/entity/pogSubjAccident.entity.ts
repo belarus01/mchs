@@ -1,6 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { SSubjObj } from "src/modules/object/entity/object.entity";
+import { SSubj } from "src/modules/subject/entity/subject.entity";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
-@Entity("s_pog_subj_accidents", { schema: "doc" })
+@Index("FK_s_pog_subj_accidents_id_obj", ["idObj"], {})
+@Index("FK_s_pog_subj_accidents_id_subj", ["idSubj"], {})
+@Entity("s_pog_subj_accidents", { schema: "mchs" })
 export class SPogSubjAccidents {
   @PrimaryGeneratedColumn({ type: "bigint", name: "id_list", unsigned: true })
   idList: number;
@@ -32,6 +43,9 @@ export class SPogSubjAccidents {
 
   @Column("bigint", { name: "id_subj", nullable: true, unsigned: true })
   idSubj: number | null;
+
+  @Column("bigint", { name: "id_obj", nullable: true, unsigned: true })
+  idObj: number | null;
 
   @Column("tinyint", {
     name: "fl_accid",
@@ -185,4 +199,18 @@ export class SPogSubjAccidents {
     unsigned: true,
   })
   uid: number | null;
+
+  @ManyToOne(() => SSubjObj, (sSubjObj) => sSubjObj.sPogSubjAccidents, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "id_obj", referencedColumnName: "idObj" }])
+  idObj2: SSubjObj;
+
+  @ManyToOne(() => SSubj, (sSubj) => sSubj.sPogSubjAccidents, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "id_subj", referencedColumnName: "idSubj" }])
+  idSubj2: SSubj;
 }
