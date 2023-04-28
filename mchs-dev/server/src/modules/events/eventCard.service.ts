@@ -301,7 +301,7 @@ export class EventCardService {
         #4  количество надз.-проф. меропр. по сферам контроля
         SELECT #COUNT(e.id_unit),e.id_subj,s.name
         s.name,#sph_name
-        COUNT(e.id_unit) #sum_events
+        COUNT(e.id_unit) ss #sum_events
         FROM
         mchs.s_events_order e
         LEFT JOIN s_units s ON s.id_unit=e.id_unit
