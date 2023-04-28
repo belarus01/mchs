@@ -12,4 +12,12 @@ export class CreateSopbCardSubjDTO{
     uid?: number;
 
     active?: number;
+
+    nameAgent?: string;
+
+    jobAgent?: string;
+
+    telAgent?: string;
+
+    addrAgent?: string;
 }

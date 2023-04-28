@@ -1,4 +1,3 @@
-import { SSubj } from "src/modules/subject/entity/subject.entity";
 import { User } from "src/modules/users/user.entity";
 import {
   Column,
@@ -9,11 +8,12 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { SSopbCardSubjList } from "./sopbCardSubjList.entity";
 import { SSopbCardSubjState } from "./sopbCardSubjState.entity";
+import { SSopbCardSubjList } from "./sopbCardSubjList.entity";
+import { SSubj } from "src/modules/subject/entity/subject.entity";
 
-@Index("FK_s_sopb_card_subj_id_subj2", ["idSubj"], {})
 @Index("FK_s_sopb_card_subj_uid", ["uid"], {})
+@Index("FK_s_sopb_card_subj_id_subj2", ["idSubj"], {})
 @Entity("s_sopb_card_subj", { schema: "mchs" })
 export class SSopbCardSubj {
   @PrimaryGeneratedColumn({ type: "bigint", name: "id_data", unsigned: true })
@@ -81,19 +81,44 @@ export class SSopbCardSubj {
   })
   active: number;
 
+  @Column("varchar", {
+    name: "name_agent",
+    nullable: true,
+    comment: "ФИО представителя (от субъекта)",
+    length: 255,
+  })
+  nameAgent: string | null;
+
+  @Column("varchar", {
+    name: "job_agent",
+    nullable: true,
+    comment: "Должность представителя суъекта",
+    length: 255,
+  })
+  jobAgent: string | null;
+
+  @Column("varchar", {
+    name: "tel_agent",
+    nullable: true,
+    comment: "Телефон представителя субъекта",
+    length: 55,
+  })
+  telAgent: string | null;
+
+  @Column("varchar", {
+    name: "addr_agent",
+    nullable: true,
+    comment: "Адрес службы/ответственного",
+    length: 255,
+  })
+  addrAgent: string | null;
+
   @ManyToOne(() => SSubj, (sSubj) => sSubj.sSopbCardSubjs, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "id_subj", referencedColumnName: "idSubj" }])
   idSubj2: SSubj;
-
-  @ManyToOne(() => User, (users) => users.sSopbCardSubjs, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "uid", referencedColumnName: "uid" }])
-  u: User;
 
   @OneToMany(
     () => SSopbCardSubjList,
@@ -106,4 +131,11 @@ export class SSopbCardSubj {
     (sSopbCardSubjState) => sSopbCardSubjState.idData2
   )
   sSopbCardSubjStates: SSopbCardSubjState[];
+
+  @ManyToOne(() => User, (users) => users.sSopbCardSubjs, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "uid", referencedColumnName: "uid" }])
+  u: User;
 }
