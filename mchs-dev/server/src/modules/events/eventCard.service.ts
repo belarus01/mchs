@@ -7,7 +7,6 @@ import { Observable, from, throwError } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { SEventsOrder } from './entity/eventsOrder.entity';
 import { SEventsPrivate } from './entity/eventsPrivate.entity';
-import * as moment from 'moment';
 import { GetNowDTO } from './dto/getNow.dto';
 import { ModuleRef } from '@nestjs/core';
 import { channel } from 'diagnostics_channel';
