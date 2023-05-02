@@ -28,6 +28,14 @@ export class SSopbCardSubjState {
   @Column("int", { name: "id_state", nullable: true, unsigned: true })
   idState: number | null;
 
+  @Column("tinyint", {
+    name: "fl_imp_exp",
+    nullable: true,
+    comment: "0-импорт, 1-экспорт",
+    unsigned: true,
+  })
+  flImpExp: number | null;
+
   @Column("varchar", {
     name: "name",
     nullable: true,

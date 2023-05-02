@@ -39,6 +39,11 @@ export class SopbController {
         return await this.sopbService.getSopbCardSubjById(idData);
     }
 
+    @Get('/get/sopbCardSubjState/id/:idDataState')
+    async getSopbCardSubjStateById(@Param('idDataState') idDataState: number){
+        return await this.sopbService.getSopbCardSubjStateById(idDataState);
+    }
+
     @Get('/get/all')
     async getAllSopbs(){
         return this.sopbService.getAllSopbs();
@@ -54,6 +59,21 @@ export class SopbController {
         const {field, order} = params;
         const {current, pageSize, total} = params2;
         return this.sopbService.getAllSopbCardSubjsSortAndPage(field, order, current, pageSize, total);
+    }
+
+    @Get('/get/all/sopbCardSubjState')
+    async getAllSopbCardSubjStates(){
+        return this.sopbService.getAllSopbCardSubjStates();
+    }
+
+    @Get('/get/all/sopbCardSubjState/with/relations')
+    async getAllSopbCardSubjStatesWithRelations(){
+        return this.sopbService.getAllSopbCardSubjStatesWithRelations();
+    }
+
+    @Get('/get/all/sopbCard/with/relations')
+    async getAllSopbCardsWithRelations(){
+        return this.sopbService.getAllSopbCardsWithRelations();
     }
 
     @Get('/get/sopbCards/idSopb/:idSopb')

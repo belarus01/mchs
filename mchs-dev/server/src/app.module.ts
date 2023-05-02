@@ -41,6 +41,7 @@ import { AdmModule } from './modules/adm/adm.module';
 import { TypeModule } from './modules/type/type.module';
 import { PogModule } from './modules/pog/pog.module';
 import { FileModule } from './file/file.module';
+import { FireModule } from './modules/fire/fire.module';
 
 
 
@@ -149,6 +150,8 @@ import { FileModule } from './file/file.module';
     TypeModule,
     PogModule,
     FileModule,
+    FireModule
+  
   ],
   controllers: [AppController],
 //   providers: [

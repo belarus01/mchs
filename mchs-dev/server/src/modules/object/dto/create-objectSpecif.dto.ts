@@ -11,6 +11,12 @@ export class CreateObjectSpecifDTO{
 
     area?: number;
 
+    numVisit?: number;
+
+    numStaff?: number;
+
+    serviceOrg?: string;
+
     dateReg?: Date;
 
     dateAnnul?: Date;

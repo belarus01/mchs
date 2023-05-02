@@ -61,6 +61,31 @@ export class SSubjObjSpecif {
   })
   area: number | null;
 
+  @Column("int", {
+    name: "num_visit",
+    nullable: true,
+    comment: "Расчетное количество посетителей(чел.)",
+    unsigned: true,
+  })
+  numVisit: number | null;
+
+  @Column("int", {
+    name: "num_staff",
+    nullable: true,
+    comment: "Численность персонала",
+    unsigned: true,
+  })
+  numStaff: number | null;
+
+  @Column("varchar", {
+    name: "service_org",
+    nullable: true,
+    comment:
+      "6.2.2.3. Обслуживающая организация((наименование, юридический адрес,номер и дата выдачи лицензии,  руководитель,  телефон )",
+    length: 2555,
+  })
+  serviceOrg: string | null;
+
   @Column("date", {
     name: "date_reg",
     nullable: true,
