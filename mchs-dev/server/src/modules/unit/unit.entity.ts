@@ -6,14 +6,7 @@ import { SEventsPlan } from "../events/entity/eventsPlan.entity";
 import { SPooSubjPb } from "../poo/entity/pooSubjPb.entity";
 import { SQuestion } from "../question/entity/question.entity";
 import { SSubjObjSpecif } from "../object/entity/objectSpecif.entity";
-/* import { SEvents } from "./SEvents";
-import { SEventsOrder } from "./SEventsOrder";
-import { SEventsOrderObj } from "./SEventsOrderObj";
-import { SEventsPlan } from "./SEventsPlan";
-import { SFireCardBuild } from "./SFireCardBuild";
-import { SPooSubjPb } from "./SPooSubjPb";
-import { SQuestion } from "./SQuestion";
-import { SSubjObjSpecif } from "./SSubjObjSpecif"; */
+import { SFireCardBuild } from "../fire/entity/fireCardBuild.entity";
 
 @Entity("s_units", { schema: "mchs" })
 export class SUnits {
@@ -132,14 +125,14 @@ export class SUnits {
   @OneToMany(() => SEventsPlan, (sEventsPlan) => sEventsPlan.idUnit_2)
   sEventsPlans2: SEventsPlan[];
 
-/*   @OneToMany(() => SFireCardBuild, (sFireCardBuild) => sFireCardBuild.idUnit_17)
+  @OneToMany(() => SFireCardBuild, (sFireCardBuild) => sFireCardBuild.idUnit_17)
   sFireCardBuilds: SFireCardBuild[];
 
   @OneToMany(() => SFireCardBuild, (sFireCardBuild) => sFireCardBuild.idUnit)
   sFireCardBuilds2: SFireCardBuild[];
 
   @OneToMany(() => SFireCardBuild, (sFireCardBuild) => sFireCardBuild.idUnit_2)
-  sFireCardBuilds3: SFireCardBuild[]; */
+  sFireCardBuilds3: SFireCardBuild[];
 
   @OneToMany(() => SPooSubjPb, (sPooSubjPb) => sPooSubjPb.idUnit)
   sPooSubjPbs: SPooSubjPb[];

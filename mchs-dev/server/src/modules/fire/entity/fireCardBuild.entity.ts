@@ -1,3 +1,5 @@
+import { SSubjObj } from "src/modules/object/entity/object.entity";
+import { SUnits } from "src/modules/unit/unit.entity";
 import {
     Column,
     Entity,
@@ -6,7 +8,7 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
   } from "typeorm";
-
+import { SFireCardSubj } from "./fireCardSubj.entity";
   
   @Index("FK_s_fire_card_build_id_card", ["idCard"], {})
   @Index("FK_s_fire_card_build_id_subj_obj", ["idSubjObj"], {})
@@ -16,10 +18,10 @@ import {
   @Entity("s_fire_card_build", { schema: "mchs" })
   export class SFireCardBuild {
     @PrimaryGeneratedColumn({ type: "bigint", name: "id_list", unsigned: true })
-    idList: string;
+    idList: number;
   
     @Column("bigint", { name: "id_card", nullable: true, unsigned: true })
-    idCard: string | null;
+    idCard: number | null;
   
     @Column("int", { name: "id_dept", nullable: true, unsigned: true })
     idDept: number | null;
@@ -28,10 +30,10 @@ import {
     idObl: number | null;
   
     @Column("bigint", { name: "id_subj", nullable: true, unsigned: true })
-    idSubj: string | null;
+    idSubj: number | null;
   
     @Column("bigint", { name: "id_subj_obj", nullable: true, unsigned: true })
-    idSubjObj: string | null;
+    idSubjObj: number | null;
   
     @Column("int", {
       name: "num_reg",
@@ -56,7 +58,7 @@ import {
         "Класс функциональной пожарной опасности doc.s_units.type_unit=6  type",
       unsigned: true,
     })
-    idUnit_6: string | null;
+    idUnit_6: number | null;
   
     @Column("varchar", { name: "addr", nullable: true, length: 255 })
     addr: string | null;
@@ -92,7 +94,7 @@ import {
       precision: 10,
       scale: 3,
     })
-    space: string | null;
+    space: number | null;
   
     @Column("decimal", {
       name: "area",
@@ -101,7 +103,7 @@ import {
       precision: 10,
       scale: 3,
     })
-    area: string | null;
+    area: number | null;
   
     @Column("bigint", {
       name: "id_unit_17_37",
@@ -110,7 +112,7 @@ import {
         "Категория здания (наружной установки)  по взрывопожарной, пожарной опасности doc.s_units.type_unit=17,37  type",
       unsigned: true,
     })
-    idUnit_17_37: string | null;
+    idUnit_17_37: number | null;
   
     @Column("bigint", {
       name: "id_unit_21",
@@ -118,7 +120,7 @@ import {
       comment: "степень огнестойкости зданий",
       unsigned: true,
     })
-    idUnit_21: string | null;
+    idUnit_21: number | null;
   
     @Column("decimal", {
       name: "area_A",
@@ -128,7 +130,7 @@ import {
       scale: 3,
       default: () => "'0.000'",
     })
-    areaA: string | null;
+    areaA: number | null;
   
     @Column("decimal", {
       name: "area_6",
@@ -138,7 +140,7 @@ import {
       scale: 3,
       default: () => "'0.000'",
     })
-    area_6: string | null;
+    area_6: number | null;
   
     @Column("decimal", {
       name: "area_B1",
@@ -148,7 +150,7 @@ import {
       scale: 3,
       default: () => "'0.000'",
     })
-    areaB1: string | null;
+    areaB1: number | null;
   
     @Column("decimal", {
       name: "area_B2",
@@ -158,7 +160,7 @@ import {
       scale: 3,
       default: () => "'0.000'",
     })
-    areaB2: string | null;
+    areaB2: number | null;
   
     @Column("decimal", {
       name: "area_B3",
@@ -168,7 +170,7 @@ import {
       scale: 3,
       default: () => "'0.000'",
     })
-    areaB3: string | null;
+    areaB3: number | null;
   
     @Column("decimal", {
       name: "area_B4",
@@ -178,7 +180,7 @@ import {
       scale: 3,
       default: () => "'0.000'",
     })
-    areaB4: string | null;
+    areaB4: number | null;
   
     @Column("date", {
       name: "date_record",
@@ -186,7 +188,7 @@ import {
       comment: "Дата составления (изменения)",
       default: () => "'now()'",
     })
-    dateRecord: string | null;
+    dateRecord: Date | null;
   
     @Column("varchar", {
       name: "info",
@@ -212,15 +214,15 @@ import {
     })
     uid: number | null;
   
-/*     @ManyToOne(
+    @ManyToOne(
       () => SFireCardSubj,
       (sFireCardSubj) => sFireCardSubj.sFireCardBuilds,
       { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
     )
     @JoinColumn([{ name: "id_card", referencedColumnName: "idList" }])
     idCard2: SFireCardSubj;
-   */
-/*     @ManyToOne(() => SSubjObj, (sSubjObj) => sSubjObj.sFireCardBuilds, {
+  
+    @ManyToOne(() => SSubjObj, (sSubjObj) => sSubjObj.sFireCardBuilds, {
       onDelete: "NO ACTION",
       onUpdate: "NO ACTION",
     })
@@ -246,6 +248,6 @@ import {
       onUpdate: "CASCADE",
     })
     @JoinColumn([{ name: "id_unit_6", referencedColumnName: "idUnit" }])
-    idUnit_2: SUnits; */
+    idUnit_2: SUnits;
   }
   

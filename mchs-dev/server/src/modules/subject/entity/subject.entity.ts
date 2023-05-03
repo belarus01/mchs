@@ -1,4 +1,6 @@
 import { SEventsOrder } from "src/modules/events/entity/eventsOrder.entity";
+import { SFireCardCut } from "src/modules/fire/entity/fireCardCut.entity";
+import { SFireCardAuto } from "src/modules/fire/entity/fireCardAuto.entity";
 import { SSubjObj } from "src/modules/object/entity/object.entity";
 import { SPogSubjAccidents } from "src/modules/pog/entity/pogSubjAccident.entity";
 import { SPogSubjAuto } from "src/modules/pog/entity/pogSubjAuto.entity";
@@ -17,8 +19,13 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { SFireCardStaff } from "src/modules/fire/entity/fireCardStaff.entity";
+import { SFireCardSubj } from "src/modules/fire/entity/fireCardSubj.entity";
 /* import { SEventsOrder } from "./SEventsOrder";
+import { SFireCardAuto } from "./SFireCardAuto";
+import { SFireCardCut } from "./SFireCardCut";
 import { SFireCardStaff } from "./SFireCardStaff";
+import { SFireCardSubj } from "./SFireCardSubj";
 import { SPogSubjAccidents } from "./SPogSubjAccidents";
 import { SPogSubjAuto } from "./SPogSubjAuto";
 import { SPogSubjAvia } from "./SPogSubjAvia";
@@ -27,8 +34,8 @@ import { SPogSubjWater } from "./SPogSubjWater";
 import { SPooSubjPb } from "./SPooSubjPb";
 import { SSopbCardSubj } from "./SSopbCardSubj";
 import { SVedomstva } from "./SVedomstva";
-import { SSubjObj } from "./SSubjObj"; */
-
+import { SSubjObj } from "./SSubjObj";
+ */
 @Index("FK_s_subj_id_ved", ["idVed"], {})
 @Index("num_opo", ["numOpo"], {})
 @Index("s_subj_FK", ["codeSoatoYur"], {})
@@ -333,8 +340,17 @@ export class SSubj {
   @OneToMany(() => SEventsOrder, (sEventsOrder) => sEventsOrder.idSubj2)
   sEventsOrders: SEventsOrder[];
 
-/*   @OneToMany(() => SFireCardStaff, (sFireCardStaff) => sFireCardStaff.idSubj2)
-  sFireCardStaffs: SFireCardStaff[]; */
+  @OneToMany(() => SFireCardAuto, (sFireCardAuto) => sFireCardAuto.idSubj2)
+  sFireCardAutos: SFireCardAuto[];
+
+  @OneToMany(() => SFireCardCut, (sFireCardCut) => sFireCardCut.idSubj2)
+  sFireCardCuts: SFireCardCut[];
+
+  @OneToMany(() => SFireCardStaff, (sFireCardStaff) => sFireCardStaff.idSubj2)
+  sFireCardStaffs: SFireCardStaff[];
+
+  @OneToMany(() => SFireCardSubj, (sFireCardSubj) => sFireCardSubj.idSubj2)
+  sFireCardSubjs: SFireCardSubj[];
 
   @OneToMany(
     () => SPogSubjAccidents,

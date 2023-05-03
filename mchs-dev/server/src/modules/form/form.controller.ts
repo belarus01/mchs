@@ -98,7 +98,7 @@ export class FormController {
         return this.formService.getAllFormBuildData();
     }
 
-    @Get('/get/all/formReports')
+    @Get('/get/all/formReport')
     async getAllFormReports(){
         return this.formService.getAllFormReports();
     }
@@ -140,27 +140,27 @@ export class FormController {
         return this.formService.deleteFormById(idForm);
     }
 
-    @Put('/delete/:idFormBuild')
+    @Put('/delete/formBuild/:idFormBuild')
     async deleteFormBuildById(@Param('idBuild') idBuild: number){
         return this.formService.deleteFormBuildById(idBuild);
     }
 
-    @Put('/delete/:idBuild1')
+    @Put('/delete/formBuild1/:idBuild1')
     async deleteFormBuild1ById(@Param('idBuild1') idBuild1: number){
         return this.formService.deleteFormBuild1ById(idBuild1);
     }
 
-    @Put('/delete/:idBuild2')
+    @Put('/delete/formBuild2/:idBuild2')
     async deleteFormBuild2ById(@Param('idBuild2') idBuild2: number){
         return this.formService.deleteFormBuild1ById(idBuild2);
     }
     
-    @Put('/delete/:idList')
+    @Put('/delete/formReport/:idList')
     async deleteFormReportById(@Param('idList') idList: number){
         return this.formService.deleteFormReportById(idList);
     }
 
-    @Put('/delete/:idData')
+    @Put('/delete/formBuildData/:idData')
     async deleteFormBuildDataById(@Param('idData') idData: number){
         return this.formService.deleteFormBuildDataById(idData);
     }
