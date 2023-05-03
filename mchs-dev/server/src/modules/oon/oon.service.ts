@@ -23,7 +23,7 @@ export class OonService {
     }
 
     async getAllOons(){
-        return await this.oonRepository.find();
+        return await this.oonRepository.find({where:{active:1}});
     }
     
     async updateOon(idType: number, dto: CreateOonDTO){

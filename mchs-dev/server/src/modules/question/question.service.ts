@@ -26,13 +26,15 @@ export class QuestionService {
     }
 
     async getAllQuestions(){
-        return await this.questionRepository.find();
+        return await this.questionRepository.find({where:{active:1}});
     }
 
     async getAllQuestionsWithRelations(){
-        return await this.questionRepository.find({where: {
+        return await this.questionRepository.find({
+            where:{
             active:1
-        }, relations: {
+        },
+        relations: {
             idUnit: true,
             sEventsQues: true,
             sEventsOrderQues: true,
@@ -41,9 +43,11 @@ export class QuestionService {
     }
 
     async getAllQuestion1sWithRelations(){
-        return await this.question1Repository.find({where: {
+        return await this.question1Repository.find({
+            where:{
             active:1
-        }, relations: {
+        },
+        relations: {
             idEvent2: true,
             idTnpa2: true
         }

@@ -23,7 +23,7 @@ export class TypeService {
     }
 
     async getAllTypeTests(){
-        return await this.typeTestRepository.find();
+        return await this.typeTestRepository.find({where:{active:1}});
     }
     
     async updateTypeTest(idTypeTest: number, dto: CreateTypeTestDTO){

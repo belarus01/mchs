@@ -32,7 +32,7 @@ export class PooService {
     }
 
     async getAllPoos(){
-        return await this.pooRepository.find();
+        return await this.pooRepository.find({where:{active:1}});
     }
     
     async updatePoo(idPoo: number, dto: CreatePooDTO){
@@ -56,8 +56,17 @@ export class PooService {
         return pooSubjPb;
     }
 
+    async getAllPooSubjPbsBySubjObjId(idSubjObj: number){
+        return await this.pooSubjPbRepository.find({
+            where:{
+                active:1,
+                idSubjObj: idSubjObj
+            }
+        });
+    }
+
     async getAllPooSubjPbs(){
-        return await this.pooSubjPbRepository.find();
+        return await this.pooSubjPbRepository.find({where:{active:1}});
     }
 
 
@@ -100,7 +109,7 @@ export class PooService {
     }
 
     async getAllPooDocs(){
-        return await this.pooDocsRepository.find();
+        return await this.pooDocsRepository.find({where:{active:1}});
     }
     
     async updatePooDoc(idNumReg: number, dto: CreatePooDocsDTO){

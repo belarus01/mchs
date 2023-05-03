@@ -32,7 +32,7 @@ export class AdmService {
     }
 
     async getAllAdmBans(){
-        return await this.admBanRepository.find();
+        return await this.admBanRepository.find({where:{active:1}});
     }
 
     async getAdmForceById(idForce: number){
@@ -44,7 +44,7 @@ export class AdmService {
     }
 
     async getAllAdmForces(){
-        return await this.admForceRepository.find();
+        return await this.admForceRepository.find({where:{active:1}});
     }
     
     async updateAdmBan(idBan: number, dto: CreateAdmBanDTO){

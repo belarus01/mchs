@@ -20,7 +20,12 @@ export class ObjectController {
 
     @Get('/get/all')
     getAllObjs(){
-        return this.objectService.getAllObjs;
+        return this.objectService.getAllObjs();
+    }
+
+    @Get('/get/all/objectSpecifs')
+    getAllObjSpecifs(){
+        return this.objectService.getAllObjSpecifs();
     }
 
     @Get('/get/all/objectSpecifs/sorted/by/page')

@@ -105,15 +105,15 @@ export class FormService {
 
 
     async getAllFormBuilds(){
-        return await this.formBuildRepository.find();
+        return await this.formBuildRepository.find({where:{active:1}});
     }
 
     async getAllFormBuild1s(){
-        return await this.formBuild1Repository.find();
+        return await this.formBuild1Repository.find({where:{active:1}});
     }
 
     async getAllFormBuild2s(){
-        return await this.formBuild2Repository.find();
+        return await this.formBuild2Repository.find({where:{active:1}});
     }
 
     async getAllFormBuildData(){
@@ -121,11 +121,11 @@ export class FormService {
     }
 
     async getAllFormReports(){
-        return await this.formReportRepository.find();
+        return await this.formReportRepository.find({where:{active:1}});
     }
 
     async getAllForms(){
-        return await this.formRepository.find();
+        return await this.formRepository.find({where:{active:1}});
     }
 
 

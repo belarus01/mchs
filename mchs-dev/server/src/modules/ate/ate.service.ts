@@ -32,8 +32,7 @@ export class AteService {
     async getAllCategs(): Promise<SAteCateg[]>{
         const categs = this.ateCategRepository.find({where: {
             active:1
-        }});
-        
+        }});       
         return categs;
     }
 

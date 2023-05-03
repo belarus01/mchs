@@ -23,7 +23,7 @@ export class OpoService {
     }
 
     async getAllOpos(){
-        return await this.opoRepository.find();
+        return await this.opoRepository.find({where:{active:1}});
     }
     
     async updateOpo(idOpo: number, dto: CreateOpoDTO){

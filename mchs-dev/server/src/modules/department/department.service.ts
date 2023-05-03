@@ -69,7 +69,7 @@ export class DepartmentService {
     } 
 
     async getAllDeptUnits(): Promise<SDeptUnits[]>{
-        const depts = await this.deptUnitRepository.find();
+        const depts = await this.deptUnitRepository.find({where:{active:1}});
         return depts;
     }
 

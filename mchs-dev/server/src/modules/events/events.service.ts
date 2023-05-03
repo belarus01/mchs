@@ -357,6 +357,7 @@ export class EventsService {
   async getAllWeekEvents(dateNow: GetNowDTO): Promise<SEvents[]> {
     const weekEvents = await this.eventsRepository.find({
       where: {
+        active: 1,
         dateBegin: Between(
           moment(dateNow.dateNow).startOf('day').toDate(),
           moment(dateNow.dateNow).endOf('day').toDate(),
@@ -374,6 +375,7 @@ export class EventsService {
   async getAllMonthEvents(dateNow: GetNowDTO): Promise<SEvents[]> {
     const monthEvents = await this.eventsRepository.find({
       where: {
+        active: 1,
         dateBegin: Between(
           moment(dateNow.dateNow).startOf('month').toDate(),
           moment(dateNow.dateNow).endOf('month').toDate(),

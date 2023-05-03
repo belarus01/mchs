@@ -23,7 +23,7 @@ export class UnitService {
     }
 
     async getAllUnits(): Promise<SUnits[]>{
-        const units = await this.unitRepository.find();
+        const units = await this.unitRepository.find({where:{active:1}});
         return units;
     }
 

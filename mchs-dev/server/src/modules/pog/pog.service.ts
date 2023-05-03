@@ -12,6 +12,7 @@ import { CreatePogSubjAviaDTO } from './dto/create-pogSubjAvia.dto';
 import { CreatePogSubjAutoDTO } from './dto/create-pogSubjAuto.dto';
 import { CreatePogSubjRwDTO } from './dto/create-pogSubjRw.dto';
 import { CreatePogSubjWaterDTO } from './dto/create-pogSubjWater.dto';
+import { skipPage, sortByField } from 'src/utils/utils';
 
 @Injectable()
 export class PogService {
@@ -37,7 +38,7 @@ export class PogService {
     }
 
     async getAllPogSubjAccidents(){
-        return await this.pogSubjAccidentRepository.find();
+        return await this.pogSubjAccidentRepository.find({where:{active:1}});
     }
 
 
@@ -64,7 +65,7 @@ export class PogService {
     }
 
     async getAllPogSubjAvias(){
-        return await this.pogSubjAviaRepository.find();
+        return await this.pogSubjAviaRepository.find({where:{active:1}});
     }
     
     async updatePogSubjAvia(idList: number, dto: CreatePogSubjAviaDTO){
@@ -90,16 +91,29 @@ export class PogService {
     }
 
     async getAllPogSubjAutos(){
-        return await this.pogSubjAutoRepository.find();
+        return await this.pogSubjAutoRepository.find({where:{active:1}});
     }
 
-    async getAllPogSubjAutosWithRelationsSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
-        const autos = (await this.pogSubjAutoRepository.find({where:{
+    async getAllPogSubjAutosWithRelationsSortAndPage(
+        field:string,
+        order:string,
+        current: string,
+        pageSize: string,
+        total: number
+        ) {
+        const autos = (await this.pogSubjAutoRepository.find({
+            where:{
             active: 1
-        }, relations: {
-           idOblSubj2: true, 
+        }, 
+        relations: {
+           idOblSubj2: true,
+           idSubj2: true,
+           idSubjObj2: true 
         }
-    }))
+    }));
+    const sorted = sortByField(autos, field, order);
+    const paged = skipPage(sorted, current, pageSize, total);
+    return paged;
     }
     
     async updatePogSubjAuto(idList: number, dto: CreatePogSubjAutoDTO){
@@ -125,7 +139,7 @@ export class PogService {
     }
 
     async getAllPogSubjRws(){
-        return await this.pogSubjRwRepository.find();
+        return await this.pogSubjRwRepository.find({where:{active:1}});
     }
     
     async updatePogSubjRw(idList: number, dto: CreatePogSubjRwDTO){
@@ -151,7 +165,7 @@ export class PogService {
     }
 
     async getAllPogSubjWaters(){
-        return await this.pogSubjWaterRepository.find();
+        return await this.pogSubjWaterRepository.find({where:{active:1}});
     }
     
     async updatePogSubjWater(idList: number, dto: CreatePogSubjWaterDTO){

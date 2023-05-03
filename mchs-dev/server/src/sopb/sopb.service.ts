@@ -80,12 +80,12 @@ export class SopbService {
     }
 
     async getAllSopbs(): Promise<SSopb[]>{
-        const sopbs = await this.sopbRepository.find();
+        const sopbs = await this.sopbRepository.find({where:{active:1}});
         return sopbs;
     }// + withRelations
 
     async getAllSopbCards(): Promise<SSopbCard[]>{
-        const sopbs = await this.sopbCardRepository.find();
+        const sopbs = await this.sopbCardRepository.find({where:{active:1}});
         return sopbs;
     }
 
@@ -110,7 +110,7 @@ export class SopbService {
     }
     
     async getAllSopbCardSubjStates(): Promise<SSopbCardSubjState[]>{
-        const sopbs = await this.sopbCardSubjStateRepository.find();
+        const sopbs = await this.sopbCardSubjStateRepository.find({where:{active:1}});
         return sopbs;
     }
 

@@ -76,6 +76,11 @@ export class PooController {
         return this.pooService.getAllPooSubjPbs();
     }
 
+    @Get('/get/all/pooSubjPb/idSubjObj/:idSubjObj')
+    async getAllPooSubjPbsBySubjObjId(@Param('idSubjObj') idSubjObj: number){
+        return this.pooService.getAllPooSubjPbsBySubjObjId(idSubjObj);
+    }
+
     @Get('/get/all/pooSubjPb/relations/sorted')
     async getAllPooSubjPbsWithRelationsSortedBy(@Query() params: Order){
         const {field, order} = params;

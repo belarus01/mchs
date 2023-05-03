@@ -23,7 +23,7 @@ export class DefectionService {
     }
 
     async getAllDefections(): Promise<SDefection[]>{
-        return await this.defectionRepository.find();
+        return await this.defectionRepository.find({where:{active:1}});
     }
 
     async updateDefection(idDef: number, dto: CreateDefectionDTO){

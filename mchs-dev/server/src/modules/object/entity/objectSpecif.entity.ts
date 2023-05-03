@@ -8,7 +8,6 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-
 @Index("FK_s_subj_obj_specif_id_unit_17", ["idUnit_17"], {})
 @Index("FK_s_subj_obj_specif_id_unit_41", ["idUnit_41"], {})
 @Index("FK_s_subj_obj_specif_id_unit_6", ["idUnit_6"], {})

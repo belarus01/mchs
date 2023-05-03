@@ -40,6 +40,13 @@ export class ObjectService {
         return paged;
     } 
 
+    async getAllObjSpecifs(): Promise<SSubjObjSpecif[]>{
+        const objects = await this.objectSpecifRepository.find({where: {
+            active:1
+        }});
+        return objects;
+    }
+
     async getAllObjectSpecifsSortAndPage(field:string, order:string, current: string, pageSize: string, total: number){
         const objects = (await this.objectSpecifRepository.find({where:{active:1}}));
         const sorted = sortByField(objects, field, order);
