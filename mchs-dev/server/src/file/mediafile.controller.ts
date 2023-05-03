@@ -12,7 +12,7 @@ export class MediafileController {
       //@InjectQueue('upload-queue') private fileQueue: Queue
       ){}
 
-    //upload single file
+    //upload single mediafile
     @Post('/upload/mediafile')
     @UseInterceptors(
       FileInterceptor('mediafile', {
@@ -35,7 +35,7 @@ export class MediafileController {
       };
     }
 
-    //upload multiple files
+    //upload multiple mediafiles
     @Post('/upload/mediafiles')
     @UseInterceptors(
         FilesInterceptor('mediafile', 10, {
@@ -74,6 +74,7 @@ export class MediafileController {
         };};
       }
 
+      //пока в разработке
       @Post('/upload/mediafile/to/path')
       @UseInterceptors(
         /* FileInterceptor('mediafile', {

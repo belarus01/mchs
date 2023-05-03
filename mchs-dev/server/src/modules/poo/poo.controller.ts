@@ -23,8 +23,6 @@ export class PooController {
     async getAllPoos(){
         return this.pooService.getAllPoos();
     }
-
-    
     
     @Put('/update')
     async updatePoo(@Param('idPoo') idPoo: number, @Body() dto: CreatePooDTO){
