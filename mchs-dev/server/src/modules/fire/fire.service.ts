@@ -43,6 +43,16 @@ export class FireService {
         });
     }
 
+    async getAllFireCardBuildsBySubjObjId(idSubjObj: number){
+        return await this.fireCardBuildRepository.find({
+            where:{
+                active:1,
+                idSubjObj: idSubjObj
+            }
+        });
+    }
+
+
     async updateFireCardBuild(idList: number, dto: CreateFireCardBuildDTO){
         return await this.fireCardBuildRepository.update(idList, dto);
     }

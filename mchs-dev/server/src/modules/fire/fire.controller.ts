@@ -26,6 +26,11 @@ export class FireController {
         return this.fireService.getAllFireCardBuilsWithRelations();
     }
 
+    @Get('/get/all/fireCardBuild/idSubjObj/:idSubjObj')
+    async getAllFireCardBuildsBySubjObjId(@Param('idSubjObj') idSubjObj: number){
+        return this.fireService.getAllFireCardBuildsBySubjObjId(idSubjObj);
+    }
+
     @Put('/update/fireCardBuild')
     async updateFireCardBuild(@Param('idList') idList: number, @Body() dto: CreateFireCardBuildDTO){
         return this.fireService.updateFireCardBuild(idList, dto);
