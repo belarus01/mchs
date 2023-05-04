@@ -11,3 +11,5 @@ export enum WS_NOTIFICATION_EVENTS{
     DONE = 'DONE',
     DELETED = 'DELETED',
 }
+
+export const CLIENT_URI = "http://localhost:3000";

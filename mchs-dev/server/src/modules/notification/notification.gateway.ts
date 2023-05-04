@@ -6,15 +6,19 @@ import { RolesGuard } from '../auth/roles.guard';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { User } from '../users/user.entity';
 import { CreateNotificationDTO } from './dto/create-notification.dto';
-import { WS_NOTIFICATION_EVENTS } from './notification.constants';
+import { WS_NOTIFICATION_EVENTS, CLIENT_URI } from './notification.constants';
 import { NotificationService } from './notification.service';
 
 @WebSocketGateway({
 /*   pingTimeout: 2000,
   pingInterval: 2000, */
   cors: {
-    origin: '*',
+    //origin: '*',
+    origin: CLIENT_URI //+ в константы прописать путь export const CLIENT_URI = "http://localhost:3000";
   },
+  serveClient: false,
+  // название пространства может быть любым, но должно учитываться на клиенте
+  namespace: "notification"
  })
 export class NotificationGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   constructor(private notificationService: NotificationService) {}
@@ -22,6 +26,8 @@ export class NotificationGateway implements OnGatewayInit, OnGatewayConnection, 
   @WebSocketServer() server: Server;
 
   users = [];
+
+  userss: Record<string, string> = {};
 
   u: User;
 
@@ -110,6 +116,23 @@ async handleUpdatedNotifications(client: Socket, user: CreateNotificationDTO){
     /* this.server.on('connection',(clients) => {
       console.log(`Connected ${client.id}`);
     }) */
+  }
+
+  
+  handleConnection2(client: Socket, ...args: any[]){
+    const userName = client.handshake.query.userName as string;
+    const socketId = client.id;
+    this.userss[socketId] = userName;
+
+    client.broadcast.emit("log", `${userName} connected`);
+  }
+
+  handleDisconnect2(client: Socket){
+    const socketId = client.id;
+    const userName = this.userss[socketId];
+    delete this.userss[socketId];
+
+    client.broadcast.emit("log", `${userName} disconnected`);    
   }
 
   handleConnectionToRoom(client: Socket){

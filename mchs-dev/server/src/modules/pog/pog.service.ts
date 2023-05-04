@@ -41,8 +41,6 @@ export class PogService {
         return await this.pogSubjAccidentRepository.find({where:{active:1}});
     }
 
-
-    
     async updatePogSubjAccident(idList: number, dto: CreatePogSubjAccidentDTO){
         return await this.pogSubjAccidentRepository.update(idList, dto);
     }
@@ -50,6 +48,7 @@ export class PogService {
     async deletePogSubjAccidentById(idList: number){
         return await this.pogSubjAccidentRepository.update(idList, {active:0});
     }
+
 
     async createPogSubjAvia(dto: CreatePogSubjAviaDTO){
         const pogSubjAvia = this.pogSubjAviaRepository.create(dto);
@@ -67,7 +66,16 @@ export class PogService {
     async getAllPogSubjAvias(){
         return await this.pogSubjAviaRepository.find({where:{active:1}});
     }
-    
+
+    async getAllPogSubjAviasBySubjObjId(idSubjObj: number){
+        return await this.pogSubjAviaRepository.find({
+            where:{
+                active:1,
+                idSubjObj: idSubjObj
+            }
+        });
+    }
+
     async updatePogSubjAvia(idList: number, dto: CreatePogSubjAviaDTO){
         return await this.pogSubjAviaRepository.update(idList, dto);
     }
@@ -92,6 +100,15 @@ export class PogService {
 
     async getAllPogSubjAutos(){
         return await this.pogSubjAutoRepository.find({where:{active:1}});
+    }
+
+    async getAllPogSubjAutosBySubjObjId(idSubjObj: number){
+        return await this.pogSubjAutoRepository.find({
+            where:{
+                active:1,
+                idSubjObj: idSubjObj
+            }
+        });
     }
 
     async getAllPogSubjAutosWithRelationsSortAndPage(
@@ -141,6 +158,15 @@ export class PogService {
     async getAllPogSubjRws(){
         return await this.pogSubjRwRepository.find({where:{active:1}});
     }
+
+    async getAllPogSubjRwsBySubjObjId(idSubjObj: number){
+        return await this.pogSubjRwRepository.find({
+            where:{
+                active:1,
+                idSubjObj: idSubjObj
+            }
+        });
+    }
     
     async updatePogSubjRw(idList: number, dto: CreatePogSubjRwDTO){
         return await this.pogSubjRwRepository.update(idList, dto);
@@ -166,6 +192,15 @@ export class PogService {
 
     async getAllPogSubjWaters(){
         return await this.pogSubjWaterRepository.find({where:{active:1}});
+    }
+
+    async getAllPogSubjWatersBySubjObjId(idSubjObj: number){
+        return await this.pogSubjWaterRepository.find({
+            where:{
+                active:1,
+                idSubjObj: idSubjObj
+            }
+        });
     }
     
     async updatePogSubjWater(idList: number, dto: CreatePogSubjWaterDTO){

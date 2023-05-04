@@ -36,6 +36,7 @@ export class PogController {
         return this.pogService.deletePogSubjAccidentById(idList);
     }
 
+
     @Post('/create/pogSubjAvia')
     async createPogSubjAvia(@Body() dto: CreatePogSubjAviaDTO){
         return this.pogService.createPogSubjAvia(dto);
@@ -50,6 +51,11 @@ export class PogController {
     async getAllPogSubjAvias(){
         return this.pogService.getAllPogSubjAvias();
     }
+
+    @Get('/get/all/pogSubjAvias/idSubjObj/:idSubjObj')
+    async getAllPogSubjAviasBySubjObjId(@Param('idSubjObj') idSubjObj: number){
+        return this.pogService.getAllPogSubjAviasBySubjObjId(idSubjObj);
+    }
     
     @Put('/update/pogSubjAvia')
     async updatePogSubjAvia(@Param('idList') idList: number, @Body() dto: CreatePogSubjAviaDTO){
@@ -60,6 +66,7 @@ export class PogController {
     async deletePogSubjAviaById(@Param('idList') idList: number){
         return this.pogService.deletePogSubjAviaById(idList);
     }
+
 
     @Post('/create/pogSubjRw')
     async createPogSubjRw(@Body() dto: CreatePogSubjRwDTO){
@@ -74,6 +81,11 @@ export class PogController {
     @Get('/get/all/pogSubjRw')
     async getAllPogSubjRws(){
         return this.pogService.getAllPogSubjRws();
+    }
+
+    @Get('/get/all/pogSubjRws/idSubjObj/:idSubjObj')
+    async getAllPogSubjRwsBySubjObjId(@Param('idSubjObj') idSubjObj: number){
+        return this.pogService.getAllPogSubjRwsBySubjObjId(idSubjObj);
     }
     
     @Put('/update/pogSubjRw')
@@ -102,6 +114,11 @@ export class PogController {
         return this.pogService.getAllPogSubjAutos();
     }
 
+    @Get('/get/all/pogSubjAutos/idSubjObj/:idSubjObj')
+    async getAllPogSubjAutosBySubjObjId(@Param('idSubjObj') idSubjObj: number){
+        return this.pogService.getAllPogSubjAutosBySubjObjId(idSubjObj);
+    }
+
     @Get('/get/all/pogSubjAutos/with/relations/sorted/by/page')
     async getAllPogSubjAutosWithRelationsSortAndPage(@Query() params: Order, @Query() params2: Pagination){
         const {field, order} = params;
@@ -119,27 +136,33 @@ export class PogController {
         return this.pogService.deletePogSubjAutoById(idList);
     }
 
-    @Post('/create')
+
+    @Post('/create/pogSubjWater')
     async createPogSubjWater(@Body() dto: CreatePogSubjWaterDTO){
         return this.pogService.createPogSubjWater(dto);
     }
 
-    @Get('/get/id/:idList')
+    @Get('/get/pogSubjWater/id/:idList')
     async getPogSubjWaterById(@Param('idList') idList: number){
         return this.pogService.getPogSubjWaterById(idList);
     }
 
-    @Get('/get/all')
+    @Get('/get/all/pogSubjWater')
     async getAllPogSubjWaters(){
         return this.pogService.getAllPogSubjWaters();
     }
+
+    @Get('/get/all/pogSubjWater/idSubjObj/:idSubjObj')
+    async getAllPogSubjWatersBySubjObjId(@Param('idSubjObj') idSubjObj: number){
+        return this.pogService.getAllPogSubjWatersBySubjObjId(idSubjObj);
+    }
     
-    @Put('/update')
+    @Put('/update/pogSubjWater')
     async updatePogSubjWater(@Param('idList') idList: number, @Body() dto: CreatePogSubjWaterDTO){
         return this.pogService.updatePogSubjWater(idList, dto);
     }
 
-    @Put('/delete/:idList')
+    @Put('/delete/pogSubjWater/:idList')
     async deletePogSubjWaterById(@Param('idList') idList: number){
         return this.pogService.deletePogSubjWaterById(idList);
     }
