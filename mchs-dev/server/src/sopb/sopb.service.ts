@@ -13,6 +13,8 @@ import { SopbCardSubjNotFoundException } from './exception/sopbCardSubj.not-foun
 import { skipPage, sortByField } from 'src/utils/utils';
 import { SSopbCardSubjState } from './entity/sopbCardSubjState.entity';
 import { SopbCardSubjStateNotFoundException } from './exception/sopbCardSubjState.exception';
+import { SSopbCardSubjList } from './entity/sopbCardSubjList.entity';
+import { SopbCardSubjListNotFoundException } from './exception/sopbCardSubjList.not-found.exception';
 
 @Injectable()
 export class SopbService {
@@ -20,6 +22,7 @@ export class SopbService {
     @InjectRepository(SSopbCard, 'mchs_connection') private sopbCardRepository: Repository<SSopbCard>,
     @InjectRepository(SSopbCardSubj, 'mchs_connection') private sopbCardSubjRepository: Repository<SSopbCardSubj>,
     @InjectRepository(SSopbCardSubjState, 'mchs_connection') private sopbCardSubjStateRepository: Repository<SSopbCardSubjState>,
+    @InjectRepository(SSopbCardSubjList, 'mchs_connection') private sopbCardSubjListRepository: Repository<SSopbCardSubjList>,
     ){}
 
     async createSopb(dto: CreateSopbDTO): Promise<SSopb>{
@@ -79,6 +82,14 @@ export class SopbService {
         return sopbCardSubjState;
     }
 
+    async getSopbCardSubjListById(idList: number){
+        const sopbCardSubjList = await this.sopbCardSubjListRepository.findOneBy({idList});
+        if(!sopbCardSubjList){
+            throw new SopbCardSubjListNotFoundException(idList);
+        }
+        return sopbCardSubjList;
+    }
+
     async getAllSopbs(): Promise<SSopb[]>{
         const sopbs = await this.sopbRepository.find({where:{active:1}});
         return sopbs;
@@ -108,6 +119,19 @@ export class SopbService {
         const paged = skipPage(sorted, current, pageSize, total);
         return paged;
     }
+
+    async getAllSopbCardSubjs(){
+        return await this.sopbCardSubjRepository.find({where:{active:1}});
+    }
+
+    async getAllSopbCardSubjsBySubjObjId(idSubjObj: number){
+        return await this.sopbCardSubjRepository.find({
+            where:{
+                active:1,
+                idSubjObj: idSubjObj
+            }
+        });
+    }
     
     async getAllSopbCardSubjStates(): Promise<SSopbCardSubjState[]>{
         const sopbs = await this.sopbCardSubjStateRepository.find({where:{active:1}});
@@ -121,6 +145,20 @@ export class SopbService {
             idData2: true,
             idState2: true
         }}));
+        return sopbs;
+    }
+
+    async getAllSopbCardSubjLists(){
+        return await this.sopbCardSubjListRepository.find({where:{active:1}});
+    }
+
+    async getAllSopbCardSubjListsBySopbCardSubjId(idSubjSopb: number){
+        return await this.sopbCardSubjListRepository.find({
+            where:{
+                active:1,
+                idSubjSopb: idSubjSopb
+            }
+        });
     }
 
     async updateSopb(idSopb: number, dto: CreateSopbDTO){

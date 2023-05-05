@@ -54,6 +54,16 @@ export class SopbController {
         return this.sopbService.getAllSopbCards();
     }
 
+    @Get('/get/all/sopbCardSubj')
+    async getAllSopbCardSubjs(){
+        return this.sopbService.getAllSopbCardSubjs();
+    }
+
+    @Get('/get/all/sopbCardSubj/idSubjObj/:idSubjObj')
+    async getAllSopbCardSubjsBySubjObjId(@Param('idSubjObj') idSubjObj: number){
+        return this.sopbService.getAllSopbCardSubjsBySubjObjId(idSubjObj);
+    }
+
     @Get('get/all/sopbCardSubjs/sorted/by/page')
     async getAllObjectsSortAndPage(@Query() params: Order, @Query() params2: Pagination){
         const {field, order} = params;
@@ -79,6 +89,16 @@ export class SopbController {
     @Get('/get/sopbCards/idSopb/:idSopb')
     async getSopbCardBySopbId(@Param('idSopb') idSopb: number){
         return await this.sopbService.getSopbCardsBySopbId(idSopb);
+    }
+
+    @Get('/get/all/sopbCardSubjList')
+    async getAllSopbCardSubjLists(){
+        return this.sopbService.getAllSopbCardSubjLists();
+    }
+
+    @Get('/get/all/sopbCardSubjLists/idSubjSopb/:idSubjSopb')
+    async getAllSopbCardSubjListsBySopbCardSubjId(@Param('idSubjSopb') idSubjSopb: number){
+        return this.sopbService.getAllSopbCardSubjListsBySopbCardSubjId(idSubjSopb);
     }
 
     @Put('/update/:idSopb')
