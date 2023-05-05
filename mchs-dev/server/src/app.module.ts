@@ -42,6 +42,7 @@ import { TypeModule } from './modules/type/type.module';
 import { PogModule } from './modules/pog/pog.module';
 import { FileModule } from './file/file.module';
 import { FireModule } from './modules/fire/fire.module';
+import { DocGenerationModule } from './doc-generation/doc-generation.module';
 
 
 
@@ -150,7 +151,8 @@ import { FireModule } from './modules/fire/fire.module';
     TypeModule,
     PogModule,
     FileModule,
-    FireModule
+    FireModule, 
+    DocGenerationModule
   
   ],
   controllers: [AppController],
