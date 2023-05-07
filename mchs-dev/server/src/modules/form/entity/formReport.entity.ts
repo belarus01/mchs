@@ -1,6 +1,8 @@
 import { SEventsOrder } from "src/modules/events/entity/eventsOrder.entity";
 import { SEventsOrderAdmBan } from "src/modules/events/entity/eventsOrderAdmBan.entity";
 import { SEventsOrderAdmForce } from "src/modules/events/entity/eventsOrderAdmForce.entity";
+import { SEventsOrderObj } from "src/modules/events/entity/eventsOrderObj.entity";
+import { SEventsOrderQueDef } from "src/modules/events/entity/eventsOrderQueDef.entity";
 import {
   Column,
   Entity,
@@ -11,12 +13,9 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { SForm } from "./form.entity";
-/* import { SEventsOrderAdmBan } from "./SEventsOrderAdmBan";
-import { SEventsOrderAdmForce } from "./SEventsOrderAdmForce";
-import { SEventsOrder } from "./SEventsOrder";
-import { SForm } from "./SForm"; */
 
 @Index("FK_s_form_report_id_event_order", ["idEventOrder"], {})
+@Index("FK_s_form_report_id_event_order_obj", ["idEventOrderObj"], {})
 @Index("FK_s_form_report_id_form", ["idForm"], {})
 @Entity("s_form_report", { schema: "mchs" })
 export class SFormReport {
@@ -28,6 +27,13 @@ export class SFormReport {
 
   @Column("bigint", { name: "id_event_order", nullable: true, unsigned: true })
   idEventOrder: number | null;
+
+  @Column("bigint", {
+    name: "id_event_order_obj",
+    nullable: true,
+    unsigned: true,
+  })
+  idEventOrderObj: number | null;
 
   @Column("tinyint", {
     name: "num_appendix",
@@ -159,7 +165,8 @@ export class SFormReport {
   @Column("datetime", {
     name: "date_book",
     nullable: true,
-    comment: "Дата записи в книге учета проверок у субъекта",
+    comment:
+      "Дата записи в книге учета проверок у субъекта(для чл: дата завершения заполнения)",
   })
   dateBook: Date | null;
 
@@ -175,6 +182,12 @@ export class SFormReport {
   )
   sEventsOrderAdmForces: SEventsOrderAdmForce[];
 
+  @OneToMany(
+    () => SEventsOrderQueDef,
+    (sEventsOrderQueDef) => sEventsOrderQueDef.idFormReport2
+  )
+  sEventsOrderQueDefs: SEventsOrderQueDef[];
+
   @ManyToOne(() => SEventsOrder, (sEventsOrder) => sEventsOrder.sFormReports, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
@@ -183,6 +196,16 @@ export class SFormReport {
     { name: "id_event_order", referencedColumnName: "idEventOrder" },
   ])
   idEventOrder2: SEventsOrder;
+
+  @ManyToOne(
+    () => SEventsOrderObj,
+    (sEventsOrderObj) => sEventsOrderObj.sFormReports,
+    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
+  )
+  @JoinColumn([
+    { name: "id_event_order_obj", referencedColumnName: "idObjOrder" },
+  ])
+  idEventOrderObj2: SEventsOrderObj;
 
   @ManyToOne(() => SForm, (sForm) => sForm.sFormReports, {
     onDelete: "NO ACTION",

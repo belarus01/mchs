@@ -2,9 +2,9 @@ import { SEventsOrderAdmBan } from "src/modules/events/entity/eventsOrderAdmBan.
 import { SEventsOrderAdmForce } from "src/modules/events/entity/eventsOrderAdmForce.entity";
 import { SEventsOrderObj } from "src/modules/events/entity/eventsOrderObj.entity";
 import { SEventsOrderQueDef } from "src/modules/events/entity/eventsOrderQueDef.entity";
-import { SFireCardCut } from "src/modules/fire/entity/fireCardCut.entity";
 import { SFireCardAuto } from "src/modules/fire/entity/fireCardAuto.entity";
 import { SFireCardBuild } from "src/modules/fire/entity/fireCardBuild.entity";
+import { SFireCardCut } from "src/modules/fire/entity/fireCardCut.entity";
 import { SPogSubjAccidents } from "src/modules/pog/entity/pogSubjAccident.entity";
 import { SPogSubjAuto } from "src/modules/pog/entity/pogSubjAuto.entity";
 import { SPogSubjAvia } from "src/modules/pog/entity/pogSubjAvia.entity";
@@ -12,6 +12,7 @@ import { SPogSubjRw } from "src/modules/pog/entity/pogSubjRw.entity";
 import { SPogSubjWater } from "src/modules/pog/entity/pogSubjWater.entity";
 import { SPooSubjPb } from "src/modules/poo/entity/pooSubjPb.entity";
 import { SSubj } from "src/modules/subject/entity/subject.entity";
+import { SUnits } from "src/modules/unit/unit.entity";
 import { User } from "src/modules/users/user.entity";
 import {
   Column,
@@ -22,21 +23,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-/* import { SEventsOrderAdmBan } from "./SEventsOrderAdmBan";
-import { SEventsOrderAdmForce } from "./SEventsOrderAdmForce";
-import { SEventsOrderObj } from "./SEventsOrderObj";
-import { SEventsOrderQueDef } from "./SEventsOrderQueDef";
-import { SFireCardAuto } from "./SFireCardAuto";
-import { SFireCardBuild } from "./SFireCardBuild";
-import { SFireCardCut } from "./SFireCardCut";
-import { SPogSubjAccidents } from "./SPogSubjAccidents";
-import { SPogSubjAuto } from "./SPogSubjAuto";
-import { SPogSubjAvia } from "./SPogSubjAvia";
-import { SPogSubjRw } from "./SPogSubjRw";
-import { SPogSubjWater } from "./SPogSubjWater";
-import { SPooSubjPb } from "./SPooSubjPb";
-import { Users } from "./Users";
-import { SSubj } from "./SSubj"; */
+import { SSubjObjCh } from "./objectCh.entity";
 
 @Index("id_subj", ["idSubj"], {})
 @Index("s_subj_obj_FK_1", ["uid"], {})
@@ -50,9 +37,9 @@ export class SSubjObj {
   @Column("bigint", { name: "id_subj", unsigned: true })
   idSubj: number;
 
-  @Column("tinyint", {
+  @Column("bigint", {
     name: "id_type_danger",
-    comment: "тип опасности",
+    comment: "тип опасности s_units.type_unit=1 (Классы опасности)",
     unsigned: true,
     default: () => "'1'",
   })
@@ -168,6 +155,16 @@ export class SSubjObj {
   })
   numOpo: string | null;
 
+  @Column("date", {
+    name: "date_reg_opo",
+    nullable: true,
+    comment: "Дата регистрации ОПО",
+  })
+  dateRegOpo: Date | null;
+
+  @Column("varchar", { name: "num_reg", nullable: true, length: 15 })
+  numReg: string | null;
+
   @OneToMany(
     () => SEventsOrderAdmBan,
     (sEventsOrderAdmBan) => sEventsOrderAdmBan.idObj2
@@ -235,4 +232,14 @@ export class SSubjObj {
   })
   @JoinColumn([{ name: "id_subj", referencedColumnName: "idSubj" }])
   idSubj2: SSubj;
+
+  @ManyToOne(() => SUnits, (sUnits) => sUnits.sSubjObjs, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "id_type_danger", referencedColumnName: "idUnit" }])
+  idTypeDanger2: SUnits;
+
+  @OneToMany(() => SSubjObjCh, (sSubjObjCh) => sSubjObjCh.idSubjObj2)
+  sSubjObjChes: SSubjObjCh[];
 }

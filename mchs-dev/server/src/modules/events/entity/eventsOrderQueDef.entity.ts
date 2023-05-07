@@ -9,12 +9,14 @@ import {
 } from "typeorm";
 import { SEventsOrder } from "./eventsOrder.entity";
 import { SEventsOrderQue } from "./eventsOrderQue.entity";
+import { SFormReport } from "src/modules/form/entity/formReport.entity";
 import { SSubjObj } from "src/modules/object/entity/object.entity";
 
-@Index("FK_s_events_order_que_def_id_def2", ["idDef"], {})
 @Index("FK_s_events_order_que_def_id_event_order", ["idEventOrder"], {})
 @Index("FK_s_events_order_que_def_id_event_order_que", ["idEventQue"], {})
 @Index("FK_s_events_order_que_def_id_obj", ["idObj"], {})
+@Index("FK_s_events_order_que_def_id_def2", ["idDef"], {})
+@Index("FK_s_events_order_que_def_id_form_report", ["idFormReport"], {})
 @Entity("s_events_order_que_def", { schema: "mchs" })
 export class SEventsOrderQueDef {
   @PrimaryGeneratedColumn({ type: "int", name: "id_list", unsigned: true })
@@ -23,10 +25,21 @@ export class SEventsOrderQueDef {
   @Column("bigint", { name: "id_event_order", nullable: true, unsigned: true })
   idEventOrder: number | null;
 
-  @Column("int", { name: "id_event_que", nullable: true, unsigned: true })
+  @Column("int", {
+    name: "id_event_que",
+    nullable: true,
+    comment: "не используется!!!!!",
+    unsigned: true,
+  })
   idEventQue: number | null;
 
-  @Column("bigint", { name: "id_def", nullable: true, unsigned: true })
+  @Column("bigint", {
+    name: "id_def",
+    nullable: true,
+    comment:
+      "mchs.s_defection.id_def нарушения, а также все!!!вопросы чек-листов",
+    unsigned: true,
+  })
   idDef: number | null;
 
   @Column("bigint", {
@@ -115,10 +128,27 @@ export class SEventsOrderQueDef {
   })
   transferData: string | null;
 
+  @Column("bigint", {
+    name: "id_form_report",
+    nullable: true,
+    comment:
+      "Для чек-листов. Ид.таблицы s_form_report.id_list. По нему можно подтянуть номер чеклиста и.т.д.",
+    unsigned: true,
+  })
+  idFormReport: number | null;
+
+  @Column("bigint", {
+    name: "id_list_ch",
+    nullable: true,
+    comment: "ссылка на таблицу s_subj_obj_ch. буква из чл 3 и 4(ПБ и ПОГ)",
+    unsigned: true,
+  })
+  idListCh: number | null;
+
   @Column("tinyint", {
     name: "chl_fl_yes",
     nullable: true,
-    comment: "Для чеклистов!!!0-да,1 нет,2-не требуется",
+    comment: "Для чеклистов!!!0-да,1 нет,2-не требуется,3-не оценивается",
     unsigned: true,
   })
   chlFlYes: number | null;
@@ -126,7 +156,7 @@ export class SEventsOrderQueDef {
   @Column("decimal", {
     name: "chl_num_index",
     nullable: true,
-    comment: "Для чеклистров .колтчественный показатель",
+    comment: "Для чеклистров . Количественный показатель",
     precision: 10,
     scale: 2,
   })
@@ -142,7 +172,7 @@ export class SEventsOrderQueDef {
 
   @ManyToOne(() => SDefection, (sDefection) => sDefection.sEventsOrderQueDefs, {
     onDelete: "NO ACTION",
-    onUpdate: "CASCADE",
+    onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "id_def", referencedColumnName: "idDef" }])
   idDef2: SDefection;
@@ -164,6 +194,14 @@ export class SEventsOrderQueDef {
   )
   @JoinColumn([{ name: "id_event_que", referencedColumnName: "idList" }])
   idEventQue2: SEventsOrderQue;
+
+  @ManyToOne(
+    () => SFormReport,
+    (sFormReport) => sFormReport.sEventsOrderQueDefs,
+    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
+  )
+  @JoinColumn([{ name: "id_form_report", referencedColumnName: "idList" }])
+  idFormReport2: SFormReport;
 
   @ManyToOne(() => SSubjObj, (sSubjObj) => sSubjObj.sEventsOrderQueDefs, {
     onDelete: "NO ACTION",

@@ -28,6 +28,11 @@ export class ObjectController {
         return this.objectService.getAllObjSpecifs();
     }
 
+    @Get('/get/all/objectChs')
+    getAllObjChs(){
+        return this.objectService.getAllObjChs();
+    }
+
     @Get('/get/all/objectSpecifs/sorted/by/page')
     getAllObjectSpecifsSortAndPage(@Query() params: Order, @Query() params2: Pagination){
         const {field, order} = params;
@@ -53,6 +58,13 @@ export class ObjectController {
         const object = this.objectService.getObjSpecifById(idSpecif);
         return object;
     }
+
+    @Get('/get/id/:idList')
+    getObjChById(@Param('idList') idList: number){
+        const object = this.objectService.getObjChById(idList);
+        return object;
+    }
+
 
     @Get('/get/subjectId=:idSubj')
     getAllObjectsBySubjectId(@Param('idSubj') idSubj:number){

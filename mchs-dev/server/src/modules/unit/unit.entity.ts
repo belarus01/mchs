@@ -3,10 +3,12 @@ import { SEvents } from "../events/entity/events.entity";
 import { SEventsOrder } from "../events/entity/eventsOrder.entity";
 import { SEventsOrderObj } from "../events/entity/eventsOrderObj.entity";
 import { SEventsPlan } from "../events/entity/eventsPlan.entity";
+import { SFireCardBuild } from "../fire/entity/fireCardBuild.entity";
 import { SPooSubjPb } from "../poo/entity/pooSubjPb.entity";
 import { SQuestion } from "../question/entity/question.entity";
+import { SSubjObj } from "../object/entity/object.entity";
+import { SSubjObjCh } from "../object/entity/objectCh.entity";
 import { SSubjObjSpecif } from "../object/entity/objectSpecif.entity";
-import { SFireCardBuild } from "../fire/entity/fireCardBuild.entity";
 
 @Entity("s_units", { schema: "mchs" })
 export class SUnits {
@@ -139,6 +141,12 @@ export class SUnits {
 
   @OneToMany(() => SQuestion, (sQuestion) => sQuestion.idUnit)
   sQuestions: SQuestion[];
+
+  @OneToMany(() => SSubjObj, (sSubjObj) => sSubjObj.idTypeDanger2)
+  sSubjObjs: SSubjObj[];
+
+  @OneToMany(() => SSubjObjCh, (sSubjObjCh) => sSubjObjCh.idUnit_8)
+  sSubjObjChes: SSubjObjCh[];
 
   @OneToMany(() => SSubjObjSpecif, (sSubjObjSpecif) => sSubjObjSpecif.idUnit)
   sSubjObjSpecifs: SSubjObjSpecif[];

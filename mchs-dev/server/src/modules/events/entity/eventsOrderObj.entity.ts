@@ -4,16 +4,14 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { SEventsOrder } from "./eventsOrder.entity";
 import { SSubjObj } from "src/modules/object/entity/object.entity";
 import { STypeTest } from "src/modules/type/entity/typeTest.entity";
 import { SUnits } from "src/modules/unit/unit.entity";
-/* import { SEventsOrder } from "./SEventsOrder";
-import { SSubjObj } from "./SSubjObj";
-import { STypeTest } from "./STypeTest";
-import { SUnits } from "./SUnits"; */
+import { SFormReport } from "src/modules/form/entity/formReport.entity";
 
 @Index("FK_s_events_order_obj_id_event_order", ["idEventOrder"], {})
 @Index("FK_s_events_order_obj_id_obj", ["idObj"], {})
@@ -203,4 +201,7 @@ export class SEventsOrderObj {
   })
   @JoinColumn([{ name: "id_unit_6", referencedColumnName: "idUnit" }])
   idUnit_3: SUnits;
+
+  @OneToMany(() => SFormReport, (sFormReport) => sFormReport.idEventOrderObj2)
+  sFormReports: SFormReport[];
 }

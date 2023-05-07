@@ -229,7 +229,6 @@ export class EventsService {
         active: 1,
       },
       relations: {
-        idDef2: true,
         idEventOrder2: true,
         idEventQue2: true,
         idObj2: true,

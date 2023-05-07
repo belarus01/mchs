@@ -7,12 +7,14 @@ import { skipPage, sortByField } from 'src/utils/utils';
 import { CreateObjectDTO } from './dto/create-object.dto';
 import { SSubjObjSpecif } from './entity/objectSpecif.entity';
 import { CreateObjectSpecifDTO } from './dto/create-objectSpecif.dto';
+import { SSubjObjCh } from './entity/objectCh.entity';
 
 @Injectable()
 export class ObjectService {
     constructor(
         @InjectRepository(SSubjObj, 'mchs_connection') private objectRepository: Repository<SSubjObj>,
         @InjectRepository(SSubjObjSpecif, 'mchs_connection') private objectSpecifRepository: Repository<SSubjObjSpecif>,
+        @InjectRepository(SSubjObjCh, 'mchs_connection') private objectChRepository: Repository<SSubjObjCh>,
         ){}
 
     async createObject(dto: CreateObjectDTO){
@@ -54,6 +56,13 @@ export class ObjectService {
         return paged;
     } 
 
+    async getAllObjChs(): Promise<SSubjObjCh[]>{
+        const objects = await this.objectChRepository.find({where: {
+            active:1
+        }});
+        return objects;
+    }
+
     async getObjById(idObj: number): Promise<SSubjObj>{
         const object = await this.objectRepository.findOneBy({idObj});
         if(!object){
@@ -68,6 +77,14 @@ export class ObjectService {
             throw new ObjectNotFoundException(`Object Specif id = ${idSpecif} not found!`);
         }
         return objectSpecif;
+    }
+
+    async getObjChById(idList: number): Promise<SSubjObjCh>{
+        const object = await this.objectChRepository.findOneBy({idList});
+        if(!object){
+            throw new ObjectNotFoundException(`Object Ch id = ${idList} not found!`);
+        }
+        return object;
     }
 
     async getObjectBySubjectId(idSubj:number){

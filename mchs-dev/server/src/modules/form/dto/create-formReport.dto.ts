@@ -1,4 +1,7 @@
 export class CreateFormReportDTO{
+    idForm?: number;
+    idEventOrder?: number;
+    idEventOrderObj?: number;
     numAppendix?: number;
     pathTemp?: string;
     numDoc?: string;

@@ -2,12 +2,12 @@ export class CreateEventOrderQueDefDTO{
     idEventOrder?: number;
   
     idEventQue?: number;
+
+    idDef?: number;
  
     idObj?: number;
 
     idSubObj?: number;
-
-    idDef?: number;
  
     numReg?: number;
 
@@ -24,6 +24,10 @@ export class CreateEventOrderQueDefDTO{
     dateCheckFix?: Date;
  
     transferData?: string;
+
+    idFormReport?: number;
+
+    idListCh?: number;
 
     chlFlYes?: number;
 
